@@ -15,4 +15,10 @@ public class Ranking {
     private String comment;
     //@ManyToOne
     private User user;
+
+    public Ranking(long id, String comment, User user) {
+        this.id = id;
+        this.comment = comment;
+        this.user = user;
+    }
 }

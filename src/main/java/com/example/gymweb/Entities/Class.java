@@ -19,4 +19,12 @@ public class Class {
     private LocalTime startTime;
     private LocalTime finishTime;
     private String sport;
+
+ public Class(User teacher, long id, LocalTime startTime, LocalTime finishTime, String sport) {
+  this.teacher = teacher;
+  this.id = id;
+  this.startTime = startTime;
+  this.finishTime = finishTime;
+  this.sport = sport;
+ }
 }
