@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -25,8 +26,9 @@ public class User {
     private int phoneNumber;
     private int age;
     private String Role;
+    private List<Ranking> comments;
     //@ManyToMany
-    private List<Class> classes;
+    private List<Lesson> lessons;
 
     public User(String name, String password, String DNI, String email, int phoneNumber, int age, String Role) {
         this.name = name;
@@ -36,7 +38,24 @@ public class User {
         this.age=age;
         this.phoneNumber=phoneNumber;
         this.Role="Admin";
+        this.lessons=new ArrayList<>();
     }
+
+    //this method is for the user to add classes
+    public void addLessons(Lesson lesson){
+        this.lessons.add(lesson);
+    }
+
+    //this method is for the user to delete classes
+    public void deleteLessons(Lesson lesson){
+        this.lessons.remove(lesson);
+    }
+
+    //this method is for the user to show the lessons
+    public List<Lesson> showLessons(){
+        return lessons;
+    }
+
 
 
 }

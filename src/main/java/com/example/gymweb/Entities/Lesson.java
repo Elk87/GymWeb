@@ -10,7 +10,7 @@ import java.time.LocalTime;
 @Setter
 //@Entity
 @NoArgsConstructor
-public class Class {
+public class Lesson {
    // @ManyToOne
     private User teacher;
     @Id
@@ -20,11 +20,12 @@ public class Class {
     private LocalTime finishTime;
     private String sport;
 
- public Class(User teacher, long id, LocalTime startTime, LocalTime finishTime, String sport) {
+ public Lesson(User teacher, long id, LocalTime startTime, LocalTime finishTime, String sport) {
   this.teacher = teacher;
   this.id = id;
   this.startTime = startTime;
   this.finishTime = finishTime;
   this.sport = sport;
  }
+
 }

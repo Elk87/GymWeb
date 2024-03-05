@@ -21,4 +21,6 @@ public class Ranking {
         this.comment = comment;
         this.user = user;
     }
+
+
 }
