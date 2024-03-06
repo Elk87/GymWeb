@@ -26,11 +26,12 @@ public class User {
     private int phoneNumber;
     private int age;
     private String Role;
+    //@OneToMany
     private List<Ranking> comments;
     //@ManyToMany
     private List<Lesson> lessons;
 
-    public User(String name, String password, String DNI, String email, int phoneNumber, int age, String Role) {
+    public User(String name, String password, String DNI, String email, int phoneNumber, int age) {
         this.name = name;
         this.password=password;
         this.DNI=DNI;
@@ -54,6 +55,15 @@ public class User {
     //this method is for the user to show the lessons
     public List<Lesson> showLessons(){
         return lessons;
+    }
+    public void addRanking(Ranking ranking){
+        this.comments.add(ranking);
+    }
+    public void deleteRanking(Ranking ranking){
+        this.comments.add(ranking);
+    }
+    public List<Ranking> showRanking(){
+        return comments;
     }
 
 
