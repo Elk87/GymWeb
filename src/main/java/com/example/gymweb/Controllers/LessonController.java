@@ -16,5 +16,14 @@ public class LessonController {
     UserService userService;
     LessonService lessonService;
 
+    @GetMapping
+    public String showTimetable(Model model){
+        User user=userService.getUser(1);
+        Iterable<Lesson>avaliableLesson=lessonService.getAvailableLessons();
+        model.addAttribute("user",user);
+        model.addAttribute("lessons",avaliableLesson);
+        return "timetable";
+    }
+
 
 }
