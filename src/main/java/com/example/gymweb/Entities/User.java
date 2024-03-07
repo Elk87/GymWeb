@@ -20,12 +20,12 @@ public class User {
     private String password;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long id=-1;
     private String DNI;
     private String email;
     private int phoneNumber;
     private int age;
-    private String Role;
+   // private String Role;
     //@OneToMany
     private List<Ranking> comments;
     //@ManyToMany
@@ -38,7 +38,7 @@ public class User {
         this.email=email;
         this.age=age;
         this.phoneNumber=phoneNumber;
-        this.Role="Admin";
+       // this.Role="Admin";
         this.lessons=new ArrayList<>();
     }
 

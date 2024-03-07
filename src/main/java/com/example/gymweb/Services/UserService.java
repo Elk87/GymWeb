@@ -15,23 +15,26 @@ public class UserService {
     private Map<Long, User> idUsers= new HashMap<>();
     private Map<String, Long> idEmail= new HashMap<>();
 
+    //adding an user
     public UserService(){
-        addUser(new User("Admin", "password", "XXXX", "admin@email.com",0,20));
+        addUser(new User("Admin", "password", "09864527F", "admin@email.com",666777888,20));
     }
 
+    //add an user
     public void addUser(User user){
         long id =Id.incrementAndGet();
         idUsers.put(id,user);
         user.setId(id);
         idEmail.put(user.getEmail(),id);
     }
+
     private String getPassword(long id){
         return idUsers.get(id).getPassword();
     }
-    private User getUser(long id){
+    public User getUser(long id){
         return idUsers.get(id);
     }
-    private User getUser(String email){
+    public User getUser(String email){
         return idUsers.get(idEmail.get(email));
     }
     public boolean checkLogin(String email, String  passwd ){
@@ -63,4 +66,14 @@ public class UserService {
         }
         return lesson;
     }
+
+    public void bookClass(long userId, Lesson lesson) {
+        User user = idUsers.get(userId);
+        if (user != null) {
+            user.addLessons(lesson);
+        } else {
+            System.err.println("Usuario no encontrado");
+        }
+    }
+
 }
