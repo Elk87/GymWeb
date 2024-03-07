@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Profile- GymRat</title>
+    <title>Profile - GymRat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <link rel="shortcut icon" href="/img/logo.png">
     <link rel="stylesheet" href="/css/estilo.css">
@@ -10,7 +11,11 @@
 
 <body>
 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-    <div class="container"><a class="navbar-brand logo" href="/index">GymRat</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+    <div class="container">
+        <a class="navbar-brand logo" href="/index">GymRat</a>
+        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+            <span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link active" href="/index">Home</a></li>
@@ -19,16 +24,68 @@
         </div>
     </div>
 </nav>
-
-
-
+<main class="page landing-page">
+    <div id="wrapper">
+        <div class="d-flex flex-column" id="content-wrapper">
+            <main id="content">
+                <div class="container-fluid">
+                    <br>
+                    <h3 class="text-dark mb-4">Mi Perfil</h3>
+                    <div class="row mb-3">
+                        <div class="col-lg-4">
+                            <div class="card mb-3">
+                                <div class="card-body text-center shadow">
+                                    <img class="rounded-circle mb-3 mt-4" src="C:\Users\Admin\Downloads\logo.png" width="1200" height="160">
+                                </div>
+                            </div>
+                            <div class="card shadow mb-4"></div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow mb-3">
+                                        <div class="card-header py-3">
+                                            <p class="text-muted m-0 fw-bold">Información del usuario</p>
+                                        </div>
+                                        <div class="card-body">
+                                            <form method="post" action="/profile">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="inputName">Name</label>
+                                                        <input type="name" class="form-control" id="inputName" placeholder=" ">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="inputLastname">Password</label>
+                                                        <input type="lastname" class="form-control" id="inputLastname" placeholder=" ">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inputDNI">DNI</label>
+                                                    <input type="text" class="form-control" id="inputDNI" placeholder=" ">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inputAge">Age</label>
+                                                    <input type="text" class="form-control" id="inputAge" placeholder=" ">
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="inputEmail">Email</label>
+                                                        <input type="text" class="form-control" id="inputEmail" placeholder=" ">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Guardar cambios</button></div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</main>
 </body>
-
-
-
-
-
-
-
 
 </html>
