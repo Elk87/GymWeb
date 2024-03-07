@@ -24,11 +24,16 @@ public class UserController {
     }
 
     //user reserves classes
-    @PostMapping("/book class")
+    @PostMapping("/bookclass")
     public String bookLesson(@RequestParam long lessonId) {
         User user = userService.getUser(1);
         Lesson lesson = userService.getLessonById(1,1);
         userService.bookClass(user.getId(), lesson);
         return "redirect:/profile";
+    }
+    @PostMapping("/register")
+    public String addUser(User newUser){
+        userService.addUser(newUser);
+        return "registerSuccessful";
     }
 }
