@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administrador</title>
+  <link rel="stylesheet" href="/css/estilo.css">
+  <link rel="stylesheet" href="/css/lessons.css">
+</head>
+
+<body>
+<header>
+  <h1>Panel de Administrador</h1>
+  <button id="btn-logout">Cerrar Sesión</button>
+</header>
+
+
+<div id="class-template" type="text/template">
+  <form action="/admin/add" method="get">
+    <button type="submit" class="box">Añadir</button>
+  </form>
+  {{#Lessons}}
+  <div class="class-item">
+    <h3>{{sport}}</h3>
+    <p>Profesor: {{teacher.name}}</p>
+    <p>Hora: {{startTime}}-{{finishTime}}</p>
+    <form action="/admin/add" method="get">
+      <button type="submit" class="box">Editar</button>
+    </form>
+    <form action="/admin/deleteLesson/{{id}}" method="post">
+      <button type="submit" class="box">Eliminar</button>
+    </form>
+  </div>
+  {{/Lessons}}
+</div>
+
+<section id="admin-content">
+  <!-- Aquí se mostrará el contenido según la opción seleccionada -->
+</section>
+
+<footer>
+  <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>
+</footer>
+
+</body>
+
+</html>
+>

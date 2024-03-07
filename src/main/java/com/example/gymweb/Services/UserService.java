@@ -4,10 +4,7 @@ import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.User;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 @Service
 public class UserService {
@@ -53,7 +50,7 @@ public class UserService {
     public void deleteFromTimeTable(long id, Lesson lesson){
         idUsers.get(id).deleteLessons(lesson);
     }
-    public List<Lesson> getLessons(long id){
+    public Collection<Lesson> getLessons(long id){
         return idUsers.get(id).getLessons();
     }
     public Lesson getLessonById(long idUser, long idLesson){

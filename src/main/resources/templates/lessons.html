@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clases Disponibles</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <link rel="stylesheet" href="/css/lessons.css">
+</head>
+
+<body>
+<header>
+    <h1>GymRat Web</h1>
+    <button id="btn-login">Iniciar Sesión</button>
+</header>
+
+<section id="available-classes">
+    <h2>Clases Disponibles</h2>
+
+    <!-- Aquí se insertarán las clases utilizando Mustache -->
+    <div id="classes-list"></div>
+</section>
+
+
+<div id="class-template" type="text/template">
+    {{#noLessons}}
+    {{/noLessons}}
+    {{#Lessons}}
+    <div class="lesson-card">
+        <h3>{{sport}}</h3>
+        <p class="teacher-info">Profesor: {{teacher.name}}</p>
+        <p class="time-info">Hora: {{startTime}} - {{finishTime}}</p>
+        <form action="/lessons/{{id}}" method="post">
+            <button type="submit" class="btn-enroll">Apuntarme</button>
+        </form>
+    </div>
+    {{/Lessons}}
+</div>
+
+</body>
+<footer>
+    <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>
+</footer>
+</html>
