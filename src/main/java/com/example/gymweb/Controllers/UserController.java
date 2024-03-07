@@ -26,7 +26,7 @@ public class UserController {
         boolean error= !(userService.checkLogin(email,passwd));
         model.addAttribute("ok",valid); //Login valid
         model.addAttribute("error",error); //Login invalid
-        return "loginResult";
+        return "login";
     }
 
     //user reserves classes
