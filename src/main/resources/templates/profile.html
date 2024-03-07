@@ -97,33 +97,25 @@
                                         </div>
                                         <div class="card-body">
                                             <form method="post" action="/profile">
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-6">
-                                                        <label for="inputName">Nombre</label>
-                                                        <input type="text" class="form-control" id="inputName" placeholder=" ">
+                                                {{#user}}
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3"><label class="form-label" for="username"><strong>Usuario</strong></label><input class="form-control" type="text" id="username" placeholder="{{username}}" value="{{username}}" name="username"></div>
                                                     </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label for="inputPassword">Contraseña</label>
-                                                        <input type="password" class="form-control" id="inputPassword" placeholder=" ">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputDNI">DNI</label>
-                                                    <input type="text" class="form-control" id="inputDNI" placeholder=" ">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputAge">Edad</label>
-                                                    <input type="text" class="form-control" id="inputAge" placeholder=" ">
-                                                </div>
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-6">
-                                                        <label for="inputEmail">Email</label>
-                                                        <input type="text" class="form-control" id="inputEmail" placeholder=" ">
+                                                    <div class="col">
+                                                        <div class="mb-3"><label class="form-label" for="email"><strong>Email</strong></label><input class="form-control" type="email" id="email" placeholder="{{email}}" value="{{email}}" name="email"></div>
                                                     </div>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <button class="btn btn-primary btn-sm" type="submit">Guardar cambios</button>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3"><label class="form-label" for="first_name"><strong>Nombre</strong></label><input class="form-control" type="text" id="first_name" placeholder="{{name}}" value="{{name}}" name="name"></div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="mb-3"><label class="form-label" for="last_name"><strong>Apellidos</strong></label><input class="form-control" type="text" id="last_name" placeholder="{{surname}}" value="{{surname}}" name="surname"></div>
+                                                    </div>
                                                 </div>
+                                                <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Guardar cambios</button></div>
+                                                {{/user}}
                                             </form>
                                         </div>
                                     </div>
