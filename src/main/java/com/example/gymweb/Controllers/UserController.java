@@ -20,6 +20,14 @@ public class UserController {
         model.addAttribute("lessons", userService.getLessons(user.getId()));
         return "profile";
     }
+    @PostMapping("/login")
+    public String login(Model model, @RequestParam String email, @RequestParam String passwd){
+        boolean valid= userService.checkLogin(email,passwd);
+        boolean error= !(userService.checkLogin(email,passwd));
+        model.addAttribute("ok",valid); //Login valid
+        model.addAttribute("error",error); //Login invalid
+        return "loginResult";
+    }
 
     //user reserves classes
     @PostMapping("/bookclass")
