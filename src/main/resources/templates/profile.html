@@ -48,6 +48,7 @@
                                         </div>
                                         <div class="card-body">
                                             <form method="post" action="/profile">
+                                                {{#user}}
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3"><label class="form-label" for="username"><strong>Usuario</strong></label><input class="form-control" type="text" id="username" placeholder="{{username}}" value="{{username}}" name="username"></div>
