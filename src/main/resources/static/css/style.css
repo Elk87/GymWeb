@@ -66,3 +66,12 @@ form button{
     cursor:pointer;
     font-size: 20px;
 }
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+    bottom: 0;
+    width: 100%;
+}
+
