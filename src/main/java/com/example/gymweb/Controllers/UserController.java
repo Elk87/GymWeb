@@ -38,7 +38,7 @@ public class UserController {
         return "redirect:/profile";
     }
     //@PostMapping("/register")
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String addUser(User newUser){
         userService.addUser(newUser);
         return "register";
