@@ -59,6 +59,12 @@ form label input {
     width: 100%;
 }
 
+.form-group.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 form button {
     color: #fefefe;
     border: none;
@@ -76,3 +82,4 @@ footer {
     padding: 1em;
     width: 100%;
 }
+
