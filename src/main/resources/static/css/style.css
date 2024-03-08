@@ -4,14 +4,14 @@ padding: 0;
 box-sizing: border-box;
 font-family: sans-serif;
 }
-ody {
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Alinea verticalmente en el centro */
+    justify-content: space-between;
     align-items: center;
     min-height: 100vh;
 }
@@ -25,6 +25,9 @@ form {
     box-shadow: 0 5px 10px rgba(70, 3, 5, 0.5);
     max-width: 400px;
     border-radius: 10px;
+    margin: auto;
+    margin-bottom: 40px; /* Agregado para dar espacio entre el formulario y el footer */
+    align-self: center; /* Añadido para centrar verticalmente el formulario */
 }
 
 form.title {
