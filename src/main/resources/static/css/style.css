@@ -10,10 +10,10 @@ body {
     box-sizing: border-box;
     font-family: sans-serif;
     display: flex;
-    flex-direction: column; /* Cambiado de row a column */
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between; /* Cambiado de center a space-between */
     align-items: center;
-    min-height: 100vh; /* Cambiado de height a min-height */
+    min-height: 100vh;
 }
 
 form {
@@ -25,6 +25,8 @@ form {
     box-shadow: 0 5px 10px rgba(70, 3, 5, 0.5);
     max-width: 400px;
     border-radius: 10px;
+    margin: auto;
+    margin-bottom: 20px; /* Agregado para dar espacio entre el formulario y el footer */
 }
 form.title {
     color: #000000;
