@@ -26,7 +26,7 @@ form {
     max-width: 400px;
     border-radius: 10px;
     margin: auto;
-    margin-bottom: 40px; /* Agregado para dar espacio entre el formulario y el footer */
+    margin-bottom: 80px; /* Agregado para dar espacio entre el formulario y el footer */
     align-self: center; /* Añadido para centrar verticalmente el formulario */
 }
 
