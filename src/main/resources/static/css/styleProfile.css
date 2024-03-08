@@ -19,6 +19,7 @@ form {
     box-shadow: 0 5px 10px rgba(70, 3, 5, 0.5);
     max-width: 400px;
     border-radius: 10px;
+    max-width: 600px;
     margin: auto;
     margin-bottom: 100px; /* Reduce el valor de margin-bottom para dar más espacio dentro del formulario */
     align-self: center;
