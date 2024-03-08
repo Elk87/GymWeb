@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Profile - GymRat</title>
-    <link rel="stylesheet" href="/css/styleProfile.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.css" integrity="sha512-NVt7pmp5f+3eWRPO1h4A1gCf4opn4r5z2wS1mi7AaVcTzE9wDJ6RzMqSygjDzYHLp+mAJ2/qzXXDHar6IQwddQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -16,52 +16,51 @@
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
-    }
-
-    form {
-        text-align: center;
-    }
-
-    .form-row {
-        display: flex;
-        justify-content: space-around;
-    }
-
-    .form-column {
-        flex: 1;
-        margin: 10px;
     }
 </style>
 <form action="">
-    <h1 class="title">Información del usuario</h1>
-    <div class="form-row">
-        <div class="form-column">
-            <label>
-                <input placeholder="Nombre" type="text" id="nombre" value="John">
-            </label>
-            <label>
-                <input placeholder="Edad" type="text" id="edad" value="25">
-            </label>
-            <label>
-                <input placeholder="Email" type="text" id="email" value="john@example.com">
-            </label>
-        </div>
-        <div class="form-column">
-            <label>
-                <input placeholder="Apellidos" type="text" id="apellidos" value="Doe">
-            </label>
-            <label>
-                <input placeholder="DNI" type="text" id="DNI" value="12345678">
-            </label>
-            <label>
-                <input placeholder="Teléfono" type="text" id="telefono" value="555-1234">
-            </label>
-        </div>
+    <h1 class="title">Mi Perfil</h1>
+    <div class="form-group">
+        <label for="nombre">
+            <i class="fa-solid fa-user"></i>
+            Nombre
+        </label>
+        <input placeholder="nombre" type="text" id="nombre">
+    </div>
+    <div class="form-group">
+        <label for="apellidos">
+            <i class="fa-solid fa-lock"></i>
+            Apellidos
+        </label>
+        <input placeholder="apellidos" type="text" id="apellidos">
+    </div>
+    <div class="form-group">
+        <label for="edad">
+            <i class="fa-solid fa-lock"></i>
+            Edad
+        </label>
+        <input placeholder="edad" type="text" id="edad">
+    </div>
+    <div class="form-group">
+        <label for="DNI">
+            <i class="fa-solid fa-lock"></i>
+            DNI
+        </label>
+        <input placeholder="DNI" type="text" id="DNI">
+    </div>
+    <div class="form-group">
+        <label for="email">
+            <i class="fa-solid fa-lock"></i>
+            Email
+        </label>
+        <input placeholder="email" type="text" id="email">
+    </div>
+    <div class="form-group">
+        <label for="telefono">
+            <i class="fa-solid fa-lock"></i>
+            Teléfono
+        </label>
+        <input placeholder="telefono" type="text" id="telefono">
     </div>
     <button id="button">Guardar cambios</button>
 </form>
