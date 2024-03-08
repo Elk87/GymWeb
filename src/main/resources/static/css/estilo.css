@@ -32,6 +32,23 @@ nav form {
     display: inline-block; /* Alinea los formularios en línea */
     margin-left: 10px; /* Agrega un espacio entre los botones */
 }
+.box {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+section {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centra el contenido dentro de las secciones */
+}
 
 button {
     background-color: #4CAF50;
