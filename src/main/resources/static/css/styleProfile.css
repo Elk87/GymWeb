@@ -15,6 +15,7 @@ form {
     flex-direction: column;
     background: #c3e6cb;
     text-align: center;
+    align-items: flex-start;
     padding: 40px 25px; /* Ajusta el valor de padding para hacer el cuadro más grande */
     box-shadow: 0 5px 10px rgba(70, 3, 5, 0.5);
     max-width: 400px;
@@ -36,11 +37,6 @@ form label {
     margin-bottom: 50px;
 }
 
-form label.fa-solid {
-    font-size: 20px;
-    color: #0b2e13;
-    margin-right: 10px;
-}
 
 form label input {
     outline: none;
@@ -55,10 +51,6 @@ form label input::placeholder {
     color: rgba(36, 36, 36, 0.4);
 }
 
-form .link {
-    color: #040505;
-    margin-bottom: 15px;
-}
 
 form button {
     color: #fefefe;
