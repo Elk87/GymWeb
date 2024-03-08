@@ -27,15 +27,17 @@ main {
     box-shadow: 0 5px 10px rgba(70, 3, 5, 0.5);
     max-width: 600px;
     border-radius: 10px;
-    position: relative; /* Añadido para posicionar el botón de manera absoluta con respecto al formulario */
 }
 
 form.title {
     grid-column: span 2;
-    color: #000000;
+    color: #fff; /* Cambiado a color blanco */
+    background-color: #333; /* Cambiado a color del footer */
     font-size: 35px;
     font-weight: 800;
     margin-bottom: 20px;
+    padding: 10px; /* Añadido espacio alrededor del título */
+    border-radius: 5px; /* Añadido borde redondeado */
 }
 
 .form-group {
@@ -61,10 +63,9 @@ form label input {
 }
 
 .form-group.button {
-    position: absolute; /* Añadido para posicionar de manera absoluta */
-    bottom: 20px; /* Añadido para ajustar la posición desde la parte inferior */
-    left: 50%; /* Añadido para centrar horizontalmente */
-    transform: translateX(-50%); /* Añadido para centrar horizontalmente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 form button {
@@ -75,6 +76,7 @@ form button {
     text-align: center;
     cursor: pointer;
     font-size: 20px;
+    width: 50%; /* Añadido ancho del botón */
 }
 
 footer {
@@ -86,4 +88,3 @@ footer {
     position: fixed;
     bottom: 0;
 }
-
