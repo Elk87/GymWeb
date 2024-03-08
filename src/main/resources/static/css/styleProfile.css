@@ -5,9 +5,15 @@ body {
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
     min-height: 100vh;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
 }
 
 .grid-form {
@@ -17,13 +23,10 @@ body {
     background: #c3e6cb;
     text-align: center;
     align-items: flex-start;
-    padding: 40px 25px; /* Ajusta el valor de padding para hacer el cuadro más grande */
+    padding: 40px 25px;
     box-shadow: 0 5px 10px rgba(70, 3, 5, 0.5);
     max-width: 600px;
     border-radius: 10px;
-    margin: auto;
-    margin-bottom: 100px; /* Reduce el valor de margin-bottom para dar más espacio dentro del formulario */
-    align-self: center;
 }
 
 form.title {
@@ -51,14 +54,9 @@ form label input {
     border: none;
     color: #252525;
     border-bottom: solid 1px #4CAF50;
-    margin-bottom: 15px;
-    padding: 0 5px;
-    font-size: 18px;
+    padding: 8px 5px;
+    font-size: 16px;
     width: 100%;
-}
-
-form label input::placeholder {
-    color: rgba(36, 36, 36, 0.4);
 }
 
 form button {
