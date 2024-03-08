@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -44,5 +45,9 @@ public class UserController {
     public String addUser(User newUser){
         userService.addUser(newUser);
         return "register";
+    }
+    @GetMapping("/ranking") // Esta es la URL a la que se redirigirá
+    public ModelAndView viewOpinions() {
+        return new ModelAndView("redirect:/ranking.html"); // Aquí especificas la URL de la página de opiniones
     }
 }
