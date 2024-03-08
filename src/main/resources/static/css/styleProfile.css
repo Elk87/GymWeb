@@ -27,6 +27,7 @@ main {
     box-shadow: 0 5px 10px rgba(70, 3, 5, 0.5);
     max-width: 600px;
     border-radius: 10px;
+    position: relative; /* Añadido para posicionar el botón de manera absoluta con respecto al formulario */
 }
 
 form.title {
@@ -60,9 +61,10 @@ form label input {
 }
 
 .form-group.button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: absolute; /* Añadido para posicionar de manera absoluta */
+    bottom: 20px; /* Añadido para ajustar la posición desde la parte inferior */
+    left: 50%; /* Añadido para centrar horizontalmente */
+    transform: translateX(-50%); /* Añadido para centrar horizontalmente */
 }
 
 form button {
