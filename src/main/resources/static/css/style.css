@@ -6,11 +6,11 @@ font-family: sans-serif;
 }
 
 body{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
     background-image: url("/static/img/fondoGym.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 form{
     display: flex;
