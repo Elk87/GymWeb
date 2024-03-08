@@ -11,7 +11,7 @@ form{
     background: #c3e6cb;
     text-align: center;
     padding: 20px 25px;
-    box-shadow: 0 5px 10px rgba(70,3,5,0.5);
+    /*box-shadow: 0 5px 10px rgba(70,3,5,0.5);*/
 }
 form.title{
     color: #000000;
