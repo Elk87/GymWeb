@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
+//this code is for classes
 @Controller
 public class LessonsController {
     @Autowired
@@ -47,6 +48,7 @@ public class LessonsController {
     public String add(){
         return "editLessons";
     }
+    //admin can add classes
     @GetMapping("/admin/add/Lesson")
     public String addLesson(Model model, Lesson lesson){
         lessonsService.addLesson(lesson);
@@ -58,6 +60,7 @@ public class LessonsController {
         }
         return "admin";
     }
+    //admin can delete some classes
     @RequestMapping(value = "/admin/deleteLesson/{id}", method = RequestMethod.POST)
     public String deleteLesson(Model model, @PathVariable long id){
         lessonsService.deleteLessonById(id);

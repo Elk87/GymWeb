@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class LessonsService {
     private Map<Long, Lesson> idLesson = new HashMap<>() ;
     private AtomicLong Id =new AtomicLong();
+    //examples of classes and teacher
     public LessonsService() {
         User teacher1 = new User("Enrique", "password1", "XXXX1", "profesor1@email.com", 0, 30);
         User teacher2 = new User("Erika", "password2", "XXXX2", "profesor2@email.com", 0, 35);

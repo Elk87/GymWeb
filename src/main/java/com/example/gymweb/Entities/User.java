@@ -30,7 +30,7 @@ public class User {
     private List<Ranking> comments;
     //@ManyToMany
     private List<Lesson> lessons;
-
+    //constructor
     public User(String name, String password, String DNI, String email, int phoneNumber, int age) {
         this.name = name;
         this.password=password;

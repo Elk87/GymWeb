@@ -20,6 +20,7 @@ public class Lesson {
     private LocalTime finishTime;
     private String sport;
 
+//constructor
  public Lesson(User teacher, long id, LocalTime startTime, LocalTime finishTime, String sport) {
   this.teacher = teacher;
   this.id = id;

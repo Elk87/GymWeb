@@ -15,6 +15,7 @@ public class Ranking {
     private String comment;
     //@ManyToOne
     private User user;
+    //constructor
 
     public Ranking(long id, String comment, User user) {
         this.id = id;
