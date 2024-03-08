@@ -9,6 +9,21 @@ body {
     align-items: center;
     min-height: 100vh;
 }
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header h1 {
+    margin: 0; /* Elimina el margen predeterminado del título */
+}
+nav form {
+    display: inline-block; /* Alinea los formularios en línea */
+    margin-left: 10px; /* Agrega un espacio entre los botones */
+}
 
 form {
     display: flex;
@@ -35,7 +50,6 @@ form.title {
 form label {
     margin-bottom: 20px;
 }
-
 
 form label input {
     outline: none;
