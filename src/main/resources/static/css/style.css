@@ -10,7 +10,7 @@ body{
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-image: url("/static/img/HomeImg.jpg");
+    background-image: url("/static/img/fondoGym.jpg");
 }
 form{
     display: flex;
