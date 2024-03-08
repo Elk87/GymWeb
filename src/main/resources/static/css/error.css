@@ -6,8 +6,8 @@
 }
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f8d7da; /* Fondo rojo claro */
-    color: #721c24; /* Texto oscuro */
+    background: linear-gradient(to right, #34ce57, #71dd8a);
+    color: #040505 ;
     text-align: center;
     padding: 50px;
 }
