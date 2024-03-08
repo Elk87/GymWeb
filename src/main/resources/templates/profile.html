@@ -1,82 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Profile - GymRat</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <link rel="shortcut icon" href="/img/logo.png">
-    <link rel="stylesheet" href="/css/estilo.css">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>Profile - GymRat</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.css" integrity="sha512-NVt7pmp5f+3eWRPO1h4A1gCf4opn4r5z2wS1mi7AaVcTzE9wDJ6RzMqSygjDzYHLp+mAJ2/qzXXDHar6IQwddQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-
 <body>
-<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-    <div class="container">
-        <a class="navbar-brand logo" href="/index">GymRat</a>
-        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
-            <span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navcol-1">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link active" href="/index">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<main class="page landing-page">
-    <div id="wrapper">
-        <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content">
-                <div class="container-fluid">
-                    <h3 class="text-dark mb-4">Mi Perfil</h3>
-                    <div class="row mb-3">
-                        <div class="col-lg-4">
-                            <div class="card mb-3">
-                                <div class="card-body text-center shadow">
-                                    <img class="rounded-circle mb-3 mt-4" src="/img/logo.png" width="1200" height="160">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-8">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="card shadow mb-3">
-                                        <div class="card-header py-3">
-                                            <p class="text-muted m-0 fw-bold">Información del usuario</p>
-                                        </div>
-                                        <div class="card-body">
-                                            <form method="post" action="/profile">
-                                                {{#user}}
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="email"><strong>Email</strong></label><input class="form-control" type="email" id="email" placeholder="{{email}}" value="{{email}}" name="email"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="first_name"><strong>Nombre</strong></label><input class="form-control" type="text" id="first_name" placeholder="{{name}}" value="{{name}}" name="name"></div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="last_name"><strong>Apellidos</strong></label><input class="form-control" type="text" id="last_name" placeholder="{{surname}}" value="{{surname}}" name="surname"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Guardar cambios</button></div>
-                                                {{/user}}
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="card shadow"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
-<script src="/bootstrap/bootstrap.min.js"></script>
+<style>
+    body{
+        background-image: url("/img/HomeImg.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+</style>
+<form action="">
+    <h1 class="title">Login</h1>
+    <label>
+        <i class="fa-solid fa-user"></i>
+        <input placeholder="nombre" type="text" id="nombre">
+    </label>
+    <label>
+        <i class="fa-solid fa-lock"></i>
+        <input placeholder="apellidos" type="text" id="apellidos">
+    </label>
+    <label>
+        <i class="fa-solid fa-lock"></i>
+        <input placeholder="edad" type="text" id="edad">
+    </label>
+    <label>
+        <i class="fa-solid fa-lock"></i>
+        <input placeholder="DNI" type="text" id="DNI">
+    </label>
+    <label>
+        <i class="fa-solid fa-lock"></i>
+        <input placeholder="email" type="text" id="email">
+    </label>
+    <label>
+        <i class="fa-solid fa-lock"></i>
+        <input placeholder="telefono" type="text" id="telefono">
+    </label>
+    <button id="button">Guardar cambios</button>
+</form>
+<footer>
+    <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>
+</footer>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </body>
 </html>
