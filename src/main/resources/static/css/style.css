@@ -10,7 +10,7 @@ body{
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: linear-gradient(to right, #34ce57, #71dd8a);
+    background-image: url("/static/img/HomeImg.jpg");
 }
 form{
     display: flex;
