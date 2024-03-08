@@ -4,15 +4,16 @@ padding: 0;
 box-sizing: border-box;
 font-family: sans-serif;
 }
-body{
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
     display: flex;
+    flex-direction: column; /* Cambiado de row a column */
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Ajusta la altura al 100% de la ventana visible */
+    min-height: 100vh; /* Cambiado de height a min-height */
 }
 
 form {
@@ -21,12 +22,10 @@ form {
     background: #c3e6cb;
     text-align: center;
     padding: 20px 25px;
-    box-shadow: 0 5px 10px rgba(70,3,5,0.5);
+    box-shadow: 0 5px 10px rgba(70, 3, 5, 0.5);
     max-width: 400px;
-    /*margin: auto;*/
     border-radius: 10px;
 }
-
 form.title {
     color: #000000;
     font-size: 35px;
@@ -71,7 +70,6 @@ footer {
     color: #fff;
     text-align: center;
     padding: 1em;
-    bottom: 0;
     width: 100%;
 }
 
