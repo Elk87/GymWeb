@@ -41,6 +41,6 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String addUser(User newUser){
         userService.addUser(newUser);
-        return "registerSuccessful";
+        return "register";
     }
 }
