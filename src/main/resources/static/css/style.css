@@ -11,7 +11,7 @@ body {
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Cambiado de center a space-between */
+    justify-content: space-between;
     align-items: center;
     min-height: 100vh;
 }
@@ -27,7 +27,9 @@ form {
     border-radius: 10px;
     margin: auto;
     margin-bottom: 20px; /* Agregado para dar espacio entre el formulario y el footer */
+    align-self: center; /* Añadido para centrar verticalmente el formulario */
 }
+
 form.title {
     color: #000000;
     font-size: 35px;
