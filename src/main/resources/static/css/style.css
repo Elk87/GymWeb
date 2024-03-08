@@ -5,19 +5,25 @@ box-sizing: border-box;
 font-family: sans-serif;
 }
 
-form{
+form {
     display: flex;
     flex-direction: column;
     background: #c3e6cb;
     text-align: center;
     padding: 20px 25px;
     /*box-shadow: 0 5px 10px rgba(70,3,5,0.5);*/
+
+    /* Nuevas propiedades para centrar y cuadrar el formulario */
+    max-width: 400px; /* Ajusta este valor según sea necesario */
+    margin: auto;
+    border-radius: 10px; /* Agrega un borde redondeado si lo deseas */
 }
-form.title{
+
+form.title {
     color: #000000;
     font-size: 35px;
     font-weight: 800;
-    margin-bottom: 30px;
+    margin-bottom: 20px; /* Reducir el margen inferior */
 }
 
 form label{
