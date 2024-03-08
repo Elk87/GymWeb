@@ -20,20 +20,22 @@ public class UserController {
         model.addAttribute("lessons", userService.getLessons(user.getId()));
         return "profile";
     }
-    @PostMapping("/login")
-    public String login(Model model, @RequestParam String email, @RequestParam String passwd){
-        boolean valid= userService.checkLogin(email,passwd);
-        boolean error= !(userService.checkLogin(email,passwd));
-        model.addAttribute("ok",valid); //Login valid
+    @PostMapping("/login/submit")
+    public String login(Model model, @RequestParam String email, @RequestParam String password){
+        boolean valid= userService.checkLogin(email,password);
+        boolean error= !valid;
         model.addAttribute("error",error); //Login invalid
-        return "login";
+       if(valid){
+           return "redirect:/profile";
+       }
+       return "redirect:/login";
     }
 
     //user reserves classes
-    @PostMapping("/bookclass")
-    public String bookLesson(@RequestParam long lessonId) {
+    @PostMapping("/bookclass/{id}")
+    public String bookLesson(@PathVariable long lessonId) {
         User user = userService.getUser(1);
-        Lesson lesson = userService.getLessonById(1,1);
+        Lesson lesson = userService.getLessonById(1,lessonId);
         userService.bookClass(user.getId(), lesson);
         return "redirect:/profile";
     }

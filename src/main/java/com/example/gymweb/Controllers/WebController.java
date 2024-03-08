@@ -12,7 +12,7 @@ public class WebController {
     }
     @GetMapping("/login")
     public String showLogin(){
-        return "Login";
+        return "login";
     }
 
 
