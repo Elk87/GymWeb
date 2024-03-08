@@ -47,7 +47,7 @@ public class UserController {
         return "register";
     }
     @GetMapping("/ranking") // Esta es la URL a la que se redirigirá
-    public ModelAndView viewOpinions() {
-        return new ModelAndView("redirect:/ranking"); // Aquí especificas la URL de la página de opiniones
+    public String viewRanking() {
+        return "ranking"; // Esta es la vista de ranking.html
     }
 }
