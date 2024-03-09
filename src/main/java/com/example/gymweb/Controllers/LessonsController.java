@@ -24,6 +24,10 @@ public class LessonsController {
         }
         return "lessons";
     }
+    @GetMapping("/training")
+    public String showTrainnig(Model model){
+        return "training";
+    }
     @GetMapping("/admin")
     public String showLessonsAdmin(Model model){
         Collection<Lesson> lessons = lessonsService.getLessons();
