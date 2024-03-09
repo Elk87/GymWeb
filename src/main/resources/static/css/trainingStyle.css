@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+h1 {
+    text-align: center;
+    color: #333;
+}
+.sport-class {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+.sport-class img {
+    max-width: 50%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Estilos específicos para cada clase de deporte */
+.yoga {
+    background-color: #f7f7f7;
+}
+.crossfit {
+    background-color: #f0f0f0;
+}
+.zumba {
+    background-color: #f5f5f5;
+}
+.spinning {
+    background-color: #f7f7f7;
+}
+.pilates {
+    background-color: #f7f7f7;
+}
+.entrenamiento{
+    background-color: #f7f7f7;
+}
