@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.ModelAndView;
+
 
 
 @Controller
@@ -46,8 +46,8 @@ public class UserController {
         userService.addUser(newUser);
         return "register";
     }
-    @GetMapping("/ranking") // Esta es la URL a la que se redirigirá
+    @GetMapping("/ranking")
     public String viewRanking() {
-        return "ranking"; // Esta es la vista de ranking.html
+        return "ranking";//this show comments and opinions, but not avaliable for now
     }
 }
