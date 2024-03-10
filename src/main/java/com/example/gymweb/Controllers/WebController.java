@@ -14,7 +14,10 @@ public class WebController {
     public String showLogin(){
         return "login";
     }
-
+    @GetMapping("/register")
+    public String showRegister(){
+        return "register";
+    }
 
 
 

@@ -85,6 +85,6 @@ public class UserService {
     public void updateUser(long id, User newUser) {
         idUsers.put(id,newUser);//overwrite old user
         idEmail.put(newUser.getEmail(),id); //overwrite old register
-        //hay que mirarlo bien los mapas por si estamos reptiiendo algo
+
     }
 }
