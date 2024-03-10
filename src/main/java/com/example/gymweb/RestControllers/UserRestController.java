@@ -26,6 +26,7 @@ public class UserRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    //this code is change profile of user
     @PutMapping("/changeprofile/{id}/")
     public ResponseEntity<User> updateProfile(@PathVariable long id,@RequestBody User newUser){
         User oldUser= userService.getUser(id);
