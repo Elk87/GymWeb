@@ -5,11 +5,15 @@ import com.example.gymweb.Entities.User;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 @Service
 public class UserService {
     private final AtomicLong Id= new AtomicLong();
+
     private Map<Long, User> idUsers= new HashMap<>();
+    private Map<Long,User> users= new ConcurrentHashMap<>();
+
     private Map<String, Long> idEmail= new HashMap<>();
 
     //adding an user
@@ -44,6 +48,12 @@ public class UserService {
         }
         return false;
     }
+
+    public User removeUser(long id){
+        idEmail.remove(users.get(id).getEmail()); //Remove from the <email,ID> Map
+        return users.remove(id);
+    }
+
     public void addToTimeTable(long id, Lesson lesson){
         idUsers.get(id).addLessons(lesson);
     }
