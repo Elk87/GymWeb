@@ -11,10 +11,10 @@ import java.util.concurrent.atomic.AtomicLong;
 public class UserService {
     private final AtomicLong Id= new AtomicLong();
 
-    private Map<Long, User> idUsers= new HashMap<>();
-    private Map<Long,User> users= new ConcurrentHashMap<>();
+    private Map<Long, User> idUsers= new HashMap<>();//map of id and user
+    private Map<Long,User> users= new ConcurrentHashMap<>(); // same ?
 
-    private Map<String, Long> idEmail= new HashMap<>();
+    private Map<String, Long> idEmail= new HashMap<>(); //map of email and id
 
     //adding an user
     public UserService(){
@@ -28,6 +28,7 @@ public class UserService {
         user.setId(id);
         idEmail.put(user.getEmail(),id);
     }
+
 
     private String getPassword(long id){
         return idUsers.get(id).getPassword();
@@ -50,7 +51,7 @@ public class UserService {
     }
 
     public User removeUser(long id){
-        idEmail.remove(users.get(id).getEmail()); //Remove from the <email,ID> Map
+        idEmail.remove(users.get(id).getEmail()); //remove from the <email,ID> Map
         return users.remove(id);
     }
 
@@ -83,4 +84,9 @@ public class UserService {
         }
     }
 
+    public void updateUser(long id, User newUser) {
+        users.put(id,newUser);//overwrite old user
+        idEmail.put(newUser.getEmail(),id); //overwrite old register
+        //hay que mirarlo bien los mapas por si estamos reptiiendo algo
+    }
 }
