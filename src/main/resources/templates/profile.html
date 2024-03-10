@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -22,35 +22,38 @@
 <main>
     <h1 class="title">
         <i class="fa-regular fa-user"></i>Mi Perfil</h1>
+    {{#user}}
     <form action="" class="grid-form">
         <div class="form-group">
             <label for="nombre">Nombre:</label>
-            <input placeholder="Nombre" type="text" id="nombre">
-        </div>
-        <div class="form-group">
-            <label for="apellidos">Apellidos:</label>
-            <input placeholder="Apellidos" type="text" id="apellidos">
+            <input placeholder="{{user.name}}" type="text" id="nombre">
         </div>
         <div class="form-group">
             <label for="edad">Edad:</label>
-            <input placeholder="Edad" type="text" id="edad">
+            <input placeholder="{{user.age}}" type="text" id="edad">
         </div>
         <div class="form-group">
             <label for="DNI">DNI:</label>
-            <input placeholder="DNI" type="text" id="DNI">
+            <input placeholder="{{user.DNI}}" type="text" id="DNI">
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input placeholder="Email" type="text" id="email">
+            <input placeholder="{{user.email}}" type="text" id="email">
         </div>
         <div class="form-group">
             <label for="telefono">Teléfono:</label>
-            <input placeholder="Teléfono" type="text" id="telefono">
+            <input placeholder="{{user.phoneNumber}}" type="text" id="telefono">
         </div>
         <div class="form-group">
-            <button id="button">Guardar cambios</button>
+            <label for="image" class="form-label">Image</label>
+            <input type="file" class="form-control" id="image" name="image" required>
+        </div>
+        <img src="{{user.image}}" alt="Imagen de perfil">
+        <div class="form-group">
+            <button href="" id="button">Guardar cambios</button>
         </div>
     </form>
+    {{/user}}
 </main>
 <footer>
     <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>

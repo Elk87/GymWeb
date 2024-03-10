@@ -25,6 +25,7 @@ public class User {
     private String email;
     private int phoneNumber;
     private int age;
+    private String image;
    // private String Role;
     //@OneToMany
     private List<Ranking> comments;
@@ -39,6 +40,17 @@ public class User {
         this.age=age;
         this.phoneNumber=phoneNumber;
        // this.Role="Admin";
+        this.lessons=new ArrayList<>();
+    }
+    public User(String name, String password, String DNI, String email, int phoneNumber, int age, String image) {
+        this.name = name;
+        this.password=password;
+        this.DNI=DNI;
+        this.email=email;
+        this.age=age;
+        this.phoneNumber=phoneNumber;
+        this.image=image;
+        // this.Role="Admin";
         this.lessons=new ArrayList<>();
     }
 

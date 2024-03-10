@@ -1,18 +1,23 @@
 package com.example.gymweb.Controllers;
 import com.example.gymweb.Entities.User;
 import com.example.gymweb.Entities.Lesson;
+import com.example.gymweb.Services.UploadFileService;
 import com.example.gymweb.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 
 
 @Controller
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    UploadFileService uploadFileService;
     //show profile of user and classes
     @GetMapping("/profile")
     public String viewProfile(Model model) {
@@ -42,7 +47,11 @@ public class UserController {
     }
     //@PostMapping("/register")
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String addUser(User newUser){
+    public String addUser(@RequestBody User newUser, @RequestParam("image") MultipartFile image) throws IOException {
+        if(newUser.getId()==0L){//add image to new books
+            String nombreImagen=uploadFileService.saveImage(image);
+            newUser.setImage(nombreImagen);
+        }
         userService.addUser(newUser);
         return "register";
     }

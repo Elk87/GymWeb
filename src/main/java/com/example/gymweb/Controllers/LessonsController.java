@@ -54,7 +54,7 @@ public class LessonsController {
     }
     //admin can add classes
     @GetMapping("/admin/add/Lesson")
-    public String addLesson(Model model, Lesson lesson){
+    public String addLesson(Model model,@RequestBody Lesson lesson){
         lessonsService.addLesson(lesson);
         Collection<Lesson> lessons = lessonsService.getLessons();
         if(lessons.isEmpty()){
@@ -78,7 +78,7 @@ public class LessonsController {
     }
 
     @PostMapping("/updateLesson/{id}")
-    public String updateLesson(Model model, Lesson lesson, @PathVariable long id){
+    public String updateLesson(Model model, @RequestBody Lesson lesson, @PathVariable long id){
         lessonsService.updateBook(id,lesson);
         Collection<Lesson> lessons = lessonsService.getLessons();
         if(lessons.isEmpty()){
