@@ -16,7 +16,7 @@ public class RankingRest {
     @Autowired
     RankingService rankingService;
     //this code is to create ranking
-    @PostMapping("/")
+   /* @PostMapping("/")
     public ResponseEntity<Ranking> createRanking(@RequestBody Ranking ranking) {
         Ranking createdRanking = rankingService.createRanking(ranking);
         return new ResponseEntity<>(createdRanking, HttpStatus.CREATED);
@@ -42,7 +42,7 @@ public class RankingRest {
         Collection<Ranking> rankings = rankingService.getRanking();
         return new ResponseEntity<>(rankings, HttpStatus.OK);
 
-    }
+    }*/
 }
 
 

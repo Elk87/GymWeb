@@ -1,79 +1,83 @@
-{
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family: sans-serif;
-}
 body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
+    background-color: #f2f2f2;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    min-height: 100vh;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    background: #c3e6cb;
-    text-align: center;
-    padding: 20px 25px;
-    box-shadow: 0 5px 10px rgba(70, 3, 5, 0.5);
-    max-width: 400px;
-    border-radius: 10px;
-    margin: auto;
-    margin-bottom: 170px; /
-    align-self: center;
+header h1 {
+    margin: 0; /* Elimina el margen predeterminado del título */
 }
 
-form.title {
-    color: #000000;
-    font-size: 35px;
-    font-weight: 800;
-    margin-bottom: 20px;
-}
-
-form label{
-    margin-bottom: 35px;
-}
-form label.fa-solid{
-    font-size: 20px;
-    color:#0b2e13;
+.button-special {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     margin-right: 10px;
 }
-form label input{
-    outline: none;
-    border:none;
-    color: #252525;
-    border-bottom: solid 1px #4CAF50;
-    padding: 0 5px;
-    font-size: 18px;
-}
-form label input::placeholder{
-    color: rgba(36,36,36,0.4);
-}
-form .link{
-    color: #040505;
-    margin-bottom: 15px;
+
+main {
+    padding: 40px 20px;
 }
 
-form button{
-    color: #fefefe;
-    border: none;
-    background: linear-gradient(to right, #34ce57, #71dd8a);
-    padding: 10px 15px;
-    cursor:pointer;
-    font-size: 20px;
+.login-box {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.login-box h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-box label {
+    margin-bottom: 5px;
+}
+
+.login-box input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#btn-login {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
 footer {
     background-color: #333;
     color: #fff;
     text-align: center;
     padding: 1em;
     width: 100%;
+    position: fixed;
+    bottom: 0;
 }
-
