@@ -3,18 +3,42 @@
 <head>
     <meta charset="utf-8" />
     <title>Not Found</title>
-    <link rel="stylesheet" href="/css/error.css" />
-</head>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
 
+        #myCarousel {
+            background-color: black;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        a {
+            color: white;
+        }
+    </style>
+</head>
+<body>
 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
             <div>
-                <img src="/img/404.png"  alt="..." >
+                <img src="/img/404.png" alt="...">
             </div>
         </div>
     </div>
-    <a href="/" >Volver</a>
+    <a href="/">Volver</a>
 </div>
 </body>
 </html>
