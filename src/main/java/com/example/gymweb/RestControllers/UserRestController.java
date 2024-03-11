@@ -26,7 +26,7 @@ public class UserRestController {
         }
     }
     //update users information
-    @PutMapping("/changeprofile/{id}/")
+    @PutMapping("/changeprofile/{id}")
     public ResponseEntity<User> updateProfile(@PathVariable long id,@RequestBody User newUser){
         User oldUser= userService.getUser(id);
         if (oldUser!= null) {

@@ -39,6 +39,7 @@ public class User {
         this.email=email;
         this.age=age;
         this.phoneNumber=phoneNumber;
+        this.comments=new ArrayList<>();
        // this.Role="Admin";
         this.lessons=new ArrayList<>();
     }
@@ -50,6 +51,7 @@ public class User {
         this.age=age;
         this.phoneNumber=phoneNumber;
         this.image=image;
+        this.comments=new ArrayList<>();
         // this.Role="Admin";
         this.lessons=new ArrayList<>();
     }

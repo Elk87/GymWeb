@@ -50,10 +50,7 @@ public class RankingRest {
     }
     //update an existing ranking using his ID
     @PutMapping("/ranking/{id}")
-    public ResponseEntity<Ranking> updateRanking(@RequestParam String comment, @PathVariable long id, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Ranking> updateRanking(@RequestParam String comment, @PathVariable long id) {
         Ranking ranking=rankingService.updateRanking(id,comment);
         return new ResponseEntity<>(ranking,HttpStatus.OK);
     }

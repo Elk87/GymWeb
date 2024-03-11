@@ -45,7 +45,7 @@ public class LessonsRest {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         lessonsService.deleteLessonById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(lesson, HttpStatus.OK);
     }
     //update an existing lesson giving his ID
     @PutMapping("/lesson/{id}")
@@ -54,7 +54,7 @@ public class LessonsRest {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         lessonsService.updateLesson(id,lesson);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(lesson,HttpStatus.OK);
     }
 
 }
