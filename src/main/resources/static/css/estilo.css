@@ -15,7 +15,7 @@ header {
 }
 
 header h1 {
-    margin: 0; /* Elimina el margen predeterminado del título */
+    margin: 0;
 }
 
 #btn-login {
@@ -27,10 +27,10 @@ header h1 {
     cursor: pointer;
 }
 
-/* Estilos mejorados para los botones de inicio de sesión */
+
 nav form {
-    display: inline-block; /* Alinea los formularios en línea */
-    margin-left: 10px; /* Agrega un espacio entre los botones */
+    display: inline-block;
+    margin-left: 10px; /
 }
 
 button {

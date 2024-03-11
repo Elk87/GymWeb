@@ -74,7 +74,7 @@ public class UserController {
     @PostMapping("/bookClass/{id}")
     public String bookClass(@PathVariable long id){
         userService.bookClass(1,id);
-        return "redirect:/mylessons";
+        return "redirect:/lessons";
     }
     //delete a lessons from users timetable
     @PostMapping ("/deleteClass/{id}")
@@ -86,6 +86,7 @@ public class UserController {
     @GetMapping("/admin/allUsers")
     public String showAllUsers(Model model){
         Collection<User> users = userService.showAllUsers();
+        model.addAttribute("Users", users);
         return "adminUsers";
     }
     //show all the rankings that the user has done

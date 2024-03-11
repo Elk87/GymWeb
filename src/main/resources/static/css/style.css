@@ -15,7 +15,7 @@ header {
 }
 
 header h1 {
-    margin: 0; /* Elimina el margen predeterminado del título */
+    margin: 0;
 }
 
 .button-special {
@@ -81,3 +81,17 @@ footer {
     position: fixed;
     bottom: 0;
 }
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-details {
+    flex: 1;
+}
+
+.user-image {
+    margin-left: 20px; /* Ajusta según sea necesario */
+}
+

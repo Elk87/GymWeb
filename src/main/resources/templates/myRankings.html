@@ -27,7 +27,7 @@
       <td>
         <form method="post" action="/updateRanking/{{id}}">
           <label>
-            <input type="text" name="comment" placeholder="{{comment}}" required>
+            <textarea name="comment" placeholder="{{comment}}" rows="3" cols="50" required>{{comment}}</textarea>
           </label>
           <button type="submit">Editar</button>
         </form>

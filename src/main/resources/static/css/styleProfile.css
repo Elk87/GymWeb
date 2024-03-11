@@ -29,7 +29,7 @@ main {
     max-width: 600px;
     border-radius: 10px;
     margin-top: 50px;
-    position: relative; /* Añadido para posicionar el botón de manera absoluta con respecto al formulario */
+    position: relative;
 }
 
 form.title {
@@ -50,7 +50,7 @@ h1{
 }
 
 h1 i {
-    margin-right: 10px; /* Ajusta la separación entre el icono y el texto */
+    margin-right: 10px;
 }
 
 .form-group {
@@ -76,10 +76,10 @@ form label input {
 }
 
 .form-group.button {
-    position: absolute; /* Añadido para posicionar de manera absoluta */
-    bottom: 20px; /* Añadido para ajustar la posición desde la parte inferior */
-    left: 50%; /* Añadido para centrar horizontalmente */
-    transform: translateX(-50%); /* Añadido para centrar horizontalmente */
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 form button {
