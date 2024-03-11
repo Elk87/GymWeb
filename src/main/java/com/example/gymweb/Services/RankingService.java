@@ -1,5 +1,6 @@
 package com.example.gymweb.Services;
 
+import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.Ranking;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +19,15 @@ public class RankingService {
         return ranking;
     }
     //delete a ranking
-    public void deleteRanking(Long id) {
+    public void deleteRanking(long id) {
         rankings.remove(id);
     }
     // look for the comment and take it
     public Collection<Ranking> getRanking() {
         return rankings.values();
+    }
+    public Ranking getRankingById(long id){
+        return rankings.get(id);
     }
 
 
