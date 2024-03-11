@@ -20,23 +20,37 @@
     <button type="submit" class="box">Añadir</button>
   </form>
   {{#Lessons}}
-  <div class="class-item">
-    <h3>{{sport}}</h3>
-    <p>Profesor: {{teacher.name}}</p>
-    <p>Hora: {{startTime}}-{{finishTime}}</p>
-    <form action="/admin/add" method="get">
-      <button type="submit" class="box">Editar</button>
+  <div class="class-form">
+    <form action="/updateLesson/{{id}}" class="grid-form" method="post">
+      <div class="form-group">
+        <label for="sport">Deporte:</label>
+        <input value="{{sport}}" type="text" id="sport" name="sport" required>
+      </div>
+      <div class="form-group">
+        <label for="teacher">Profesor:</label>
+        <input value="{{teacher.name}}" type="text" id="teacher" name="teacher" required>
+      </div>
+      <div class="form-group">
+        <label for="startTime">Hora de inicio:</label>
+        <input value="{{startTime}}" type="text" id="startTime" name="startTime" required>
+      </div>
+      <div class="form-group">
+        <label for="finishTime">Hora de finalización:</label>
+        <input value="{{finishTime}}" type="text" id="finishTime" name="finishTime" required>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn-enroll">Actualizar</button>
+      </div>
     </form>
+
     <form action="/admin/deleteLesson/{{id}}" method="post">
-      <button type="submit" class="box">Eliminar</button>
+      <div class="form-group">
+        <button type="submit" class="btn-enroll">Eliminar</button>
+      </div>
     </form>
   </div>
   {{/Lessons}}
 </div>
-
-<section id="admin-content">
-  <!-- Aquí se mostrará el contenido según la opción seleccionada -->
-</section>
 
 <footer>
   <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>

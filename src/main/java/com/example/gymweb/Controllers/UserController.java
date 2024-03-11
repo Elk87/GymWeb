@@ -41,14 +41,14 @@ public class UserController {
        if(valid){
            return "redirect:/profile";
        }
-       return "redirect:/login";
+       return "loginIncorrect";
     }
 
     //user book a class
     @PostMapping("/bookclass/{id}")
-    public String bookLesson(@PathVariable long lessonId) {
+    public String bookLesson(@PathVariable long id) {
         User user = userService.getUser(1);
-        Lesson lesson = userService.getLessonById(1,lessonId);
+        Lesson lesson = userService.getLessonById(1,id);
         userService.bookClass(user.getId(), lesson.getId());
         return "redirect:/profile";
     }
@@ -61,7 +61,7 @@ public class UserController {
             newUser.setImage(nombreImagen);
         }*/
         userService.addUser(newUser);
-        return "redirect: profile";
+        return "redirect:/profile";
     }
     //show the lessons that the user has booked
     @GetMapping("/mylessons")
@@ -74,13 +74,13 @@ public class UserController {
     @PostMapping("/bookClass/{id}")
     public String bookClass(@PathVariable long id){
         userService.bookClass(1,id);
-        return "redirect: /mylessons";
+        return "redirect:/mylessons";
     }
     //delete a lessons from users timetable
     @PostMapping ("/deleteClass/{id}")
     public String deleteClass(@PathVariable long id){
         userService.deleteClass(1,id);
-        return "redirect: /mylessons";
+        return "redirect:/mylessons";
     }
     //show all user, only available for the admin
     @GetMapping("/admin/allUsers")
@@ -99,20 +99,20 @@ public class UserController {
     @PostMapping("/createRanking")
     public String createRanking(@RequestParam String comment){
         rankingService.createRanking(comment);
-        return "redirect: /ranking";
+        return "redirect:/ranking";
     }
     //update a ranking done by the user
     @PostMapping("/updateRanking/{id}")
     public String updateRanking(@RequestParam String comment, @PathVariable long id){
         rankingService.updateRanking(id, comment);
-        return "redirect: /ranking";
+        return "redirect:/myrankings";
 
     }
     //delete a ranking done by the user
     @PostMapping("/deleteRanking/{id}")
     public String deleteRanking( @PathVariable long id){
         rankingService.deleteRanking(id);
-        return "redirect: /ranking";
+        return "redirect:/myrankings";
 
     }
 }

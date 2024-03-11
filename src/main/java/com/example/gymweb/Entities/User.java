@@ -53,6 +53,9 @@ public class User {
         // this.Role="Admin";
         this.lessons=new ArrayList<>();
     }
+    public User(String name) {
+        this.name = name;
+    }
 
     //this method is for the user to book classes
     public void addLessons(Lesson lesson){

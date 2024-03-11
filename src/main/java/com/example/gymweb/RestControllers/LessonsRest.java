@@ -53,7 +53,7 @@ public class LessonsRest {
         if (bindingResult.hasErrors()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        lessonsService.updateBook(id,lesson);
+        lessonsService.updateLesson(id,lesson);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -22,13 +22,8 @@
         margin: 0;
     }
 </style>
-<a  class="navbar-brand" href="/"> <h1>GYMRAT</h1> </a>
 <h2>Deja tu opinión</h2>
-<form>
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre">
-    <label for="email">Email:</label>
-    <input type="text" id="email" name="email">
+<form action="/createRanking" method="post">
     <label for="valoracion">Valoración:</label>
     <select id="valoracion" name="valoracion">
         <option value="1">1 estrella</option>
@@ -37,10 +32,11 @@
         <option value="4">4 estrellas</option>
         <option value="5">5 estrellas</option>
     </select>
-    <label for="comentario">Comentario:</label>
-    <textarea id="comentario" name="comentario" rows="4"></textarea>
+    <label for="comment">Comentario:</label>
+    <textarea id="comment" name="comment" rows="4"></textarea>
     <button type="submit">Enviar</button>
 </form>
+
 <footer>
     <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>
 </footer>

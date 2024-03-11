@@ -11,6 +11,8 @@ import java.nio.file.Paths;
 
 @Service
 @Transactional
+//This class might be used in the future
+//Class which helps to upload images in the web
 public class UploadFileService {
     private final String folder="/img/";
     public String saveImage(MultipartFile image) throws IOException {

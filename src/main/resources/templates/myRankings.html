@@ -10,7 +10,7 @@
 
 <body>
 <header>
-  <h1>Mis Rankings</h1>
+  <h1>Mis Rankings </h1>
 </header>
 
 <section id="my-rankings">
@@ -27,16 +27,20 @@
       <td>
         <form method="post" action="/updateRanking/{{id}}">
           <label>
-            <input type="text" name="comment" placeholder="{{myRankings.comment}}">
+            <input type="text" name="comment" placeholder="{{comment}}" required>
           </label>
           <button type="submit">Editar</button>
         </form>
-        <a href="/deleteRanking/{{id}}">Borrar</a>
+        <form action="/deleteRanking/{{id}}" method="post">
+          <button type="submit" class="btn-enroll">Eliminar</button>
+        </form>
       </td>
     </tr>
     {{/myRankings}}
     </tbody>
   </table>
+  <a href="/profile">Atrás</a>
+
 </section>
 
 <footer>

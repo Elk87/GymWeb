@@ -4,44 +4,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario de Clases para Administrador</title>
+  <title>Añadir Clase</title>
   <link rel="stylesheet" href="/css/estilo.css">
-  <!-- Agrega enlaces a tus archivos de estilo y scripts según sea necesario -->
 </head>
 
 <body>
-
 <header>
-  <a  class="navbar-brand" href="/"> <h1>GYMRAT</h1> </a>
+  <h1>Añadir Clase</h1>
 </header>
 
-<section id="admin-options">
-  <h2>Opciones de Administrador</h2>
-  <!-- Aquí puedes agregar más botones de opciones según sea necesario -->
+<section id="add-lesson">
+  <form action="/admin/add/Lesson" method="post">
+    <div class="form-group">
+      <label for="teacher">Profesor:</label>
+      <!-- Aquí puedes incluir un campo de selección o entrada de texto para el profesor -->
+      <input type="text" id="teacher" name="teacher" placeholder="Nombre del Profesor" required>
+    </div>
+    <div class="form-group">
+      <label for="startTime">Hora de inicio:</label>
+      <input type="time" id="startTime" name="startTime" required>
+    </div>
+    <div class="form-group">
+      <label for="finishTime">Hora de finalización:</label>
+      <input type="time" id="finishTime" name="finishTime" required>
+    </div>
+    <div class="form-group">
+      <label for="sport">Deporte:</label>
+      <input type="text" id="sport" name="sport" placeholder="Nombre del Deporte" required>
+    </div>
+    <div class="form-group">
+      <button type="submit">Añadir Clase</button>
+    </div>
+  </form>
 </section>
 
-<section id="admin-content">
-  <h2>Añadir/Actualizar Clase</h2>
+<footer>
+  <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>
+</footer>
+</body>
 
-  <!-- Formulario para agregar o actualizar clases -->
-  <form id="lesson-form" action="/admin/add/Lesson" method="POST">
-    <!-- Añadir campos del formulario según los atributos de tu clase Lesson -->
-    <label for="deporte">Deporte:</label>
-    <input type="text" id="deporte" name="deporte" required>
-
-    <!-- Seleccionar profesor existente o proporcionar detalles para uno nuevo -->
-    <label for="profesor">Profesor:</label>
-    <!-- ... -->
-    <label for="profesor">Profesor:</label>
-    <select id="profesor" name="profesor" required>
-      {{#professors}}
-      <option value="{{id}}">{{name}}</option>
-      {{/professors}}
-    </select>
-    <!-- ... -->
-
-    <!-- O permitir al usuario introducir detalles para un nuevo profesor -->
-    <!-- <label for="profesorName">Nombre del Profesor:</label>
-    <input type="text" id="profesorName" name="profesorName" required>
-    <label for="profesorDNI">DNI del Profesor:</label>
-    <input type="text" id="profesorDNI" name="profesorDNI" required>
+</html>

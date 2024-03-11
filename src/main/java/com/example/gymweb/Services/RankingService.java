@@ -16,7 +16,8 @@ public class RankingService {
     private final Map<Long, Ranking> rankings = new HashMap<>(); //map where key-long and ranking-value
     private final AtomicLong Id = new AtomicLong();//this attribute is for to generate id
     //create ranking (comments)
-    public RankingService(){
+    public RankingService(UserService userService){
+        this.userService=userService;
         createRanking("Clases variadas y profesores entregados");
         createRanking("Poco disponibilidad de horarios ");
     }
