@@ -16,8 +16,8 @@ import java.io.IOException;
 public class UserController {
     @Autowired
     UserService userService;
-    @Autowired
-    UploadFileService uploadFileService;
+   /* @Autowired
+    UploadFileService uploadFileService;*/
     //show profile of user and classes
     @GetMapping("/profile")
     public String viewProfile(Model model) {
@@ -46,14 +46,15 @@ public class UserController {
         return "redirect:/profile";
     }
     //@PostMapping("/register")
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String addUser(@RequestBody User newUser, @RequestParam("image") MultipartFile image) throws IOException {
-        if(newUser.getId()==0L){//add image to new books
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String addUser(@RequestBody User newUser /* @RequestParam("image") MultipartFile image */) throws IOException {
+        /*if(newUser.getId()==0L){//add image to new books
             String nombreImagen=uploadFileService.saveImage(image);
             newUser.setImage(nombreImagen);
-        }
+        }*/
         userService.addUser(newUser);
-        return "register";
+        return "redirect: profile";
     }
     @GetMapping("/ranking")
     public String viewRanking() {
