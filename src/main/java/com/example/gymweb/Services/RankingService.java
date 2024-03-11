@@ -2,6 +2,8 @@ package com.example.gymweb.Services;
 
 import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.Ranking;
+import com.example.gymweb.Entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -9,12 +11,21 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class RankingService {
+    @Autowired
+    UserService userService;
     private final Map<Long, Ranking> rankings = new HashMap<>(); //map where key-long and ranking-value
     private final AtomicLong Id = new AtomicLong();//this attribute is for to generate id
     //create ranking (comments)
-    public Ranking createRanking(Ranking ranking) {
+    public RankingService(){
+        createRanking("Clases variadas y profesores entregados");
+        createRanking("Poco disponibilidad de horarios ");
+    }
+    public Ranking createRanking(String comment) {
         long id = Id.incrementAndGet();
+        Ranking ranking = new Ranking();
         ranking.setId(id);
+        ranking.setUser(userService.getUser(1));
+        ranking.setComment(comment);
         rankings.put(id, ranking);
         return ranking;
     }
@@ -30,7 +41,16 @@ public class RankingService {
         return rankings.get(id);
     }
 
-
+    public Ranking updateRanking(long id, String comment) {
+        Ranking r;
+        if (!rankings.containsKey(id)) {
+            r = null;
+        }else {
+            r=rankings.get(id);
+            r.setComment(comment);
+            r.setUser(userService.getUser(1));
+        }
+        return r;}
 
 
 }

@@ -6,6 +6,7 @@ import com.example.gymweb.Services.RankingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
@@ -15,34 +16,48 @@ import java.util.Collection;
 public class RankingRest {
     @Autowired
     RankingService rankingService;
-    //this code is to create ranking
-   /* @PostMapping("/")
-    public ResponseEntity<Ranking> createRanking(@RequestBody Ranking ranking) {
-        Ranking createdRanking = rankingService.createRanking(ranking);
-        return new ResponseEntity<>(createdRanking, HttpStatus.CREATED);
+    //create a ranking using a comment, this comment is associated to the existing user
+    @PostMapping("/ranking")
+    public ResponseEntity<Ranking> createRanking(@RequestParam String comment) {
+        Ranking ranking=rankingService.createRanking(comment);
+        return new ResponseEntity<>(ranking, HttpStatus.CREATED);
     }
-    //this delete
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRanking(@PathVariable Long id) {
+    //delete a ranking using his ID
+    @DeleteMapping("/ranking/{id}")
+    public ResponseEntity<?> deleteRanking(@PathVariable long id) {
+        Ranking ranking = rankingService.getRankingById(id);
+        if(ranking==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         rankingService.deleteRanking(id);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(ranking, HttpStatus.OK);
     }
-    //to get a ranking
-    @GetMapping("/{id}")
-    public ResponseEntity<Ranking> getRanking(@PathVariable long id) {
+    //show a ranking using his ID
+    @GetMapping("/ranking/{id}")
+    public ResponseEntity<Ranking> getRankingById(@PathVariable long id) {
        Ranking ranking= rankingService.getRankingById(id);
         if (ranking == null) {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(ranking);
+        return new ResponseEntity<>(ranking, HttpStatus.OK);
     }
     //to get all rankings
-    @GetMapping
+    @GetMapping("/ranking")
     public ResponseEntity<Collection<Ranking>> getAllRankings() {
         Collection<Ranking> rankings = rankingService.getRanking();
         return new ResponseEntity<>(rankings, HttpStatus.OK);
 
-    }*/
+    }
+    //update an existing ranking using his ID
+    @PutMapping("/ranking/{id}")
+    public ResponseEntity<Ranking> updateRanking(@RequestParam String comment, @PathVariable long id, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Ranking ranking=rankingService.updateRanking(id,comment);
+        return new ResponseEntity<>(ranking,HttpStatus.OK);
+    }
+
 }
 
 

@@ -1,6 +1,8 @@
 package com.example.gymweb.Controllers;
+import com.example.gymweb.Entities.Ranking;
 import com.example.gymweb.Entities.User;
 import com.example.gymweb.Entities.Lesson;
+import com.example.gymweb.Services.RankingService;
 import com.example.gymweb.Services.UploadFileService;
 import com.example.gymweb.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +12,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
 
 @Controller
 public class UserController {
     @Autowired
     UserService userService;
-   /* @Autowired
+    @Autowired
+    RankingService rankingService;
+    /* @Autowired
     UploadFileService uploadFileService;*/
-    //show profile of user and classes
+    //show user profile
     @GetMapping("/profile")
     public String viewProfile(Model model) {
         User user = userService.getUser(1);
@@ -26,6 +32,7 @@ public class UserController {
         model.addAttribute("lessons", userService.getLessons(user.getId()));
         return "profile";
     }
+    //check if the login is correct
     @PostMapping("/login/submit")
     public String login(Model model, @RequestParam String email, @RequestParam String password){
         boolean valid= userService.checkLogin(email,password);
@@ -37,16 +44,16 @@ public class UserController {
        return "redirect:/login";
     }
 
-    //user reserves classes
+    //user book a class
     @PostMapping("/bookclass/{id}")
     public String bookLesson(@PathVariable long lessonId) {
         User user = userService.getUser(1);
         Lesson lesson = userService.getLessonById(1,lessonId);
-        userService.bookClass(user.getId(), lesson);
+        userService.bookClass(user.getId(), lesson.getId());
         return "redirect:/profile";
     }
     //@PostMapping("/register")
-
+    //create a new user
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String addUser(@RequestBody User newUser /* @RequestParam("image") MultipartFile image */) throws IOException {
         /*if(newUser.getId()==0L){//add image to new books
@@ -56,8 +63,56 @@ public class UserController {
         userService.addUser(newUser);
         return "redirect: profile";
     }
-    @GetMapping("/ranking")
-    public String viewRanking() {
-        return "ranking";//this show comments and opinions, but not avaliable for now
+    //show the lessons that the user has booked
+    @GetMapping("/mylessons")
+    public String showMyLessons(Model model){
+        Collection<Lesson> myLessons= userService.getLessons(1);
+        model.addAttribute("myLessons", myLessons);
+        return "mylessons";
+    }
+    //book a class
+    @PostMapping("/bookClass/{id}")
+    public String bookClass(@PathVariable long id){
+        userService.bookClass(1,id);
+        return "redirect: /mylessons";
+    }
+    //delete a lessons from users timetable
+    @PostMapping ("/deleteClass/{id}")
+    public String deleteClass(@PathVariable long id){
+        userService.deleteClass(1,id);
+        return "redirect: /mylessons";
+    }
+    //show all user, only available for the admin
+    @GetMapping("/admin/allUsers")
+    public String showAllUsers(Model model){
+        Collection<User> users = userService.showAllUsers();
+        return "adminUsers";
+    }
+    //show all the rankings that the user has done
+    @GetMapping("/myrankings")
+    public String showMyRankings(Model model){
+        Collection<Ranking> rankings = rankingService.getRanking();
+        model.addAttribute("myRankings", rankings);
+        return "myRankings";
+    }
+    //create a ranking associated to the existing user
+    @PostMapping("/createRanking")
+    public String createRanking(@RequestParam String comment){
+        rankingService.createRanking(comment);
+        return "redirect: /ranking";
+    }
+    //update a ranking done by the user
+    @PostMapping("/updateRanking/{id}")
+    public String updateRanking(@RequestParam String comment, @PathVariable long id){
+        rankingService.updateRanking(id, comment);
+        return "redirect: /ranking";
+
+    }
+    //delete a ranking done by the user
+    @PostMapping("/deleteRanking/{id}")
+    public String deleteRanking( @PathVariable long id){
+        rankingService.deleteRanking(id);
+        return "redirect: /ranking";
+
     }
 }

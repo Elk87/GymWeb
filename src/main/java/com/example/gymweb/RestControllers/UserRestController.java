@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserRestController {
     @Autowired
     UserService userService;
-    //this code es for user
-    //first is login (user)
+    //code for login into an existing account
     @GetMapping("/login")
     public ResponseEntity<User> login(@RequestParam String email, @RequestParam String password){
         if(userService.checkLogin(email,password)){
@@ -26,7 +25,7 @@ public class UserRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    //this code is to change profile of user
+    //update users information
     @PutMapping("/changeprofile/{id}/")
     public ResponseEntity<User> updateProfile(@PathVariable long id,@RequestBody User newUser){
         User oldUser= userService.getUser(id);
@@ -38,13 +37,13 @@ public class UserRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    //also, this is for to register of user (create user)
+    // creating a user
     @PostMapping("/register")
     public ResponseEntity<User> newUser(@RequestBody User user){
         userService.addUser(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
-    //this delete an user
+    //delete an user using his ID
     @DeleteMapping("/deleteuser/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable long id) {
         User user = userService.removeUser(id);
@@ -54,7 +53,7 @@ public class UserRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    //this code is for to show users
+    //show users based on their ID
     @GetMapping("/users/{id}")
     public ResponseEntity<User> showUser(@PathVariable long id) {
         User user = userService.getUser(id);

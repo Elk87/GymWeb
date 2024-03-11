@@ -18,7 +18,18 @@ public class WebController {
     public String showRegister(){
         return "register";
     }
-
+    @GetMapping("/training")
+    public String showTrainnig(Model model){
+        return "training";
+    }
+    @GetMapping("/admin/add")
+    public String addLesson(){
+        return "editLessons";
+    }
+    @GetMapping("/ranking")
+    public String viewRanking() {
+        return "ranking";//this show comments and opinions
+    }
 
 
 }

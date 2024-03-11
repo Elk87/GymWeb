@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Rankings</title>
+  <link rel="stylesheet" href="/css/estilo.css">
+</head>
+
+<body>
+<header>
+  <h1>Mis Rankings</h1>
+</header>
+
+<section id="my-rankings">
+  <h2>Tus Rankings</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Commentario</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#myRankings}}
+    <tr>
+      <td>
+        <form method="post" action="/updateRanking/{{id}}">
+          <label>
+            <input type="text" name="comment" placeholder="{{myRankings.comment}}">
+          </label>
+          <button type="submit">Editar</button>
+        </form>
+        <a href="/deleteRanking/{{id}}">Borrar</a>
+      </td>
+    </tr>
+    {{/myRankings}}
+    </tbody>
+  </table>
+</section>
+
+<footer>
+  <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>
+</footer>
+</body>
+
+</html>

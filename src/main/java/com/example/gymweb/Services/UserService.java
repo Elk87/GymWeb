@@ -12,6 +12,8 @@ import java.util.concurrent.atomic.AtomicLong;
 public class UserService {
     @Autowired
     UploadFileService uploadFileService;
+    @Autowired
+    LessonsService lessonsService;
     private final AtomicLong Id= new AtomicLong();
     private Map<Long, User> idUsers= new HashMap<>();//map of id and user
     private Map<String, Long> idEmail= new HashMap<>(); //map of email and id
@@ -28,6 +30,10 @@ public class UserService {
         idUsers.put(id,user);
         user.setId(id);
         idEmail.put(user.getEmail(),id);
+    }
+    public Collection<User> showAllUsers(){
+        Collection<User> users = idUsers.values();
+        return users;
     }
 
     private String getPassword(long id){
@@ -55,8 +61,8 @@ public class UserService {
         return idUsers.remove(id);
 
     }
-    public void deleteClass(long id, Lesson lesson){
-        idUsers.get(id).deleteLessons(lesson);
+    public void deleteClass(long idUser, long idLesson){
+        idUsers.get(idUser).deleteLessons(lessonsService.getLessonById(idLesson));
     }
     public Collection<Lesson> getLessons(long id){
         return idUsers.get(id).getLessons();
@@ -71,10 +77,10 @@ public class UserService {
         }
         return lesson;
     }
-    public void bookClass(long userId, Lesson lesson) {
+    public void bookClass(long userId, long idLesson) {
         User user = idUsers.get(userId);
         if (user != null) {
-            user.addLessons(lesson);
+            user.addLessons(lessonsService.getLessonById(idLesson));
         } else {
             System.err.println("Usuario no encontrado");
         }

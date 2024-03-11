@@ -54,7 +54,7 @@ public class User {
         this.lessons=new ArrayList<>();
     }
 
-    //this method is for the user to add classes
+    //this method is for the user to book classes
     public void addLessons(Lesson lesson){
         this.lessons.add(lesson);
     }

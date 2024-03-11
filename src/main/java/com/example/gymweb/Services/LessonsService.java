@@ -39,7 +39,7 @@ public class LessonsService {
     public Lesson deleteLessonById(long id){
         return idLesson.remove(id);
     }
-    public Lesson updateBook(long id, Lesson lesson) {
+    public void updateBook(long id, Lesson lesson) {
         Lesson l;
         if (!idLesson.containsKey(id)) {
             l = null;
@@ -50,7 +50,7 @@ public class LessonsService {
                 l.setStartTime(lesson.getStartTime());
                 l.setFinishTime(lesson.getFinishTime());
         }
-        return l;}
+    }
 
 
 

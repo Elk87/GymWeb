@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-//this code is for classes
 @Controller
 public class LessonsController {
     @Autowired
     LessonsService lessonsService;
+    //Show all existing lessons
     @GetMapping("/lessons")
     public String showLessons(Model model){
         Collection<Lesson> lessons = lessonsService.getLessons();
@@ -24,10 +24,7 @@ public class LessonsController {
         }
         return "lessons";
     }
-    @GetMapping("/training")
-    public String showTrainnig(Model model){
-        return "training";
-    }
+    //Show all lessons to de admin page
     @GetMapping("/admin")
     public String showLessonsAdmin(Model model){
         Collection<Lesson> lessons = lessonsService.getLessons();
@@ -38,6 +35,7 @@ public class LessonsController {
         }
         return "admin";
     }
+    //Show an exiting lesson using his ID
     @GetMapping("/lessons/{id}")
     public String showLessons(Model model, @PathVariable long id){
        Lesson lesson = lessonsService.getLessonById(id);
@@ -48,11 +46,7 @@ public class LessonsController {
         }
         return "lessons";
     }
-    @GetMapping("/admin/add")
-    public String add(){
-        return "editLessons";
-    }
-    //admin can add classes
+    //admin can add lessons
     @GetMapping("/admin/add/Lesson")
     public String addLesson(Model model,@RequestBody Lesson lesson){
         lessonsService.addLesson(lesson);
@@ -64,7 +58,7 @@ public class LessonsController {
         }
         return "admin";
     }
-    //admin can delete some classes
+    //admin can delete some classes their ID
     @RequestMapping(value = "/admin/deleteLesson/{id}", method = RequestMethod.POST)
     public String deleteLesson(Model model, @PathVariable long id){
         lessonsService.deleteLessonById(id);
@@ -76,6 +70,7 @@ public class LessonsController {
         }
         return "admin";
     }
+    //update an exiting lesson
 
     @PostMapping("/updateLesson/{id}")
     public String updateLesson(Model model, @RequestBody Lesson lesson, @PathVariable long id){
