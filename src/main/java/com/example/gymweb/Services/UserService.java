@@ -30,7 +30,6 @@ public class UserService {
         idEmail.put(user.getEmail(),id);
     }
 
-
     private String getPassword(long id){
         return idUsers.get(id).getPassword();
     }
@@ -72,7 +71,6 @@ public class UserService {
         }
         return lesson;
     }
-
     public void bookClass(long userId, Lesson lesson) {
         User user = idUsers.get(userId);
         if (user != null) {
@@ -85,6 +83,5 @@ public class UserService {
     public void updateUser(long id, User newUser) {
         idUsers.put(id,newUser);//overwrite old user
         idEmail.put(newUser.getEmail(),id); //overwrite old register
-        //hay que mirarlo bien los mapas por si estamos reptiiendo algo
     }
 }

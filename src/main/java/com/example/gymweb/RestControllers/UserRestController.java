@@ -26,7 +26,7 @@ public class UserRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    //this code is change profile of user
+    //this code is to change profile of user
     @PutMapping("/changeprofile/{id}/")
     public ResponseEntity<User> updateProfile(@PathVariable long id,@RequestBody User newUser){
         User oldUser= userService.getUser(id);
@@ -38,7 +38,7 @@ public class UserRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    //also, this is for register of user
+    //also, this is for to register of user (create user)
     @PostMapping("/register")
     public ResponseEntity<User> newUser(@RequestBody User user){
         userService.addUser(user);
@@ -51,6 +51,16 @@ public class UserRestController {
         if(user != null){
             return new ResponseEntity<>(user,HttpStatus.OK);
         }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    //this code is for to show users
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> showUser(@PathVariable long id) {
+        User user = userService.getUser(id);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

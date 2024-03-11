@@ -3,7 +3,6 @@ package com.example.gymweb.Services;
 import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.User;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.HashMap;
@@ -25,10 +24,11 @@ public class LessonsService {
         addLesson(new Lesson(teacher1, Id.incrementAndGet(), LocalTime.of(16, 0), LocalTime.of(17, 30), "Pilates"));
         addLesson(new Lesson(teacher2, Id.incrementAndGet(), LocalTime.of(18, 0), LocalTime.of(19, 30), "Zumba"));
     }
-    public void addLesson(Lesson lesson){
+    public Lesson addLesson(Lesson lesson){
         long id = Id.incrementAndGet();
         lesson.setId(id);
         idLesson.put(id,lesson);
+        return lesson;
     }
     public Collection<Lesson> getLessons(){
         return idLesson.values();
