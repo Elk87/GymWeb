@@ -27,3 +27,6 @@ h3 {
 .btn-enroll:hover {
     background-color: #45a049;
 }
+.centered-link {
+    text-align: center;
+}
