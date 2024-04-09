@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valoraciones</title>
     <link rel="stylesheet" href="/css/ranking.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.snow.css">
 </head>
 
 <header>
@@ -21,7 +21,6 @@
         background-attachment: fixed;
         margin: 0;
     }
-
 </style>
 <h2>Deja tu opinión</h2>
 <form action="/createRanking" method="post">
@@ -33,13 +32,20 @@
         <option value="4">4 estrellas</option>
         <option value="5">5 estrellas</option>
     </select>
-    <label for="comment">Comentario:</label>
-    <textarea id="comment" name="comment" rows="4"></textarea>
+    <label for="comentario">Comentario:</label>
+    <div id="comentario"></div>
     <button type="submit">Enviar</button>
 </form>
+
 
 <footer>
     <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>
 </footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.min.js"></script>
+<script>
+    var editor = new Quill('#comentario', {
+        theme: 'snow' // Puedes elegir otro tema de la documentación de Quill.js
+    });
+</script>
 </body>
 </html>
