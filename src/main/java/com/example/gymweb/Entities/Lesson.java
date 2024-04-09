@@ -5,19 +5,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 @Getter
 @Setter
-//@Entity
+@Entity
 @NoArgsConstructor
 public class Lesson {
-   // @ManyToOne
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
     private User teacher;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @NotNull
     private LocalTime startTime;
+
+    @NotNull
     private LocalTime finishTime;
+
+    @NotNull
     private String sport;
 
 //constructor

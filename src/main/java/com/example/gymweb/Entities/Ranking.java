@@ -4,18 +4,23 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
+
 @NoArgsConstructor
 @Getter
 @Setter
-//@Entity
+@Entity
 public class Ranking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @NotNull
     private String comment;
-    //@ManyToOne
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
-    //constructor
 
     public Ranking(long id, String comment, User user) {
         this.id = id;

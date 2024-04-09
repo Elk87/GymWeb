@@ -1,35 +1,50 @@
 package com.example.gymweb.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
 @Getter
 @Setter
-//@Entity
+@Entity
 public class User {
+    @NotNull
     private String name;
+    @NotNull
     private String password;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id=-1;
+    @NotNull
     private String DNI;
+    @NotNull
     private String email;
+    @NotNull
     private int phoneNumber;
+    @NotNull
     private int age;
+    @Nullable
     private String image;
-   // private String Role;
-    //@OneToMany
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private UserRole role = UserRole.REGISTERED_USER;
+    @Nullable
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ranking> comments;
-    //@ManyToMany
+    @Nullable
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "user_lessons",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "lesson_id")
+    )
     private List<Lesson> lessons;
     //constructor
     public User(String name, String password, String DNI, String email, int phoneNumber, int age) {
@@ -40,7 +55,6 @@ public class User {
         this.age=age;
         this.phoneNumber=phoneNumber;
         this.comments=new ArrayList<>();
-       // this.Role="Admin";
         this.lessons=new ArrayList<>();
     }
     public User(String name, String password, String DNI, String email, int phoneNumber, int age, String image) {
@@ -52,7 +66,6 @@ public class User {
         this.phoneNumber=phoneNumber;
         this.image=image;
         this.comments=new ArrayList<>();
-        // this.Role="Admin";
         this.lessons=new ArrayList<>();
     }
     public User(String name) {
@@ -77,7 +90,7 @@ public class User {
         this.comments.add(ranking);
     }
     public void deleteRanking(Ranking ranking){
-        this.comments.add(ranking);
+        this.comments.remove(ranking);
     }
     public List<Ranking> showRanking(){
         return comments;
