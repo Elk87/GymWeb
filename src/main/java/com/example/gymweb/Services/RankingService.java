@@ -1,8 +1,6 @@
 package com.example.gymweb.Services;
 
-import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.Ranking;
-import com.example.gymweb.Entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

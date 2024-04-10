@@ -1,6 +1,6 @@
 package com.example.gymweb.RestControllers;
 import com.example.gymweb.Entities.Lesson;
-import com.example.gymweb.Managers.LessonsService;
+import com.example.gymweb.Services.LessonsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

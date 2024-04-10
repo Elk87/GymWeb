@@ -1,4 +1,4 @@
-package com.example.gymweb.Managers;
+package com.example.gymweb.Services;
 
 import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.User;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserManager {
+public class UserService {
     @Autowired
     UploadFileService uploadFileService;
     @Autowired
@@ -25,7 +25,7 @@ public class UserManager {
     private Map<String, Long> idEmail= new HashMap<>(); //map of email and id*/
 
     //adding an user
-    public UserManager(){
+    public UserService(){
         User user = new User("Admin", "password", "09864527F", "admin@email.com",666777888,20, "/img/fotoPerfil.jpg");
         addUser(user);
     }
