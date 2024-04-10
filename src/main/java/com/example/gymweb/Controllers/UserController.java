@@ -2,6 +2,7 @@ package com.example.gymweb.Controllers;
 import com.example.gymweb.Entities.Ranking;
 import com.example.gymweb.Entities.User;
 import com.example.gymweb.Entities.Lesson;
+import com.example.gymweb.Repositories.UserRepository;
 import com.example.gymweb.Services.RankingService;
 import com.example.gymweb.Services.UploadFileService;
 import com.example.gymweb.Services.UserService;
@@ -19,6 +20,8 @@ import java.util.List;
 @Controller
 public class UserController {
     @Autowired
+    UserRepository userRepository;
+    @Autowired
     UserService userService;
     @Autowired
     RankingService rankingService;
@@ -29,7 +32,7 @@ public class UserController {
     public String viewProfile(Model model) {
         User user = userService.getUser(1);
         model.addAttribute("user", user);
-        model.addAttribute("lessons", userService.getLessons(user.getId()));
+        //model.addAttribute("lessons", userService.getLessons(user.getId()));
         return "profile";
     }
     //check if the login is correct
@@ -85,7 +88,8 @@ public class UserController {
     //show all user, only available for the admin
     @GetMapping("/admin/allUsers")
     public String showAllUsers(Model model){
-        Collection<User> users = userService.showAllUsers();
+       // Collection<User> users = userService.showAllUsers();
+        Collection<User> users = userService.getAllUsers();
         model.addAttribute("Users", users);
         return "adminUsers";
     }
