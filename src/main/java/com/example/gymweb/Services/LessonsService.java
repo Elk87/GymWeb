@@ -20,15 +20,8 @@ public class LessonsService {
     //private Map<Long, Lesson> idLesson = new HashMap<>() ;
     private AtomicLong Id =new AtomicLong();//ver esto porque la bbdd genera id automatico
     //examples of classes and teacher
-    public LessonsService() {
-        User teacher1 = new User("Enrique", "password1", "XXXX1", "profesor1@email.com", 0, 30);
-        User teacher2 = new User("Erika", "password2", "XXXX2", "profesor2@email.com", 0, 35);
-        User teacher3 = new User("Joan", "password3", "XXXX3", "profesor3@email.com", 0, 40);
-        addLesson(new Lesson(teacher1, Id.incrementAndGet(), LocalTime.of(9, 0), LocalTime.of(10, 30), "Yoga"));
-        addLesson(new Lesson(teacher2, Id.incrementAndGet(), LocalTime.of(11, 0), LocalTime.of(12, 30), "Spinning"));
-        addLesson(new Lesson(teacher3, Id.incrementAndGet(), LocalTime.of(14, 0), LocalTime.of(15, 30), "CrossFit"));
-        addLesson(new Lesson(teacher1, Id.incrementAndGet(), LocalTime.of(16, 0), LocalTime.of(17, 30), "Pilates"));
-        addLesson(new Lesson(teacher2, Id.incrementAndGet(), LocalTime.of(18, 0), LocalTime.of(19, 30), "Zumba"));
+   public LessonsService(LessonsRepository lessonRepository) {
+       lessonsRepository=lessonRepository;
     }
     /*public Lesson addLesson(Lesson lesson){
         long id = Id.incrementAndGet();

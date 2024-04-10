@@ -100,7 +100,7 @@ public class UserController {
     //create a ranking associated to the existing user
     @PostMapping("/createRanking")
     public String createRanking(@RequestParam String comment){
-        rankingService.createRanking(comment);
+        rankingService.createRanking(new Ranking(comment));
         return "redirect:/ranking";
     }
     //update a ranking done by the user

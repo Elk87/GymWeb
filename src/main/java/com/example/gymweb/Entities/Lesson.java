@@ -1,5 +1,6 @@
 package com.example.gymweb.Entities;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -18,6 +20,7 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private User teacher;
+    @Nullable
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<User> users;
     @Id
@@ -34,12 +37,19 @@ public class Lesson {
     private String sport;
 
 //constructor
- public Lesson(User teacher, long id, LocalTime startTime, LocalTime finishTime, String sport) {
+ public Lesson(User teacher, LocalTime startTime, LocalTime finishTime, String sport) {
   this.teacher = teacher;
-  this.id = id;
   this.startTime = startTime;
   this.finishTime = finishTime;
   this.sport = sport;
+  this.users=new ArrayList<>();
  }
+    public Lesson(User teacher, LocalTime startTime, LocalTime finishTime, String sport,List<User> users) {
+        this.teacher = teacher;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
+        this.sport = sport;
+        this.users=users;
+    }
 
 }

@@ -17,7 +17,7 @@ public class RankingRest {
     //create a ranking using a comment, this comment is associated to the existing user
     @PostMapping("/ranking")
     public ResponseEntity<Ranking> createRanking(@RequestParam String comment) {
-        Ranking ranking= rankingService.createRanking(comment);
+        Ranking ranking= rankingService.createRanking(new Ranking(comment));
         return new ResponseEntity<>(ranking, HttpStatus.CREATED);
     }
     //delete a ranking using his ID

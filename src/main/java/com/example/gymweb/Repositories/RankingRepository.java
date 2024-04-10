@@ -8,14 +8,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RankingRepository extends JpaRepository<Ranking,Long> {
-    //List<Ranking>findRankingByUser(User user);
-
-    @Transactional
-    int deleteRanking(long id);
-
+    List<Ranking> findRankingByUser(User user);
+   Ranking findRankingById(Long id);
    /* @Transactional
     int deleteAllRankings(User user);*/
 }

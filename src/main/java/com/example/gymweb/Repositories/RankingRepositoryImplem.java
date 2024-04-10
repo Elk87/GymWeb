@@ -22,17 +22,7 @@ public class RankingRepositoryImplem {
         TypedQuery<Ranking> query=entityManager.createQuery("SELECT d FROM Ranking d WHERE d.user=:user",Ranking.class);
         return query.setParameter("user",user).getResultList();
     }
-    @Transactional
-    public int deleteRanking(long id){
-        Query query = entityManager.createQuery
-                ("UPDATE Ranking d SET d.user=user WHERE d.id=:id");
-        return query.setParameter("id",id).executeUpdate();
-    }
 
-    @Transactional
-    public int deleteAllRankings(User user){
-        Query query = entityManager.createQuery
-                ("UPDATE Ranking d SET d.user=null WHERE d.user=:user");
-        return query.setParameter("user",user).executeUpdate();
-    }
+
+
 }

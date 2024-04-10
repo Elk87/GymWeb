@@ -22,10 +22,8 @@ public class Ranking {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Ranking(long id, String comment, User user) {
-        this.id = id;
+    public Ranking( String comment) {
         this.comment = comment;
-        this.user = user;
     }
 }
 

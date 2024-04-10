@@ -25,9 +25,10 @@ public class UserService {
     private Map<String, Long> idEmail= new HashMap<>(); //map of email and id*/
 
     //adding an user
-    public UserService(){
-        User user = new User("Admin", "password", "09864527F", "admin@email.com",666777888,20, "/img/fotoPerfil.jpg");
-        addUser(user);
+    public UserService(LessonsService lessonsService1, UserRepository userRepository1, LessonsRepository lessonsRepository1){
+        this.lessonsRepository=lessonsRepository1;
+        this.lessonsService=lessonsService1;
+        this.userRepository=userRepository1;
     }
 
     //add an user
@@ -206,4 +207,5 @@ public class UserService {
     public List<Lesson> findLessonsByTeacher(User user){
         return lessonsRepository.findLessonByTeacher(user);
     }
+
 }
