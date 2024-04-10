@@ -11,13 +11,13 @@ import java.util.List;
 
 @Repository
 public interface RankingRepository extends JpaRepository<Ranking,Long> {
-    List<Ranking>findRankingByUser(User user);
+    //List<Ranking>findRankingByUser(User user);
 
     @Transactional
     int deleteRanking(long id);
 
-    @Transactional
-    int deleteAllRankings(User user);
+   /* @Transactional
+    int deleteAllRankings(User user);*/
 }
 
 

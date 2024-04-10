@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalTime;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.List;
+//import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
@@ -83,7 +83,5 @@ public class LessonsService {
     /*public List<Lesson> findLessonsBySport(String sport) {
         return lessonsRepository.findLessonBySport(sport);
     }*/
-
-
 
 }
