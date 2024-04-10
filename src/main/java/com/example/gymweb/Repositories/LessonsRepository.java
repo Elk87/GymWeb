@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface LessonsRepository extends JpaRepository<Lesson,Long> {
     List<Lesson>findLessonBySport(String sport);
-    //List<Lesson>findLessonByTeacherAndSport(User teacher, String sport);
+    List<Lesson>findLessonByTeacher(User teacher);
+    List<Lesson> findLessonByUsers(List<User> users);
+
 }

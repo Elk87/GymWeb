@@ -1,4 +1,4 @@
-package com.example.gymweb.Services;
+package com.example.gymweb.Managers;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

@@ -1,12 +1,10 @@
 package com.example.gymweb.RestControllers;
 
-import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.Ranking;
-import com.example.gymweb.Services.RankingService;
+import com.example.gymweb.Managers.RankingManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
@@ -15,27 +13,27 @@ import java.util.Collection;
 @RequestMapping("/api")
 public class RankingRest {
     @Autowired
-    RankingService rankingService;
+    RankingManager rankingManager;
     //create a ranking using a comment, this comment is associated to the existing user
     @PostMapping("/ranking")
     public ResponseEntity<Ranking> createRanking(@RequestParam String comment) {
-        Ranking ranking=rankingService.createRanking(comment);
+        Ranking ranking= rankingManager.createRanking(comment);
         return new ResponseEntity<>(ranking, HttpStatus.CREATED);
     }
     //delete a ranking using his ID
     @DeleteMapping("/ranking/{id}")
     public ResponseEntity<?> deleteRanking(@PathVariable long id) {
-        Ranking ranking = rankingService.getRankingById(id);
+        Ranking ranking = rankingManager.getRankingById(id);
         if(ranking==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        rankingService.deleteRanking(id);
+        rankingManager.deleteRanking(id);
         return new ResponseEntity<>(ranking, HttpStatus.OK);
     }
     //show a ranking using his ID
     @GetMapping("/ranking/{id}")
     public ResponseEntity<Ranking> getRankingById(@PathVariable long id) {
-       Ranking ranking= rankingService.getRankingById(id);
+       Ranking ranking= rankingManager.getRankingById(id);
         if (ranking == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -44,14 +42,14 @@ public class RankingRest {
     //to get all rankings
     @GetMapping("/ranking")
     public ResponseEntity<Collection<Ranking>> getAllRankings() {
-        Collection<Ranking> rankings = rankingService.getRanking();
+        Collection<Ranking> rankings = rankingManager.getRanking();
         return new ResponseEntity<>(rankings, HttpStatus.OK);
 
     }
     //update an existing ranking using his ID
     @PutMapping("/ranking/{id}")
     public ResponseEntity<Ranking> updateRanking(@RequestParam String comment, @PathVariable long id) {
-        Ranking ranking=rankingService.updateRanking(id,comment);
+        Ranking ranking= rankingManager.updateRanking(id,comment);
         return new ResponseEntity<>(ranking,HttpStatus.OK);
     }
 

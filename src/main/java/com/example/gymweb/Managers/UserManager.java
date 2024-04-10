@@ -1,4 +1,4 @@
-package com.example.gymweb.Services;
+package com.example.gymweb.Managers;
 
 import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.User;
@@ -8,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
+
 @Service
-public class UserService {
+public class UserManager {
     @Autowired
     UploadFileService uploadFileService;
     @Autowired
@@ -26,7 +25,7 @@ public class UserService {
     private Map<String, Long> idEmail= new HashMap<>(); //map of email and id*/
 
     //adding an user
-    public UserService(){
+    public UserManager(){
         User user = new User("Admin", "password", "09864527F", "admin@email.com",666777888,20, "/img/fotoPerfil.jpg");
         addUser(user);
     }
@@ -71,10 +70,26 @@ public class UserService {
     /*private String getPassword(long id){
         return idUsers.get(id).getPassword();
     }*/
-    private String getPassword(long id){
-        return userRepository.findById(id).get().getPassword();
+    public String getPassword(long id){
+        Optional<User> op= userRepository.findById(id);
+        if(op.isPresent()){
+            User user=op.get();
+            return user.getPassword();
+        }
+        else{
+            return null;
+        }
     }
-
+    public User removeUser(long id){
+        Optional<User> op= userRepository.findById(id);
+        if(op.isPresent()){
+            User user=op.get();
+            userRepository.deleteById(id);
+            return user;
+        }else{
+            return null;
+        }
+    }
    /* public User getUser(long id){
         return idUsers.get(id);
     }*/
@@ -170,15 +185,25 @@ public class UserService {
        }
    }
 
-   /* public void updateUser(long id, User newUser) {
-        idUsers.put(id,newUser);//overwrite old user
-        idEmail.put(newUser.getEmail(),id); //overwrite old register
-    }*/
-   public void updateUser(long userId, User newUser) {
-       userRepository.findById(userId).ifPresent(existingUser -> {
-           existingUser.setName(newUser.getName());
-           existingUser.setEmail(newUser.getEmail());
-           userRepository.save(existingUser);
-       });
+   public User updateUser(long id, User newUser) {
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()){
+            User u = user.get();
+            u.setEmail(newUser.getEmail());
+            u.setName(newUser.getName());
+            u.setPassword(newUser.getPassword());
+            u.setPhoneNumber(newUser.getPhoneNumber());
+            userRepository.save(u);
+            return u;
+        }else {
+            return null;
+        }
    }
+    public List<Lesson> findLessonsByUser(List<User> user){
+        return lessonsRepository.findLessonByUsers(user);
+    }
+
+    public List<Lesson> findLessonsByTeacher(User user){
+        return lessonsRepository.findLessonByTeacher(user);
+    }
 }

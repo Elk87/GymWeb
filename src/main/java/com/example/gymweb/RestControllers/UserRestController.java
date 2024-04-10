@@ -1,7 +1,6 @@
 package com.example.gymweb.RestControllers;
 
-import com.example.gymweb.Repositories.UserRepository;
-import com.example.gymweb.Services.UserService;
+import com.example.gymweb.Managers.UserManager;
 import com.example.gymweb.Entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 
 public class UserRestController {
     @Autowired
-    UserService userService;
+    UserManager userManager;
 
 
     //code for login into an existing account
     @GetMapping("/login")
     public ResponseEntity<User> login(@RequestParam String email, @RequestParam String password){
-        if(userService.checkLogin(email,password)){
-            return new ResponseEntity<>(userService.getUser(email),HttpStatus.OK);
+        if(userManager.checkLogin(email,password)){
+            return new ResponseEntity<>(userManager.getUser(email),HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -31,11 +30,11 @@ public class UserRestController {
     //update users information
     @PutMapping("/changeprofile/{id}")
     public ResponseEntity<User> updateProfile(@PathVariable long id,@RequestBody User newUser){
-        User oldUser= userService.getUser(id);
+        User oldUser= userManager.getUser(id);
         if (oldUser!= null) {
             newUser.setId(id);
-            userService.updateUser(id,newUser);
-            return new ResponseEntity<>(newUser, HttpStatus.OK);
+            User user= userManager.updateUser(id,newUser);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -43,16 +42,16 @@ public class UserRestController {
     // creating a user
     @PostMapping("/register")
     public ResponseEntity<User> newUser(@RequestBody User user){
-        userService.addUser(user);
+        userManager.addUser(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
     //delete an user using his ID
     @DeleteMapping("/deleteuser/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable long id) {
-        if(userService.getUser(id).getId()==-1){
+        if(userManager.getUser(id).getId()==-1){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else{
-            userService.removeUser(id);
+            userManager.removeUser(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         //userService.removeUser(id);
@@ -66,7 +65,7 @@ public class UserRestController {
     //show users based on their ID
     @GetMapping("/users/{id}")
     public ResponseEntity<User> showUser(@PathVariable long id) {
-        User user = userService.getUser(id);
+        User user = userManager.getUser(id);
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else {

@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -16,7 +18,8 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private User teacher;
-
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<User> users;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

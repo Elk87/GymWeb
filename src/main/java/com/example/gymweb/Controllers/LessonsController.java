@@ -2,7 +2,7 @@ package com.example.gymweb.Controllers;
 
 import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.User;
-import com.example.gymweb.Services.LessonsService;
+import com.example.gymweb.Managers.LessonsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

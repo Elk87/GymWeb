@@ -21,9 +21,14 @@ public class LessonsRepositoryImplem {
                 ("SELECT d FROM Lesson d WHERE d.sport=:sport",Lesson.class);
         return query.setParameter("sport",sport).getResultList();
     }
-    public List<Lesson>findLessonByTeacherAndSport(User teacher, String sport){
+    public List<Lesson>findLessonByTeacher(User teacher, String sport){
         TypedQuery<Lesson> query= entityManager.createQuery
-                ("SELECT d FROM Lesson d WHERE d.teacher=:teacher AND d.sport=:sport",Lesson.class);
-        return query.setParameter("teacher",teacher).setParameter("sport",sport).getResultList();
+                ("SELECT d FROM Lesson d WHERE d.teacher=:teacher",Lesson.class);
+        return query.setParameter("teacher",teacher).getResultList();
+    }
+    public List<Lesson>findLessonByUsers(List<User> user){
+        TypedQuery<Lesson> query= entityManager.createQuery
+                ("SELECT d FROM Lesson d WHERE d.users=:user",Lesson.class);
+        return query.setParameter("user",user).getResultList();
     }
 }

@@ -1,13 +1,12 @@
 package com.example.gymweb.RestControllers;
 import com.example.gymweb.Entities.Lesson;
-import com.example.gymweb.Services.LessonsService;
+import com.example.gymweb.Managers.LessonsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
