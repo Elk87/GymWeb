@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/profile.css">
 </head>
 <header>
-    <a  class="navbar-brand" href="/"> <h1>GYMRAT</h1> </a>
+    <a class="navbar-brand" href="/"> <h1>GYMRAT</h1> </a>
     <nav>
         <form action="/myrankings" method="get">
             <button type="submit" class="box">Mis rankings</button>
@@ -33,7 +33,7 @@
     <h1 class="title">
         <i class="fa-regular fa-user"></i>Mi Perfil</h1>
     {{#user}}
-    <form action="" class="grid-form">
+    <form action="/updateProfileImage" method="post" class="grid-form" enctype="multipart/form-data">
         <div class="form-group">
             <label for="nombre">Nombre:</label>
             <input placeholder="{{user.name}}" type="text" id="nombre" readonly>
@@ -54,21 +54,17 @@
             <label for="telefono">Teléfono:</label>
             <input placeholder="{{user.phoneNumber}}" type="text" id="telefono" readonly>
         </div>
-        <img src={{user.image}} alt="Imagen de perfil" width="200">
-        <!-- <div class="form-group">
-             <label for="image" class="form-label">Image</label>
-             <input type="file" class="form-control" id="image" name="image" required>
-         </div>
-
-         <div class="form-group">
-             <button href="" id="button">Guardar cambios</button>
-         </div>-->
+        <div class="form-group">
+            <label for="image">Imagen de perfil:</label>
+            <input type="file" id="image" name="image">
+        </div>
+        <button type="submit">Guardar cambios</button>
     </form>
     {{/user}}
-
 </main>
 <footer>
     <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>
 </footer>
 </body>
 </html>
+

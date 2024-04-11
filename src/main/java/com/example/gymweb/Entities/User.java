@@ -68,6 +68,16 @@ public class User {
         this.comments=new ArrayList<>();
         this.lessons=new ArrayList<>();
     }
+
+    @Nullable
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(@Nullable String image) {
+        this.image = image;
+    }
+
     public User(String name) {
         this.name = name;
     }
