@@ -88,14 +88,13 @@ public class LessonsRest {
     @PostMapping("/uploadFile/{lessonId}")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable Long lessonId, RedirectAttributes redirectAttributes) {
 
-        // Obtén el nombre original del archivo
+        //original name of archive
         String originalFilename = file.getOriginalFilename();
 
-        // Define la ruta donde quieres guardar el archivo
+
         String storageDirectory = "src/files";
         String filePath = storageDirectory + "/" + originalFilename;
 
-        // Guarda el archivo en el disco
         try {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(filePath);
@@ -105,7 +104,6 @@ public class LessonsRest {
             return "redirect:/uploadStatus";
         }
 
-        // Guarda la ruta del archivo en la base de datos
         Lesson lesson = lessonsService.getLessonById(lessonId);
         if (lesson != null) {
             lesson.setFilePath(filePath);

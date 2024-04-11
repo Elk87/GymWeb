@@ -139,7 +139,7 @@ public class UserService {
             user.deleteLessons(lesson);
             userRepository.save(user);
         } else {
-            System.err.println("Usuario o clase no encontrados");
+            System.err.println("user or class not found");
         }
     }
     /*public Collection<Lesson> getLessons(long id){
@@ -150,7 +150,7 @@ public class UserService {
         if (user != null) {
             return user.getLessons();
         } else {
-            System.err.println("Usuario no encontrado");
+            System.err.println("user not found");
             return Collections.emptyList();
         }
     }
@@ -180,7 +180,7 @@ public class UserService {
         if (user != null) {
             user.addLessons(lessonsService.getLessonById(idLesson));
         } else {
-            System.err.println("Usuario no encontrado");
+            System.err.println("user not found");
         }
     }*/
    public void bookClass(long userId, long lessonId) {
@@ -190,7 +190,7 @@ public class UserService {
            user.addLessons(lesson);
            userRepository.save(user);
        } else {
-           System.err.println("Usuario o clase no encontrados");
+           System.err.println("user or class not found");
        }
    }
     public User findByID(long id){

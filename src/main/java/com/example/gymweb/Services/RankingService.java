@@ -66,9 +66,9 @@ public class RankingService {
             String cleanComment = Secure.deleteDangerous(comment);
             Ranking rankingToUpdate = optionalRanking.get();
             rankingToUpdate.setComment(cleanComment);
-            rankingRepository.save(rankingToUpdate); // Update ranking in database
+            rankingRepository.save(rankingToUpdate); // update in database
             return rankingToUpdate;
         } else {
-            return null; // Ranking not found
+            return null;
         }
 }}
