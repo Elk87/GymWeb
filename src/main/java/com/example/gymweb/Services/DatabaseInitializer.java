@@ -11,6 +11,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +41,6 @@ public class DatabaseInitializer implements CommandLineRunner {
         admin.setRole(UserRole.ADMIN);
         User user1 = new User("John", "userPass", "12345678B", "john@example.com", 987654321, 25);
         User user2 = new User("Jane","userPass", "12345678C", "jane@example.com", 987654322, 28);
-
         // Guardar usuarios
         Ranking ranking1 = new Ranking("Good lesson!");
         Ranking ranking2 = new Ranking("Awesome class!");

@@ -48,11 +48,11 @@ public class LessonsRest {
     }
     //update an existing lesson giving his ID
     @PutMapping("/lesson/{id}")
-    public ResponseEntity<Lesson> updateLesson(@RequestBody Lesson lesson,@PathVariable long id, BindingResult bindingResult){
+    public ResponseEntity<Lesson> updateLesson(@RequestBody Lesson lesson, @RequestParam String teacher,@PathVariable long id, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        lessonsService.updateLesson(id,lesson);
+        lessonsService.updateLesson(id,lesson, teacher);
         return new ResponseEntity<>(lesson,HttpStatus.OK);
     }
 

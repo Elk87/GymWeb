@@ -93,9 +93,9 @@ public class LessonsController {
     //update an exiting lesson
 
     @PostMapping("/updateLesson/{id}")
-    public String updateLesson(Model model, @ModelAttribute Lesson lesson, @PathVariable String id){
+    public String updateLesson(Model model, @ModelAttribute Lesson lesson, @RequestParam String teacher, @PathVariable String id){
         long lessonId = Long.parseLong(id);
-        lessonsService.updateLesson(lessonId, lesson);
+        lessonsService.updateLesson(lessonId, lesson, teacher);
         Collection<Lesson> lessons = lessonsService.getLessons();
         if(lessons.isEmpty()){
             model.addAttribute("noLessons", "There are no lessons available");

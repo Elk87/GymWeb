@@ -10,7 +10,12 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,11 +39,9 @@ public class User {
     private int phoneNumber;
     @NotNull
     private int age;
-    @Transient
-    private MultipartFile imageFile;
-
     @Lob
-    private byte[] image;
+    private Blob imageFile;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.REGISTERED_USER;
@@ -62,20 +65,18 @@ public class User {
         this.email=email;
         this.age=age;
         this.phoneNumber=phoneNumber;
+        try (InputStream inputStream = getClass().getClassLoader()
+                .getResourceAsStream("static/img/perfilgenerico.jpg")) {
+            byte[] imageData = inputStream.readAllBytes();
+            SerialBlob imageBlob = new SerialBlob(imageData);
+            this.setImageFile(imageBlob);
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
         this.comments=new ArrayList<>();
         this.lessons=new ArrayList<>();
     }
-    public User(String name, String password, String DNI, String email, int phoneNumber, int age, byte[] image) {
-        this.name = name;
-        this.password=password;
-        this.DNI=DNI;
-        this.email=email;
-        this.age=age;
-        this.phoneNumber=phoneNumber;
-        this.image = image;
-        this.comments=new ArrayList<>();
-        this.lessons=new ArrayList<>();
-    }
+
     public User(String name) {
         this.name = name;
     }

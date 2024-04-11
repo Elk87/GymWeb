@@ -3,19 +3,19 @@ package com.example.gymweb.Services;
 import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.User;
 import com.example.gymweb.Repositories.LessonsRepository;
+import com.example.gymweb.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalTime;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class LessonsService {
     @Autowired
     private LessonsRepository lessonsRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     //private Map<Long, Lesson> idLesson = new HashMap<>() ;
     private AtomicLong Id =new AtomicLong();//ver esto porque la bbdd genera id automatico
@@ -66,8 +66,14 @@ public class LessonsService {
                 l.setFinishTime(lesson.getFinishTime());
         }
     }*/
-    public void updateLesson(long id, Lesson lesson) {
-        lessonsRepository.findById(id).ifPresent(existingLesson -> lessonsRepository.save(lesson));
+    public void updateLesson(long id, Lesson lesson, String teacher) {
+        Optional<User> u= userRepository.findByName(teacher);
+        if (u.isPresent()){
+            User user = u.get();
+            lesson.setTeacher(user);
+            lessonsRepository.findById(id).ifPresent(existingLesson -> lessonsRepository.save(lesson));
+        }
+
     }
     /*public List<Lesson> findLessonsBySport(String sport) {
         return lessonsRepository.findLessonBySport(sport);

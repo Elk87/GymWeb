@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Base64;
 import java.util.Collection;
 
 
@@ -26,9 +29,11 @@ public class UserController {
     UploadFileService uploadFileService;*/
     //show user profile
     @GetMapping("/profile")
-    public String viewProfile(Model model) {
+    public String viewProfile(Model model) throws SQLException {
         User user = userService.getUser(1);
         model.addAttribute("user", user);
+        model.addAttribute("image", "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(userService.getUser(1)
+                .getImageFile().getBytes(1, (int) userService.getUser(1).getImageFile().length())));
         //model.addAttribute("lessons", userService.getLessons(user.getId()));
         return "profile";
     }
@@ -82,6 +87,12 @@ public class UserController {
         userService.deleteClass(1,id);
         return "redirect:/mylessons";
     }
+    @PostMapping("/updateProfile")
+    public String UpdateUser( @RequestParam(value = "fileImage", required = false) MultipartFile fileImage,
+                              @ModelAttribute User u) throws IOException {
+        userService.updateUser(1,u,fileImage);
+        return "redirect:/profile";
+    }
     //show all user, only available for the admin
     @GetMapping("/admin/allUsers")
     public String showAllUsers(Model model){
@@ -104,12 +115,7 @@ public class UserController {
         return "redirect:/ranking";
     }
     //update a ranking done by the user
-    @PostMapping("/updateRanking/{id}")
-    public String updateRanking(@RequestParam String comment, @PathVariable long id){
-        rankingService.updateRanking(id, comment);
-        return "redirect:/myrankings";
 
-    }
     //delete a ranking done by the user
     @PostMapping("/deleteRanking/{id}")
     public String deleteRanking( @PathVariable long id){

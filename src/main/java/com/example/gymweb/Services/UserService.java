@@ -4,13 +4,17 @@ import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.User;
 import com.example.gymweb.Repositories.LessonsRepository;
 import com.example.gymweb.Repositories.UserRepository;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.*;
 
 @Service
@@ -192,7 +196,7 @@ public class UserService {
     public User findByID(long id){
        return userRepository.findUserById(id);
     }
-    public User updateUser(long id, User newUser, MultipartFile multipartFile) throws IOException {
+    public User updateUser(long id, User newUser, MultipartFile fileImage) throws IOException {
         Optional<User> u = userRepository.findById(id);
 
         if (u.isPresent()) {
@@ -200,10 +204,11 @@ public class UserService {
             user.setName(newUser.getName());
             user.setEmail(newUser.getEmail());
             user.setPassword(newUser.getPassword());
-            if (multipartFile != null && !multipartFile.isEmpty()) {
-                user.setImage(multipartFile.getBytes());
+            if(fileImage!=null){
+                if (fileImage.getSize() != 0) {
+                    user.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
+                }
             }
-
             userRepository.save(user);
             return user;
         } else {
