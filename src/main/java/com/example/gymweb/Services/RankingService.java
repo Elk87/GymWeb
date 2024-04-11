@@ -1,4 +1,5 @@
 package com.example.gymweb.Services;
+import com.example.gymweb.Secure.Secure;
 
 import com.example.gymweb.Entities.Ranking;
 import com.example.gymweb.Entities.User;
@@ -28,9 +29,10 @@ public class RankingService {
 
     }
     public Ranking createRanking(User user, String comment) {
+        String cleanComment = Secure.deleteDangerous(comment);
         Ranking ranking = new Ranking();
         ranking.setUser(user);
-        ranking.setComment(comment);
+        ranking.setComment(cleanComment);
         rankingRepository.save(ranking);
         return ranking;
     }
@@ -52,8 +54,9 @@ public class RankingService {
     public Ranking updateRanking(long id, String comment) {
         Optional<Ranking> optionalRanking = rankingRepository.findById(id);
         if (optionalRanking.isPresent()) {
+            String cleanComment = Secure.deleteDangerous(comment);
             Ranking rankingToUpdate = optionalRanking.get();
-            rankingToUpdate.setComment(comment);
+            rankingToUpdate.setComment(cleanComment);
             rankingRepository.save(rankingToUpdate); // Update ranking in database
             return rankingToUpdate;
         } else {
