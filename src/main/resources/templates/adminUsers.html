@@ -11,7 +11,7 @@
 
 <body>
 <header>
-    <div class="navbar-brand" href="/"> <h1>GYMRAT</h1> </div>
+    <a class="navbar-brand" href="/"> <h1>GYMRAT</h1> </a>
 </header>
 
     <div id="user-template" type="text/template">
@@ -28,7 +28,9 @@
             </div>
         </div>
         {{/Users}}
-        <a href="/" >Volver</a>
+        <form class="user-b" action="/default">
+            <button type="submit" formaction="/admin">Volver</button>
+        </form>
 
 </div>
 

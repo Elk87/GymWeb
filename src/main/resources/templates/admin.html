@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel de Administrador</title>
   <link rel="stylesheet" href="/css/estilo.css">
+  <link rel="stylesheet" href="/css/allLessons.css">
 </head>
 
 <body>
@@ -49,9 +50,9 @@
     </form>
   </div>
   {{/Lessons}}
-  <div class="centered-link">
-    <a href="/admin/allUsers">VER USUARIOS</a>
-  </div>
+  <form class="user-b" action="/default">
+    <button type="submit" formaction="/admin/allUsers">Ver Usuarios</button>
+  </form>
 </div>
 
 

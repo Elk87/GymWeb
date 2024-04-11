@@ -1,0 +1,41 @@
+#class-template {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"],
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn-enroll {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 10px; /* Añade un espacio superior */
+}
+
+.btn-enroll:hover {
+    background-color: #0056b3;
+}
+
+.user-b {
+    text-align: center; /* Centrar el botón */
+}

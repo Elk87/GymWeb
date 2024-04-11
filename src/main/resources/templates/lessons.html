@@ -7,6 +7,7 @@
     <title>Clases Disponibles</title>
     <link rel="stylesheet" href="/css/estilo.css">
     <link rel="stylesheet" href="/css/lessons.css">
+    <link rel="stylesheet" href="/css/allLessons.css">
 </head>
 
 <body>
@@ -33,9 +34,9 @@
         </form>
     </div>
     {{/Lessons}}
-    <div class="centered-link">
-        <a href="/mylessons">VER MIS CLASES</a>
-    </div>
+    <form class="user-b" action="/default">
+        <button type="submit" formaction="/mylessons">Ver Mis Clases</button>
+    </form>
 </div>
 
 </body>
