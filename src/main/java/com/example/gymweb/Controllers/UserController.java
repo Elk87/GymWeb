@@ -4,13 +4,11 @@ import com.example.gymweb.Entities.User;
 import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Repositories.UserRepository;
 import com.example.gymweb.Services.RankingService;
-import com.example.gymweb.Services.UploadFileService;
 import com.example.gymweb.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -24,8 +22,8 @@ public class UserController {
     UserService userService;
     @Autowired
     RankingService rankingService;
-    @Autowired
-    UploadFileService uploadFileService;
+    /* @Autowired
+    UploadFileService uploadFileService;*/
     //show user profile
     @GetMapping("/profile")
     public String viewProfile(Model model) {
@@ -57,7 +55,11 @@ public class UserController {
     //@PostMapping("/register")
     //create a new user
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String addUser(@RequestBody User newUser){
+    public String addUser(@RequestBody User newUser /* @RequestParam("image") MultipartFile image */) throws IOException {
+        /*if(newUser.getId()==0L){//add image to new books
+            String nombreImagen=uploadFileService.saveImage(image);
+            newUser.setImage(nombreImagen);
+        }*/
         userService.addUser(newUser);
         return "redirect:/profile";
     }
@@ -68,12 +70,6 @@ public class UserController {
         model.addAttribute("myLessons", myLessons);
         return "mylessons";
     }
-    @PostMapping("/updateProfile")
-    public String updateProfile(@ModelAttribute User update, MultipartFile imageFile) throws IOException {
-        userService.updateUser(1,update,imageFile);
-        return "redirect:/profile";
-    }
-
     //book a class
     @PostMapping("/bookClass/{id}")
     public String bookClass(@PathVariable long id){
