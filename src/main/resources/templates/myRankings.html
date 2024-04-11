@@ -25,6 +25,7 @@
     {{#myRankings}}
     <tr>
       <td>
+        <p>{{{comment}}}</p>
         <form method="post" action="/updateRanking/{{id}}">
           <label>
             <textarea name="comment" placeholder="{{comment}}" rows="3" cols="50" required>{{comment}}</textarea>
@@ -43,9 +44,7 @@
 
 </section>
 
-<footer>
-  <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>
-</footer>
+
 </body>
 
 </html>

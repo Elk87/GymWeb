@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface LessonsRepository extends JpaRepository<Lesson,Long> {
-    List<Lesson>findLessonBySport(String sport);
+    //List<Lesson>findLessonBySport(String sport);
     List<Lesson>findLessonByTeacher(User teacher);
     List<Lesson> findLessonByUsers(List<User> users);
 
