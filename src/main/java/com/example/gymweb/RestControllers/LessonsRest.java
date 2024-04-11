@@ -1,5 +1,6 @@
 package com.example.gymweb.RestControllers;
 import com.example.gymweb.Entities.Lesson;
+import com.example.gymweb.Repositories.LessonsRepository;
 import com.example.gymweb.Services.LessonsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -14,6 +16,8 @@ import java.util.Collection;
 public class LessonsRest {
     @Autowired
     LessonsService lessonsService;
+    @Autowired
+    LessonsRepository lessonsRepository;
     //to get lesson by id
     @GetMapping("/lesson/{id}")
     public ResponseEntity<Lesson> getLessonById(@PathVariable long id) {
@@ -55,5 +59,10 @@ public class LessonsRest {
         lessonsService.updateLesson(id,lesson, teacher);
         return new ResponseEntity<>(lesson,HttpStatus.OK);
     }
-
+    @GetMapping("/lessons")
+    public List<Lesson> getLessonsByTeacherAndSport(
+            @RequestParam String teacherName,
+            @RequestParam String sport) {
+        return lessonsRepository.findByTeacherNameAndSport(teacherName, sport);
+    }
 }

@@ -73,7 +73,6 @@ public class LessonsService {
             lesson.setTeacher(user);
             lessonsRepository.findById(id).ifPresent(existingLesson -> lessonsRepository.save(lesson));
         }
-
     }
     /*public List<Lesson> findLessonsBySport(String sport) {
         return lessonsRepository.findLessonBySport(sport);
