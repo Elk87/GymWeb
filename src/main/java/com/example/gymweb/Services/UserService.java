@@ -210,9 +210,12 @@ public class UserService {
             return null;
         }
     }
+    public List<User> findUserByLesson(List<Lesson> lessons){
+       return userRepository.findUserByLessons(lessons);
+    }
 
-    public User findByName(String name  ){
-       return userRepository.findByName(name).orElse(null);
+    public Optional<User> findByName(String name  ){
+       return userRepository.findByName(name);
    }
     public List<Lesson> findLessonsByUser(List<User> user){
         return lessonsRepository.findLessonByUsers(user);

@@ -24,18 +24,12 @@
 </style>
 <h2>Deja tu opinión</h2>
 <form action="/createRanking" method="post">
-    <label for="valoracion">Valoración:</label>
-    <select id="valoracion" name="valoracion">
-        <option value="1">1 estrella</option>
-        <option value="2">2 estrellas</option>
-        <option value="3">3 estrellas</option>
-        <option value="4">4 estrellas</option>
-        <option value="5">5 estrellas</option>
-    </select>
     <label for="comentario">Comentario:</label>
     <div id="comentario"></div>
+    <input type="hidden" id="hiddenArea" name="comment">
     <button type="submit">Enviar</button>
 </form>
+
 
 
 <footer>
@@ -46,6 +40,12 @@
     var editor = new Quill('#comentario', {
         theme: 'snow'
     });
+
+    editor.on('text-change', function() {
+        var commentContent = editor.container.firstChild.innerHTML;
+        document.querySelector('#hiddenArea').value = commentContent;
+    });
+
 </script>
 </body>
 </html>

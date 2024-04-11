@@ -67,11 +67,7 @@ public class LessonsService {
         }
     }*/
     public void updateLesson(long id, Lesson lesson) {
-        Lesson existingLesson = lessonsRepository.findById(id).orElse(null);
-        if (existingLesson != null) {
-            lesson.setId(id);
-            lessonsRepository.save(lesson);
-        }
+        lessonsRepository.findById(id).ifPresent(existingLesson -> lessonsRepository.save(lesson));
     }
     /*public List<Lesson> findLessonsBySport(String sport) {
         return lessonsRepository.findLessonBySport(sport);

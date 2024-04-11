@@ -3,6 +3,7 @@ package com.example.gymweb.Controllers;
 import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.User;
 import com.example.gymweb.Services.LessonsService;
+import com.example.gymweb.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalTime;
 import java.util.Collection;
+import java.util.Optional;
 
 @Controller
 public class LessonsController {
     @Autowired
     LessonsService lessonsService;
+    @Autowired
+    UserService userService;
     //Show all existing lessons
     @GetMapping("/lessons")
     public String showLessons(Model model){
@@ -55,14 +59,15 @@ public class LessonsController {
                             @RequestParam LocalTime startTime,
                             @RequestParam LocalTime finishTime,
                             @RequestParam String sport) {
-
-        Lesson lesson = new Lesson();
-        lesson.setTeacher(new User(teacher));
-        lesson.setStartTime(startTime);
-        lesson.setFinishTime(finishTime);
-        lesson.setSport(sport);
-        lessonsService.addLesson(lesson);
-
+        Optional<User> u=userService.findByName(teacher);
+        if (u.isPresent()){
+            Lesson lesson = new Lesson();
+            lesson.setTeacher(userService.findByName(teacher).get());
+            lesson.setStartTime(startTime);
+            lesson.setFinishTime(finishTime);
+            lesson.setSport(sport);
+            lessonsService.addLesson(lesson);
+        }
         Collection<Lesson> lessons = lessonsService.getLessons();
         if (lessons.isEmpty()) {
             model.addAttribute("noLessons", "There are no lessons available");
