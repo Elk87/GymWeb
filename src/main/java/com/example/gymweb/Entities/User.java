@@ -1,10 +1,12 @@
 package com.example.gymweb.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -30,8 +32,11 @@ public class User {
     private int phoneNumber;
     @NotNull
     private int age;
-    @Nullable
-    private String image;
+    @Transient
+    private MultipartFile imageFile;
+
+    @Lob
+    private byte[] image;
     @NotNull
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.REGISTERED_USER;
@@ -57,27 +62,17 @@ public class User {
         this.comments=new ArrayList<>();
         this.lessons=new ArrayList<>();
     }
-    public User(String name, String password, String DNI, String email, int phoneNumber, int age, String image) {
+    public User(String name, String password, String DNI, String email, int phoneNumber, int age, byte[] image) {
         this.name = name;
         this.password=password;
         this.DNI=DNI;
         this.email=email;
         this.age=age;
         this.phoneNumber=phoneNumber;
-        this.image=image;
+        this.image = image;
         this.comments=new ArrayList<>();
         this.lessons=new ArrayList<>();
     }
-
-    @Nullable
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(@Nullable String image) {
-        this.image = image;
-    }
-
     public User(String name) {
         this.name = name;
     }
@@ -106,7 +101,6 @@ public class User {
     public List<Ranking> showRanking(){
         return comments;
     }
-
 
 
 }

@@ -5,8 +5,12 @@ import com.example.gymweb.Entities.User;
 import com.example.gymweb.Repositories.LessonsRepository;
 import com.example.gymweb.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -185,20 +189,30 @@ public class UserService {
            System.err.println("Usuario o clase no encontrados");
        }
    }
+    public User findByID(long id){
+       return userRepository.findUserById(id);
+    }
+    public User updateUser(long id, User newUser, MultipartFile multipartFile) throws IOException {
+        Optional<User> u = userRepository.findById(id);
 
-   public User updateUser(long id, User newUser) {
-        Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()){
-            User u = user.get();
-            u.setEmail(newUser.getEmail());
-            u.setName(newUser.getName());
-            u.setPassword(newUser.getPassword());
-            u.setPhoneNumber(newUser.getPhoneNumber());
-            userRepository.save(u);
-            return u;
-        }else {
+        if (u.isPresent()) {
+            User user = u.get();
+            user.setName(newUser.getName());
+            user.setEmail(newUser.getEmail());
+            user.setPassword(newUser.getPassword());
+            if (multipartFile != null && !multipartFile.isEmpty()) {
+                user.setImage(multipartFile.getBytes());
+            }
+
+            userRepository.save(user);
+            return user;
+        } else {
             return null;
         }
+    }
+
+    public User findByName(String name  ){
+       return userRepository.findByName(name).orElse(null);
    }
     public List<Lesson> findLessonsByUser(List<User> user){
         return lessonsRepository.findLessonByUsers(user);

@@ -32,31 +32,31 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Crear usuarios
-        User admin = new User("Admin","adminPass", "12345678A", "admin@example.com", 123456789, 30,"/img/fotoPerfil.jpg");
+        // create the example users
+        User admin = new User("Admin","adminPass", "12345678A", "admin@example.com", 123456789, 30);
         admin.setRole(UserRole.ADMIN);
         User user1 = new User("John", "userPass", "12345678B", "john@example.com", 987654321, 25);
         User user2 = new User("Jane","userPass", "12345678C", "jane@example.com", 987654322, 28);
 
-        // Guardar usuarios
+        // Create the example rankings
         Ranking ranking1 = new Ranking("Good lesson!");
         Ranking ranking2 = new Ranking("Awesome class!");
-
+        //Add ranking to the user
         admin.addRanking(ranking1);
         admin.addRanking(ranking2);
+        //Save the user
         userRepository.save(admin);
 
 
-        // Crear lecciones
+        // Create example lessons
         Lesson lesson1 = new Lesson(user1, LocalTime.of(10, 0), LocalTime.of(11, 0), "Yoga");
         Lesson lesson2 = new Lesson(user2, LocalTime.of(15, 0), LocalTime.of(16, 0), "Zumba");
 
-        // Guardar lecciones
 
-
-        // Asignar lecciones a usuarios
+        // Add lessons to the user
         user1.addLessons(lesson1);
         user2.addLessons(lesson2);
+        //Save the lessons and user
         lessonRepository.save(lesson1);
         lessonRepository.save(lesson2);
 
