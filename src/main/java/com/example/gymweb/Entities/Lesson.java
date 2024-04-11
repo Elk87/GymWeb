@@ -1,5 +1,7 @@
 package com.example.gymweb.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.sql.Blob;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +20,12 @@ import java.util.List;
 @NoArgsConstructor
 public class Lesson {
     @NotNull
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "teacher_id")
+    @JsonManagedReference
     private User teacher;
     @Nullable
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToMany(cascade={CascadeType.ALL})
     private List<User> users;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,9 +36,9 @@ public class Lesson {
 
     @NotNull
     private LocalTime finishTime;
-
     @NotNull
     private String sport;
+    private String filePath;
 
 //constructor
  public Lesson(User teacher, LocalTime startTime, LocalTime finishTime, String sport) {
@@ -56,6 +60,9 @@ public class Lesson {
         this.finishTime = finishTime;
         this.sport = sport;
         this.users=users;
+    }
+    public String getTeacherName(){
+     return this.teacher.getName();
     }
 
 

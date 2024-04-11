@@ -198,16 +198,14 @@ public class UserService {
     }
     public User updateUser(long id, User newUser, MultipartFile fileImage) throws IOException {
         Optional<User> u = userRepository.findById(id);
-
         if (u.isPresent()) {
             User user = u.get();
             user.setName(newUser.getName());
             user.setEmail(newUser.getEmail());
             user.setPassword(newUser.getPassword());
-            if(fileImage!=null){
-                if (fileImage.getSize() != 0) {
-                    user.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
-                }
+            user.setPhoneNumber(newUser.getPhoneNumber());
+            if(fileImage!=null && !fileImage.isEmpty()){
+                user.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
             }
             userRepository.save(user);
             return user;

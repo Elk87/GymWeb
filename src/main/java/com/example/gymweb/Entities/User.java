@@ -1,5 +1,6 @@
 package com.example.gymweb.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -40,13 +41,14 @@ public class User {
     @NotNull
     private int age;
     @Lob
+    @JsonIgnore
     private Blob imageFile;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.REGISTERED_USER;
     @Nullable
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, orphanRemoval = true)
     private List<Ranking> comments;
 
     @Nullable
@@ -56,6 +58,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "lesson_id")
     )
+    @JsonBackReference
     private List<Lesson> lessons;
     //constructor
     public User(String name, String password, String DNI, String email, int phoneNumber, int age) {

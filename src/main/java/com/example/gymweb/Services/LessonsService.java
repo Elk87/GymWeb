@@ -1,6 +1,7 @@
 package com.example.gymweb.Services;
 
 import com.example.gymweb.Entities.Lesson;
+import com.example.gymweb.Entities.Ranking;
 import com.example.gymweb.Entities.User;
 import com.example.gymweb.Repositories.LessonsRepository;
 import com.example.gymweb.Repositories.UserRepository;
@@ -48,12 +49,18 @@ public class LessonsService {
         return idLesson.remove(id);
     }*/
     public Lesson deleteLessonById(long id) {
-        Lesson lesson = lessonsRepository.findById(id).orElse(null);
-        if (lesson != null) {
+        Optional<Lesson> lesson = lessonsRepository.findById(id);
+        if (lesson.isPresent()) {
+            for (User user : lesson.get().getUsers()) {
+                user.getLessons().remove(lesson.get());
+            }
+            userRepository.saveAll(lesson.get().getUsers());
             lessonsRepository.deleteById(id);
+            return lesson.get();
         }
-        return lesson;
+       return null;
     }
+
     /*public void updateLesson(long id, Lesson lesson) {
         Lesson l;
         if (!idLesson.containsKey(id)) {
@@ -66,12 +73,15 @@ public class LessonsService {
                 l.setFinishTime(lesson.getFinishTime());
         }
     }*/
-    public void updateLesson(long id, Lesson lesson, String teacher) {
-        Optional<User> u= userRepository.findByName(teacher);
-        if (u.isPresent()){
-            User user = u.get();
-            lesson.setTeacher(user);
-            lessonsRepository.findById(id).ifPresent(existingLesson -> lessonsRepository.save(lesson));
+    public void updateLesson(long id, Lesson lesson) {
+        Optional<Lesson> lesson1 = lessonsRepository.findById(id);
+        if (lesson1.isPresent()){
+            Lesson l = lesson1.get();
+            l.setTeacher(lesson.getTeacher());
+            l.setSport(lesson.getSport());
+            l.setStartTime(lesson.getStartTime());
+            l.setFinishTime(lesson.getFinishTime());
+            lessonsRepository.save(l);
         }
     }
     /*public List<Lesson> findLessonsBySport(String sport) {

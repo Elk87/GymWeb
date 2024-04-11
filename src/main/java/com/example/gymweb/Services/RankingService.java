@@ -5,6 +5,7 @@ import com.example.gymweb.Entities.Ranking;
 import com.example.gymweb.Entities.User;
 import com.example.gymweb.Repositories.RankingRepository;
 import com.example.gymweb.Repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,10 +37,18 @@ public class RankingService {
         rankingRepository.save(ranking);
         return ranking;
     }
-    //delete a ranking
-    public void deleteRanking(long id) {
-        rankingRepository.deleteById(id);
+    public void deleteRanking(long commentId) {
+        Optional<Ranking> comment = rankingRepository.findById(commentId);
+        if (comment.isPresent()){
+            User user = comment.get().getUser();
+            user.getComments().remove(comment.get());
+            userRepository.save(user);
+            rankingRepository.delete(comment.get());
+        }
+
     }
+    //delete a ranking
+
     // look for the comment and take it
     public Collection<Ranking> getRanking() {
         return rankingRepository.findAll();

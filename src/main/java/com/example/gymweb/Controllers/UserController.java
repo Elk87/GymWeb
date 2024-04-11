@@ -25,8 +25,7 @@ public class UserController {
     UserService userService;
     @Autowired
     RankingService rankingService;
-    /* @Autowired
-    UploadFileService uploadFileService;*/
+
     //show user profile
     @GetMapping("/profile")
     public String viewProfile(Model model) throws SQLException {
@@ -95,12 +94,18 @@ public class UserController {
     }
     //show all user, only available for the admin
     @GetMapping("/admin/allUsers")
-    public String showAllUsers(Model model){
-       // Collection<User> users = userService.showAllUsers();
+    public String showAllUsers(Model model) throws SQLException {
         Collection<User> users = userService.getAllUsers();
+        for (User u : users){
+            long id = u.getId();
+            String imageKey = "image" + id;
+            model.addAttribute(imageKey, "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(userService.getUser(id)
+                    .getImageFile().getBytes(1, (int) userService.getUser(id).getImageFile().length())));
+        }
         model.addAttribute("Users", users);
         return "adminUsers";
     }
+
     //show all the rankings that the user has done
     @GetMapping("/myrankings")
     public String showMyRankings(Model model){
@@ -115,7 +120,12 @@ public class UserController {
         return "redirect:/ranking";
     }
     //update a ranking done by the user
+    @PostMapping("/updateRanking/{id}")
+    public String updateRanking(@RequestParam String comment, @PathVariable long id){
+        rankingService.updateRanking(id, comment);
+        return "redirect:/myrankings";
 
+    }
     //delete a ranking done by the user
     @PostMapping("/deleteRanking/{id}")
     public String deleteRanking( @PathVariable long id){

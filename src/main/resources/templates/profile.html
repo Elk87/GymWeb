@@ -44,40 +44,41 @@
     <form action="/updateProfile" method="post" class="grid-form" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Nombre:</label>
-            <input value="{{name}}" type="text" id="name" required>
+            <input value="{{name}}" type="text" id="name" name="name" required>
         </div>
         <div class="form-group">
-            <label for="password">Email:</label>
-            <input value="{{password}}" type="password" id="password" required>
+            <label for="password">Contraseña:</label>
+            <input value="{{password}}" type="password" id="password" name="password" required>
         </div>
         <div class="form-group">
             <label for="age">Edad:</label>
-            <input value="{{age}}" type="text" id="age" readonly>
+            <input value="{{age}}" type="text" id="age" name="age" readonly>
         </div>
         <div class="form-group">
             <label for="DNI">DNI:</label>
-            <input value="{{DNI}}" type="text" id="DNI" readonly>
+            <input value="{{DNI}}" type="text" id="DNI" name="DNI" readonly>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input value="{{email}}" type="text" id="email" required>
+            <input value="{{email}}" type="text" id="email" name="email" required>
         </div>
         <div class="form-group">
             <label for="phoneNumber">Teléfono:</label>
-            <input value="{{phoneNumber}}" type="text" id="phoneNumber" required>
+            <input value="{{phoneNumber}}" type="text" id="phoneNumber" name="phoneNumber" required>
         </div>
         <img class="profile-img" alt="" src="{{image}}">
-        <div class="form-group">
-            <label for="image">Imagen de perfil:</label>
-            <input type="file" id="image" name="image">
-        </div>
+        <label class="relative-file-upload">
+            Subir archivo <input id="imageFile" name="fileImage" type="file" enctype accept="image/jpeg">
+        </label>
         <button type="submit">Guardar cambios</button>
     </form>
+
     {{/user}}
 </main>
+
+</body>
 <footer>
     <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>
 </footer>
-</body>
 </html>
 
