@@ -16,6 +16,8 @@ public class RankingService {
     @Autowired
     RankingRepository rankingRepository;
     @Autowired
+    UserRepository userRepository;
+    @Autowired
     UserService userService;
    /* private final Map<Long, Ranking> rankings = new HashMap<>(); //map where key-long and ranking-value
     private final AtomicLong Id = new AtomicLong();//this attribute is for to generate id
@@ -25,16 +27,10 @@ public class RankingService {
         this.rankingRepository=rankingRepository1;
 
     }
-   /* public Ranking createRanking(String comment) {
-        long id = Id.incrementAndGet();
+    public Ranking createRanking(User user, String comment) {
         Ranking ranking = new Ranking();
-        ranking.setId(id);
-        ranking.setUser(userService.getUser(1));
+        ranking.setUser(user);
         ranking.setComment(comment);
-        rankings.put(id, ranking);
-        return ranking;
-    }*/
-    public Ranking createRanking(Ranking ranking) {
         rankingRepository.save(ranking);
         return ranking;
     }

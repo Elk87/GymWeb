@@ -36,10 +36,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.REGISTERED_USER;
     @Nullable
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ranking> comments;
     @Nullable
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(
             name = "user_lessons",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -88,6 +88,7 @@ public class User {
     }
     public void addRanking(Ranking ranking){
         this.comments.add(ranking);
+        ranking.setUser(this);
     }
     public void deleteRanking(Ranking ranking){
         this.comments.remove(ranking);

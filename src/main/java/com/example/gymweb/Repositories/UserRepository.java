@@ -1,4 +1,5 @@
 package com.example.gymweb.Repositories;
+import com.example.gymweb.Entities.Ranking;
 import com.example.gymweb.Entities.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
     List<User> findByPhoneNumberAndEmail(int phoneNumber, String email);
     User findByEmailAndPassword(String email, String password);
     User findByEmail(String email);
+    User findUserById(long id);
 }

@@ -96,7 +96,7 @@ public class UserService {
     }*/
 
     public User getUser(long id){
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findUserById(id);
     }
    /* public User getUser(String email){
         return idUsers.get(idEmail.get(email));

@@ -17,11 +17,11 @@ import java.util.List;
 @NoArgsConstructor
 public class Lesson {
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "teacher_id")
     private User teacher;
     @Nullable
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<User> users;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,6 +44,12 @@ public class Lesson {
   this.sport = sport;
   this.users=new ArrayList<>();
  }
+    public Lesson( LocalTime startTime, LocalTime finishTime, String sport) {
+        this.startTime = startTime;
+        this.finishTime = finishTime;
+        this.sport = sport;
+        this.users=new ArrayList<>();
+    }
     public Lesson(User teacher, LocalTime startTime, LocalTime finishTime, String sport,List<User> users) {
         this.teacher = teacher;
         this.startTime = startTime;
@@ -51,5 +57,6 @@ public class Lesson {
         this.sport = sport;
         this.users=users;
     }
+
 
 }

@@ -93,14 +93,14 @@ public class UserController {
     //show all the rankings that the user has done
     @GetMapping("/myrankings")
     public String showMyRankings(Model model){
-        Collection<Ranking> rankings = rankingService.getRanking();
+        Collection<Ranking> rankings = rankingService.getRankingByUser(userService.getUser(1));
         model.addAttribute("myRankings", rankings);
         return "myRankings";
     }
     //create a ranking associated to the existing user
     @PostMapping("/createRanking")
     public String createRanking(@RequestParam String comment){
-        rankingService.createRanking(new Ranking(comment));
+        rankingService.createRanking(userService.getUser(1),comment);
         return "redirect:/ranking";
     }
     //update a ranking done by the user

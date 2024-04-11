@@ -7,85 +7,61 @@ import com.example.gymweb.Entities.UserRole;
 import com.example.gymweb.Repositories.LessonsRepository;
 import com.example.gymweb.Repositories.RankingRepository;
 import com.example.gymweb.Repositories.UserRepository;
-import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 @Transactional
 @Component
-public class DatabaseInitializer {
-    @Autowired
-    RankingService rankingService;
-    @Autowired
-    UserService userService;
-    @Autowired
-    LessonsService lessonsService;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    LessonsRepository lessonsRepository;
-    @Autowired
-    RankingRepository rankingRepository;
-    @PostConstruct
-    public void init() throws IOException {
-        // Creación de usuarios
-        User teacher1 = new User("Enrique", "password1", "XXXX1", "profesor1@email.com", 0, 30);
-        User teacher2 = new User("Erika", "password2", "XXXX2", "profesor2@email.com", 0, 35);
-        User teacher3 = new User("Joan", "password3", "XXXX3", "profesor3@email.com", 0, 40);
-        User p1 = new User("A", "password11", "XXXX11", "p1@email.com", 0, 30);
-        User p2 = new User("B", "password22", "XXXX22", "p2@email.com", 0, 35);
-        User p3 = new User("C", "password33", "XXXX33", "p3@email.com", 0, 40);
-        User user = new User("Admin", "password", "09864527F", "admin@email.com",666777888,20, "/img/fotoPerfil.jpg");
-        user.setRole(UserRole.ADMIN);
+public class DatabaseInitializer implements CommandLineRunner {
 
-        // Guardar usuarios primero
-        userRepository.save(user);
-        userRepository.save(teacher1);
-        userRepository.save(teacher2);
-        userRepository.save(teacher3);
-        userRepository.save(p1);
-        userRepository.save(p2);
-        userRepository.save(p3);
+    private final UserRepository userRepository;
+    private final LessonsRepository lessonRepository;
+    private final RankingRepository rankingRepository;
 
-        // Creación de lecciones
-        Lesson l1 = new Lesson(teacher1, LocalTime.of(9, 0), LocalTime.of(10, 30), "Yoga");
-        Lesson l2 = new Lesson(teacher2, LocalTime.of(11, 0), LocalTime.of(12, 30), "Spinning");
-        Lesson l3 = new Lesson(teacher3, LocalTime.of(14, 0), LocalTime.of(15, 30), "CrossFit");
-        Lesson l4 = new Lesson(teacher1, LocalTime.of(16, 0), LocalTime.of(17, 30), "Pilates");
-        Lesson l5 = new Lesson(teacher2, LocalTime.of(18, 0), LocalTime.of(19, 30), "Zumba");
 
-        // Guardar lecciones después de guardar los usuarios
-        lessonsRepository.save(l1);
-        lessonsRepository.save(l2);
-        lessonsRepository.save(l3);
-        lessonsRepository.save(l4);
-        lessonsRepository.save(l5);
+    public DatabaseInitializer(UserRepository userRepository, LessonsRepository lessonRepository, RankingRepository rankingRepository) {
+        this.userRepository = userRepository;
+        this.lessonRepository = lessonRepository;
+        this.rankingRepository = rankingRepository;
+       ;
+    }
 
-        // Creación de rankings
-        Ranking r1 = new Ranking("Clases variadas y profesores entregados");
-        Ranking r2 = new Ranking("Poco disponibilidad de horarios ");
+    @Override
+    public void run(String... args) throws Exception {
+        // Crear usuarios
+        User admin = new User("Admin","adminPass", "12345678A", "admin@example.com", 123456789, 30,"/img/fotoPerfil.jpg");
+        admin.setRole(UserRole.ADMIN);
+        User user1 = new User("John", "userPass", "12345678B", "john@example.com", 987654321, 25);
+        User user2 = new User("Jane","userPass", "12345678C", "jane@example.com", 987654322, 28);
 
-        rankingRepository.save(r1);
-        rankingRepository.save(r2);
+        // Guardar usuarios
+        Ranking ranking1 = new Ranking("Good lesson!");
+        Ranking ranking2 = new Ranking("Awesome class!");
 
-        // Añadir lecciones y rankings a los usuarios
-        user.addLessons(l1);
-        user.addLessons(l2);
-        user.addLessons(l5);
-        user.addLessons(l3);
-        user.addLessons(l4);
+        admin.addRanking(ranking1);
+        admin.addRanking(ranking2);
+        userRepository.save(admin);
 
-        p1.addLessons(l1);
-        p1.addLessons(l2);
-        p1.addLessons(l5);
 
-        p2.addLessons(l3);
+        // Crear lecciones
+        Lesson lesson1 = new Lesson(user1, LocalTime.of(10, 0), LocalTime.of(11, 0), "Yoga");
+        Lesson lesson2 = new Lesson(user2, LocalTime.of(15, 0), LocalTime.of(16, 0), "Zumba");
 
-        p3.addLessons(l4);
-        p3.addLessons(l2);
+        // Guardar lecciones
+
+
+        // Asignar lecciones a usuarios
+        user1.addLessons(lesson1);
+        user2.addLessons(lesson2);
+        lessonRepository.save(lesson1);
+        lessonRepository.save(lesson2);
+
+
     }
 }
+
 
