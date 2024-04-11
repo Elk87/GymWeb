@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
@@ -29,11 +32,11 @@ public class UserRestController {
     }
     //update users information
     @PutMapping("/changeprofile/{id}")
-    public ResponseEntity<User> updateProfile(@PathVariable long id,@RequestBody User newUser){
+    public ResponseEntity<User> updateProfile(@PathVariable long id, @RequestBody User newUser, MultipartFile multipartFile) throws IOException {
         User oldUser= userService.getUser(id);
         if (oldUser!= null) {
             newUser.setId(id);
-            User user= userService.updateUser(id,newUser);
+            User user= userService.updateUser(id,newUser, multipartFile);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

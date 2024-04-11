@@ -33,7 +33,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // Crear usuarios
-        User admin = new User("Admin","adminPass", "12345678A", "admin@example.com", 123456789, 30,"/img/fotoPerfil.jpg");
+        User admin = new User("Admin","adminPass", "12345678A", "admin@example.com", 123456789, 30);
         admin.setRole(UserRole.ADMIN);
         User user1 = new User("John", "userPass", "12345678B", "john@example.com", 987654321, 25);
         User user2 = new User("Jane","userPass", "12345678C", "jane@example.com", 987654322, 28);
