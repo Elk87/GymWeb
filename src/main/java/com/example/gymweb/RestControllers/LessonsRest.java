@@ -89,7 +89,7 @@ public class LessonsRest {
     public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable Long lessonId, RedirectAttributes redirectAttributes) {
 
         //original name of archive
-        String originalFilename = file.getOriginalFilename();
+        String originalFilename = file.getOriginalFilename(); // src/main/java/Reversa.java vulnerabilidasd mirar
 
 
         String storageDirectory = "src/files";

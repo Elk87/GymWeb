@@ -19,8 +19,8 @@ import java.util.Collection;
 
 @Controller
 public class UserController {
-    @Autowired
-    UserRepository userRepository;
+    /*@Autowired
+    UserRepository userRepository;*///borrar rep en todos los controllers
     @Autowired
     UserService userService;
     @Autowired
