@@ -14,7 +14,7 @@ public interface LessonsRepository extends JpaRepository<Lesson,Long> {
     List<Lesson>findLessonByTeacher(User teacher);
     List<Lesson> findLessonByUsers(List<User> users);
 
-    @Query("SELECT l FROM Lesson l WHERE l.teacher.name = :teacherName AND l.sport = :lsport")
+    @Query("SELECT l FROM Lesson l WHERE l.teacher.name = :teacherName AND l.sport = :sport")
    /* void test(){//ponerlo de forma opcional
         query.setParameter("teacherName", teacherName)
     }*/
