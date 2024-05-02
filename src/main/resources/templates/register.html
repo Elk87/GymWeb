@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Login - GymRat</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/estilo.css">
+    <link rel="stylesheet" href="/css/register.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.css" integrity="sha512-NVt7pmp5f+3eWRPO1h4A1gCf4opn4r5z2wS1mi7AaVcTzE9wDJ6RzMqSygjDzYHLp+mAJ2/qzXXDHar6IQwddQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -26,24 +25,20 @@
 <form action="/register" method="post">
     <h1 class="title">Sign Up</h1>
     <label>
-        <i class="fa-solid fa-user"></i>
         <input placeholder="Nombre" type="text" id="name" required autofocus>
     </label>
     <label>
-        <i class="fa-solid fa-user"></i>
+        <!--<i class="fa-solid fa-user"></i>-->
         <input placeholder="Teléfono" type="text" id="phoneNumber" required autofocus>
     </label>
     <label>
-        <i class="fa-solid fa-user"></i>
         <input placeholder="Edad" type="text" id="age" required autofocus>
     </label>
     <label>
-        <i class="fa-solid fa-user"></i>
         <input placeholder="Email" type="text" id="email" required autofocus>
     </label>
     <label>
-        <i class="fa-solid fa-lock"></i>
-        <input placeholder="contraseña" type="password" id="password" required autofocus>
+        <input placeholder="Contraseña" type="password" id="password" required autofocus>
     </label>
     <!--<input type="file" class="form-control" id="image" name="image" required> -->
     <button  href="/register" formmethod="post" id="button">Sign Up</button>

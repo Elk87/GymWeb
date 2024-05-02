@@ -34,8 +34,8 @@ public class User {
     private long id=-1;
     @NotNull
     private String DNI;
-   /* @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles;*/
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
     @NotNull
     private String email;
     @NotNull
@@ -111,13 +111,13 @@ public class User {
         return comments;
     }
 
-    /*public List<String> getRoles() {
+    public List<String> getRoles() {
         return roles;
     }
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
-    }*/
+    }
 
 
 }
