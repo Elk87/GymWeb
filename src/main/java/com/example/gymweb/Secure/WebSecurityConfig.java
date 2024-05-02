@@ -30,15 +30,28 @@ public class WebSecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authenticationProvider(authenticationProvider());
         http.authorizeRequests(authorize ->authorize
+
                 //public pages
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/register").permitAll()
                 .requestMatchers("/error").permitAll()
-                .requestMatchers("/training").permitAll());
+                .requestMatchers("/training").permitAll()
+            //revisar version de spring porque no encuentra loginPage y logoutUrl y porque hay que cambiar esto para jwt
+                //login
+               /* .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .failureUrl("/login")
+                        .defaultSuccessUrl("/")
+                        .permitAll())
 
+                //logout
+                .logout(logout->logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .permitAll())
+                        */);
         return http.build();
-
     }
 
 }
