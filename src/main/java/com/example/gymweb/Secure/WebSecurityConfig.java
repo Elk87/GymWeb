@@ -32,14 +32,17 @@ public class WebSecurityConfig {
         http.authenticationProvider(authenticationProvider());
         http
                 .authorizeHttpRequests(authorize ->authorize
+                        //static resources
+                        .requestMatchers("/css/**","/js/**","/img/**","/bootstrap/**").permitAll()
+                        //public pages
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/register").permitAll()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers("/training").permitAll());
-            //revisar version de spring porque no encuentra loginPage y logoutUrl y porque hay que cambiar esto para jwt
+                        .requestMatchers("/training").permitAll()
+                        .requestMatchers("/ranking"))
+
                 //login
-                /*
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .failureUrl("/loginIncorrect")
