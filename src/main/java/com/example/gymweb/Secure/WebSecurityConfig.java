@@ -22,6 +22,8 @@ public class WebSecurityConfig {
     public RepositoryUserDetailsService userDetailsService;
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
+    @Autowired
+    private UnauthorizedHandlerJwt unauthorizedHandlerJwt;
 
     @Bean
     public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authConfig) throws Exception {
@@ -55,13 +57,13 @@ public class WebSecurityConfig {
                         .requestMatchers("/register").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/training").permitAll()
-                        .requestMatchers("/ranking"))
+                        .requestMatchers("/ranking").permitAll())
 
                 //login
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .failureUrl("/loginIncorrect")
-                        .defaultSuccessUrl("/private")
+                        .defaultSuccessUrl("/private") //pagina privada
                         .permitAll())
 
                 //logout
