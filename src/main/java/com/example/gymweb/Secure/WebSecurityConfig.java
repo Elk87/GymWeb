@@ -24,8 +24,8 @@ public class WebSecurityConfig {
     private JwtRequestFilter jwtRequestFilter;
 
     @Bean
-    public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authenticationConfig) throws Exception {
-        return authenticationConfig.getAuthenticationManager();
+    public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 
     @Bean
