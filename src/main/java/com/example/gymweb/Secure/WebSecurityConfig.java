@@ -26,31 +26,32 @@ public class WebSecurityConfig {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authenticationProvider(authenticationProvider());
-        http.authorizeRequests(authorize ->authorize
-
-                //public pages
-                .requestMatchers("/").permitAll()
-                .requestMatchers("/login").permitAll()
-                .requestMatchers("/register").permitAll()
-                .requestMatchers("/error").permitAll()
-                .requestMatchers("/training").permitAll()
+        http
+                .authorizeHttpRequests(authorize ->authorize
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/error").permitAll()
+                        .requestMatchers("/training").permitAll());
             //revisar version de spring porque no encuentra loginPage y logoutUrl y porque hay que cambiar esto para jwt
                 //login
-               /* .formLogin(formLogin -> formLogin
+                /*
+                .formLogin(formLogin -> formLogin
                         .loginPage("/login")
-                        .failureUrl("/login")
-                        .defaultSuccessUrl("/")
+                        .failureUrl("/loginIncorrect")
+                        .defaultSuccessUrl("/private")
                         .permitAll())
 
                 //logout
                 .logout(logout->logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
-                        .permitAll())
-                        */);
+                        .permitAll()); //punto y coma cierra todo*/
+
         return http.build();
     }
 
