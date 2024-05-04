@@ -24,7 +24,7 @@ public class UserRestController {
     @GetMapping("/login")
     public ResponseEntity<User> login(@RequestParam String email, @RequestParam String password){
         if(userService.checkLogin(email,password)){
-            return new ResponseEntity<>(userService.getUser(email),HttpStatus.OK);
+            return new ResponseEntity<>(userService.getUserByEmail(email),HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

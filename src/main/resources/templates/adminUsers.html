@@ -30,6 +30,7 @@
         {{/Users}}
         <form class="user-b" action="/default">
             <button type="submit" formaction="/admin">Volver</button>
+            <input type="hidden" name="_csrf" value="{{token}}">
         </form>
 
 </div>

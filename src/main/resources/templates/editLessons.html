@@ -16,6 +16,7 @@
 
 <section id="add-lesson">
   <form action="/admin/add/Lesson" method="post">
+    <input type="hidden" name="_csrf" value="{{token}}">
     <div class="form-group">
       <label for="teacher">Profesor:</label>
       <input type="text" id="teacher" name="teacher" placeholder="Nombre del Profesor" required>
@@ -37,6 +38,7 @@
     </div>
   </form>
   <form class="form-group" action="/default">
+    <input type="hidden" name="_csrf" value="{{token}}">
     <button type="submit" formaction="/admin">Volver</button>
   </form>
 </section>

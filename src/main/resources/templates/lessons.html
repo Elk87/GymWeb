@@ -29,13 +29,15 @@
         <h3>{{sport}}</h3>
         <p class="teacher-info">Profesor: {{teacher.name}}</p>
         <p class="time-info">Hora: {{startTime}} - {{finishTime}}</p>
-        <form action="/bookClass/{{id}}" method="post">
+        <form action="/lessons/bookClass/{{id}}" method="post">
+            <input type="hidden" name="_csrf" value="{{token}}">
             <button type="submit" class="btn-enroll">Apuntarme</button>
         </form>
     </div>
     {{/Lessons}}
     <form class="user-b" action="/default">
-        <button type="submit" formaction="/mylessons">Ver Mis Clases</button>
+        <input type="hidden" name="_csrf" value="{{token}}">
+        <button type="submit" formaction="/profile/mylessons">Ver Mis Clases</button>
     </form>
 </div>
 

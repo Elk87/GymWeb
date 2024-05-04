@@ -18,10 +18,11 @@
 <div id="class-template" type="text/template">
   <form action="/admin/add" method="get">
     <button type="submit" class="box">Añadir</button>
+    <input type="hidden" name="_csrf" value="{{token}}">
   </form>
   {{#Lessons}}
   <div class="class-form">
-    <form action="/updateLesson/{{id}}" class="grid-form" method="post">
+    <form action="/admin/updateLesson/{{id}}" class="grid-form" method="post">
       <div class="form-group">
         <label for="sport">Deporte:</label>
         <input value="{{sport}}" type="text" id="sport" name="sport" required>
@@ -40,13 +41,17 @@
       </div>
       <div class="form-group">
         <button type="submit" class="btn-enroll">Actualizar</button>
+
       </div>
+      <input type="hidden" name="_csrf" value="{{token}}">
+
     </form>
 
     <form action="/admin/deleteLesson/{{id}}" method="post">
       <div class="form-group">
         <button type="submit" class="btn-enroll">Eliminar</button>
       </div>
+      <input type="hidden" name="_csrf" value="{{token}}">
     </form>
   </div>
   {{/Lessons}}

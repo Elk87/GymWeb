@@ -4,9 +4,12 @@ import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.User;
 import com.example.gymweb.Repositories.LessonsRepository;
 import com.example.gymweb.Repositories.UserRepository;
+import com.example.gymweb.Secure.RepositoryUserDetailsService;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -27,6 +30,10 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     LessonsRepository lessonsRepository;
+    @Autowired
+     PasswordEncoder passwordEncoder;
+    @Autowired
+    RepositoryUserDetailsService userDetailsService;
 
    /* private final AtomicLong Id= new AtomicLong();
     private Map<Long, User> idUsers= new HashMap<>();//map of id and user
@@ -109,7 +116,7 @@ public class UserService {
    /* public User getUser(String email){
         return idUsers.get(idEmail.get(email));
     }*/
-    public User getUser(String email){
+    public User getUserByEmail(String email){
         return userRepository.findByEmail(email);
     }
 
@@ -123,10 +130,10 @@ public class UserService {
         }
         return false;
     }*/
-   public boolean checkLogin(String email, String passwd ){
-       User user = userRepository.findByEmailAndPassword(email,passwd);
-       return user != null && user.getEmail().equals(email) && user.getPassword().equals(passwd);
-   }
+    public boolean checkLogin(String email, String passwd) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        return passwordEncoder.matches(passwd, userDetails.getPassword());
+    }
 
 
     /*public void deleteClass(long idUser, long idLesson){

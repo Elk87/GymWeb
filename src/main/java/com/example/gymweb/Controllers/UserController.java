@@ -5,6 +5,7 @@ import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Repositories.UserRepository;
 import com.example.gymweb.Services.RankingService;
 import com.example.gymweb.Services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,11 +28,13 @@ public class UserController {
 
     //show user profile
     @GetMapping("/profile")
-    public String viewProfile(Model model) throws SQLException {
-        User user = userService.getUser(1);
-        model.addAttribute("user", user);
+    public String viewProfile(Model model, HttpServletRequest request) throws SQLException {
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        model.addAttribute("user",user);
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
         model.addAttribute("image", "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(userService.getUser(1)
-                .getImageFile().getBytes(1, (int) userService.getUser(1).getImageFile().length())));
+                .getImageFile().getBytes(1, (int)user.getImageFile().length())));
         //model.addAttribute("lessons", userService.getLessons(user.getId()));
         return "profile";
     }
@@ -48,10 +51,11 @@ public class UserController {
     }
 
     //user book a class
-    @PostMapping("/bookclass/{id}")
-    public String bookLesson(@PathVariable long id) {
-        User user = userService.getUser(1);
-        Lesson lesson = userService.getLessonById(1,id);
+    @PostMapping("/lessons/bookclass/{id}")
+    public String bookLesson(@PathVariable long id,HttpServletRequest request) {
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        Lesson lesson = userService.getLessonById(user.getId(),id);
         userService.bookClass(user.getId(), lesson.getId());
         return "redirect:/profile";
     }
@@ -67,28 +71,36 @@ public class UserController {
         return "redirect:/profile";
     }
     //show the lessons that the user has booked
-    @GetMapping("/mylessons")
-    public String showMyLessons(Model model){
-        Collection<Lesson> myLessons= userService.getLessons(1);
+    @GetMapping("/profile/mylessons")
+    public String showMyLessons(Model model,HttpServletRequest request ){
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        Collection<Lesson> myLessons= userService.getLessons(user.getId());
         model.addAttribute("myLessons", myLessons);
         return "mylessons";
     }
     //book a class
-    @PostMapping("/bookClass/{id}")
-    public String bookClass(@PathVariable long id){
-        userService.bookClass(1,id);
+    @PostMapping("/lessons/bookClass/{id}")
+    public String bookClass(@PathVariable long id,HttpServletRequest request){
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        userService.bookClass(user.getId(),id);
         return "redirect:/lessons";
     }
     //delete a lessons from users timetable
-    @PostMapping ("/deleteClass/{id}")
-    public String deleteClass(@PathVariable long id){
-        userService.deleteClass(1,id);
+    @PostMapping ("/lessons/deleteClass/{id}")
+    public String deleteClass(@PathVariable long id,HttpServletRequest request){
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        userService.deleteClass(user.getId(), id);
         return "redirect:/mylessons";
     }
-    @PostMapping("/updateProfile")
+    @PostMapping("/profile/updateProfile")
     public String UpdateUser( @RequestParam(value = "fileImage", required = false) MultipartFile fileImage,
-                              @ModelAttribute User u) throws IOException {
-        userService.updateUser(1,u,fileImage);
+                              @ModelAttribute User u, HttpServletRequest request) throws IOException {
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        userService.updateUser(user.getId(), u,fileImage);
         return "redirect:/profile";
     }
     //show all user, only available for the admin
@@ -106,27 +118,31 @@ public class UserController {
     }
 
     //show all the rankings that the user has done
-    @GetMapping("/myrankings")
-    public String showMyRankings(Model model){
-        Collection<Ranking> rankings = rankingService.getRankingByUser(userService.getUser(1));
+    @GetMapping("/profile/myrankings")
+    public String showMyRankings(Model model,HttpServletRequest request){
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        Collection<Ranking> rankings = rankingService.getRankingByUser(user);
         model.addAttribute("myRankings", rankings);
         return "myRankings";
     }
     //create a ranking associated to the existing user
-    @PostMapping("/createRanking")
-    public String createRanking(@RequestParam String comment){
-        rankingService.createRanking(userService.getUser(1),comment);
+    @PostMapping("/ranking/createRanking")
+    public String createRanking(@RequestParam String comment,HttpServletRequest request){
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        rankingService.createRanking(user,comment);
         return "redirect:/ranking";
     }
     //update a ranking done by the user
-    @PostMapping("/updateRanking/{id}")
+    @PostMapping("/ranking/updateRanking/{id}")
     public String updateRanking(@RequestParam String comment, @PathVariable long id){
         rankingService.updateRanking(id, comment);
         return "redirect:/myrankings";
 
     }
     //delete a ranking done by the user
-    @PostMapping("/deleteRanking/{id}")
+    @PostMapping("/ranking/deleteRanking/{id}")
     public String deleteRanking( @PathVariable long id){
         rankingService.deleteRanking(id);
         return "redirect:/myrankings";

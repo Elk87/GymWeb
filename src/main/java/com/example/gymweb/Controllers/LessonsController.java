@@ -36,7 +36,7 @@ public class LessonsController {
      @Autowired
      UploadFileService uploadFileService;
     //Show all existing lessons
-    @GetMapping("/lessons")
+    @GetMapping("/lesson")
     public String showLessons(Model model){
         Collection<Lesson> lessons = lessonsService.getLessons();
         if(lessons.isEmpty()){
@@ -108,7 +108,7 @@ public class LessonsController {
     }
     //update an exiting lesson
 
-    @PostMapping("/updateLesson/{id}")
+    @PostMapping("/admin/updateLesson/{id}")
     public String updateLesson(Model model,@RequestParam String teacher, @ RequestParam LocalTime startTime, @RequestParam LocalTime finishTime,@RequestParam String sport, @PathVariable Long id){
         Optional<User> user = userService.findByName(teacher);
         if (user.isPresent()){

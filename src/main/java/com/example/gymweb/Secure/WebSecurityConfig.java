@@ -11,9 +11,11 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -50,28 +52,36 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         //static resources
-                        .requestMatchers("/css/**", "/js/**", "/img/**", "/bootstrap/**").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/img/**", "/bootstrap/**", "/favicon.ico").permitAll()
                         //public pages
                         .requestMatchers("/").permitAll()
-                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/login/**").permitAll()
                         .requestMatchers("/register").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/training").permitAll()
-                        .requestMatchers("/ranking").permitAll())
+                        .requestMatchers("/lesson").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/profile/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/ranking/**").authenticated()
+                        .requestMatchers("/lessons/**").authenticated())
 
                 //login
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .failureUrl("/loginIncorrect")
-                        .defaultSuccessUrl("/private") //pagina privada
+                        .defaultSuccessUrl("/profile") //pagina privada
                         .permitAll())
 
                 //logout
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
-                        .permitAll()); //punto y coma cierra todo*/
-
+                        .permitAll())
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(unauthorizedHandlerJwt)
+                ); //punto y coma cierra todo*/
+        http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
         return http.build();
     }
 }

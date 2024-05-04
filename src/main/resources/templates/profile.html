@@ -41,7 +41,7 @@
     <h1 class="title">
         <i class="fa-regular fa-user"></i>Mi Perfil</h1>
     {{#user}}
-    <form action="/updateProfile" method="post" class="grid-form" enctype="multipart/form-data">
+    <form action="/profile/updateProfile" method="post" class="grid-form" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Nombre:</label>
             <input value="{{name}}" type="text" id="name" name="name" required>
@@ -70,10 +70,17 @@
         <label class="relative-file-upload">
             Subir archivo <input id="imageFile" name="fileImage" type="file" enctype accept="image/jpeg">
         </label>
+        <input type="hidden" name="_csrf" value="{{token}}">
         <button type="submit">Guardar cambios</button>
     </form>
 
     {{/user}}
+    {{#admin}}
+    <form action="/admin" method="get">
+        <button type="submit" class="box">Admin</button>
+        <input type="hidden" name="_csrf" value="{{token}}">
+    </form>
+    {{/admin}}
 </main>
 
 </body>

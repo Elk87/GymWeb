@@ -34,8 +34,9 @@ public class User {
     private long id=-1;
     @NotNull
     private String DNI;
+    @NotNull
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles;
+    private List<String> roles=new ArrayList<>();
     @NotNull
     private String email;
     @NotNull
@@ -45,10 +46,6 @@ public class User {
     @Lob
     @JsonIgnore
     private Blob imageFile;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private UserRole role = UserRole.REGISTERED_USER;
     @Nullable
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, orphanRemoval = true)
     private List<Ranking> comments;
@@ -63,7 +60,7 @@ public class User {
     @JsonBackReference
     private List<Lesson> lessons;
     //constructor
-    public User(String name, String password, String DNI, String email, int phoneNumber, int age) {
+    public User(String name, String password, String DNI, String email, int phoneNumber, int age, String role) {
         this.name = name;
         this.password=password;
         this.DNI=DNI;
@@ -80,6 +77,7 @@ public class User {
         }
         this.comments=new ArrayList<>();
         this.lessons=new ArrayList<>();
+        this.roles.add(role);
     }
 
     public User(String name) {
@@ -118,6 +116,8 @@ public class User {
     public void setRoles(List<String> roles) {
         this.roles = roles;
     }
-
+    public void addRole(String role ){
+        this.roles.add(role);
+    }
 
 }

@@ -54,7 +54,8 @@
             <td>{{startTime}}</td>
             <td>{{finishTime}}</td>
             <td>
-                <form action="/deleteClass/{{id}}" method="post">
+                <form action="/lessons/deleteClass/{{id}}" method="post">
+                    <input type="hidden" name="_csrf" value="{{token}}">
                     <button type="submit">Desapuntarse</button>
                 </form>
             </td>
