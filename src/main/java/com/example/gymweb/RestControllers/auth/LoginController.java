@@ -1,4 +1,4 @@
-package com.example.gymweb.RestControllers;
+package com.example.gymweb.RestControllers.auth;
 
 import com.example.gymweb.Secure.jwt.AuthResponse;
 import com.example.gymweb.Secure.jwt.LoginRequest;
@@ -7,12 +7,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import com.example.gymweb.Secure.jwt.AuthResponse.Status;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
 @RequestMapping("/api/auth")
+
 public class LoginController {
     @Autowired
     private UserLoginService userService;
@@ -29,14 +33,11 @@ public class LoginController {
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponse> refreshToken(
             @CookieValue(name = "refreshToken", required = false) String refreshToken) {
-
         return userService.refresh(refreshToken);
     }
 
     @PostMapping("/logout")
     public ResponseEntity<AuthResponse> logOut(HttpServletRequest request, HttpServletResponse response) {
-
-        return ResponseEntity.ok(new AuthResponse(Status.SUCCESS, userService.logout(request, response)));
+        return ResponseEntity.ok(new AuthResponse(AuthResponse.Status.SUCCESS, userService.logout(request, response)));
     }
-
 }
