@@ -86,6 +86,11 @@ public class UserController {
         userService.addUser(newUser);
         return "redirect:/profile";
     }
+    @PostMapping("/admin/deleteUser/{id}")
+    public String deleteUser(@PathVariable long id){
+        userService.deleteUserById(id);
+        return "redirect:/admin/allUsers";
+    }
     //show the lessons that the user has booked
     @GetMapping("/profile/mylessons")
     public String showMyLessons(Model model,HttpServletRequest request ){
