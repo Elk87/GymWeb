@@ -9,6 +9,7 @@ import com.example.gymweb.Secure.jwt.UserLoginService;
 import com.example.gymweb.Services.RankingService;
 import com.example.gymweb.Services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -66,6 +67,14 @@ public class UserController {
         model.addAttribute("image", "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(user.getImageFile().getBytes(1, (int) user.getImageFile().length())));
         //model.addAttribute("lessons", userService.getLessons(user.getId()));
         return "profile";
+    }
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/logout";
     }
 
 
