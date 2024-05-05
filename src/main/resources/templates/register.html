@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -25,27 +24,26 @@
 <form action="/register" method="post">
     <h1 class="title">Sign Up</h1>
     <input type="hidden" name="_csrf" value="{{token}}">
-    <label>
-        <input placeholder="Nombre" type="text" id="name" required autofocus>
+    <label for="name">
+        <input placeholder="Nombre" type="text" id="name" name="name" required autofocus>
     </label>
-    <label>
-        <input placeholder="DNI" type="text" id="DNI" required autofocus>
+    <label for="DNI">
+        <input placeholder="DNI" type="text" id="DNI" name="DNI" required autofocus>
     </label>
-    <label>
-        <!--<i class="fa-solid fa-user"></i>-->
-        <input placeholder="Teléfono" type="text" id="phoneNumber" required autofocus>
+    <label for="phoneNumber">
+        <input placeholder="Teléfono" type="text" id="phoneNumber" name="phoneNumber" required autofocus>
     </label>
-    <label>
-        <input placeholder="Edad" type="text" id="age" required autofocus>
+    <label for="age">
+        <input placeholder="Edad" type="text" id="age" name="age" required autofocus>
     </label>
-    <label>
-        <input placeholder="Email" type="text" id="email" required autofocus>
+    <label for="email">
+        <input placeholder="Email" type="text" id="email" name="email" required autofocus>
     </label>
-    <label>
-        <input placeholder="Contraseña" type="password" id="password" required autofocus>
+    <label for="password">
+        <input placeholder="Contraseña" type="password" id="password" name="password" required autofocus>
     </label>
     <!--<input type="file" class="form-control" id="image" name="image" required> -->
-    <button  href="/register" formmethod="post" id="button">Sign Up</button>
+    <button type="submit" id="button">Sign Up</button>
 </form>
 <footer>
     <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>
