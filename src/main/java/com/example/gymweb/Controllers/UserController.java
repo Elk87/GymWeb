@@ -3,16 +3,28 @@ import com.example.gymweb.Entities.Ranking;
 import com.example.gymweb.Entities.User;
 import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Repositories.UserRepository;
+import com.example.gymweb.Secure.jwt.LoginRequest;
+import com.example.gymweb.Secure.jwt.Token;
+import com.example.gymweb.Secure.jwt.UserLoginService;
 import com.example.gymweb.Services.RankingService;
 import com.example.gymweb.Services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.security.Principal;
+import java.security.Security;
 import java.sql.SQLException;
 import java.util.Base64;
 import java.util.Collection;
@@ -25,7 +37,21 @@ public class UserController {
     UserService userService;
     @Autowired
     RankingService rankingService;
-
+    @Autowired
+    UserLoginService loginService;
+    @ModelAttribute
+    public void addAttributes(Model model, HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        if (principal != null) {
+            model.addAttribute("logged", true);
+            model.addAttribute("admin", request.isUserInRole("ADMIN"));
+            model.addAttribute("user", request.isUserInRole("USER"));
+        } else {
+            model.addAttribute("logged", false);
+        }
+        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        model.addAttribute("token", token.getToken());
+    }
     //show user profile
     @GetMapping("/profile")
     public String viewProfile(Model model, HttpServletRequest request) throws SQLException {
@@ -38,17 +64,7 @@ public class UserController {
         //model.addAttribute("lessons", userService.getLessons(user.getId()));
         return "profile";
     }
-    //check if the login is correct
-    @PostMapping("/login/submit")
-    public String login(Model model, @RequestParam String email, @RequestParam String password){
-        boolean valid= userService.checkLogin(email,password);
-        boolean error= !valid;
-        model.addAttribute("error",error); //Login invalid
-       if(valid){
-           return "redirect:/profile";
-       }
-       return "loginIncorrect";
-    }
+
 
     //user book a class
     @PostMapping("/lessons/bookclass/{id}")
@@ -85,7 +101,7 @@ public class UserController {
         String email = request.getUserPrincipal().getName();
         User user = userService.getUserByEmail(email);
         userService.bookClass(user.getId(),id);
-        return "redirect:/lessons";
+        return "redirect:/lesson";
     }
     //delete a lessons from users timetable
     @PostMapping ("/lessons/deleteClass/{id}")
@@ -93,7 +109,7 @@ public class UserController {
         String email = request.getUserPrincipal().getName();
         User user = userService.getUserByEmail(email);
         userService.deleteClass(user.getId(), id);
-        return "redirect:/mylessons";
+        return "redirect:/profile/mylessons";
     }
     @PostMapping("/profile/updateProfile")
     public String UpdateUser( @RequestParam(value = "fileImage", required = false) MultipartFile fileImage,
@@ -138,14 +154,14 @@ public class UserController {
     @PostMapping("/ranking/updateRanking/{id}")
     public String updateRanking(@RequestParam String comment, @PathVariable long id){
         rankingService.updateRanking(id, comment);
-        return "redirect:/myrankings";
+        return "redirect:/profile/myrankings";
 
     }
     //delete a ranking done by the user
     @PostMapping("/ranking/deleteRanking/{id}")
     public String deleteRanking( @PathVariable long id){
         rankingService.deleteRanking(id);
-        return "redirect:/myrankings";
+        return "redirect:/profile/myrankings";
 
     }
 }

@@ -24,10 +24,10 @@
 </style>
 <h2>Deja tu opinión</h2>
 <form action="/ranking/createRanking" method="post">
+    <input type="hidden" name="_csrf" value="{{token}}">
     <label for="comentario">Comentario:</label>
     <div id="comentario"></div>
     <input type="hidden" id="hiddenArea" name="comment">
-    <input type="hidden" name="_csrf" value="{{token}}">
     <button type="submit">Enviar</button>
 </form>
 

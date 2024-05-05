@@ -36,7 +36,7 @@ public class User {
     private String DNI;
     @NotNull
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles=new ArrayList<>();
+    private List<String> roles;
     @NotNull
     private String email;
     @NotNull
@@ -77,7 +77,7 @@ public class User {
         }
         this.comments=new ArrayList<>();
         this.lessons=new ArrayList<>();
-        this.roles.add(role);
+        this.roles=List.of(role);
     }
 
     public User(String name) {

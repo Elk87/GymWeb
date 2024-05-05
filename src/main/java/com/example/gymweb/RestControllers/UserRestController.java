@@ -20,16 +20,6 @@ public class UserRestController {
     UserService userService;
 
 
-    //code for login into an existing account
-    @GetMapping("/login")
-    public ResponseEntity<User> login(@RequestParam String email, @RequestParam String password){
-        if(userService.checkLogin(email,password)){
-            return new ResponseEntity<>(userService.getUserByEmail(email),HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
     //update users information
     @PutMapping("/changeprofile/{id}")
     public ResponseEntity<User> updateProfile(@PathVariable long id, @RequestBody User newUser, MultipartFile multipartFile) throws IOException {
