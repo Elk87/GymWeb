@@ -35,6 +35,9 @@ public class WebController {
     public String viewRanking() {
         return "ranking";//this show comments and opinions
     }
-
+    @GetMapping("/loginIncorrect")
+    public String badLogin(){
+        return "loginIncorrect";
+    }
 
 }

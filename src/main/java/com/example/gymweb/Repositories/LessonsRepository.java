@@ -20,7 +20,6 @@ public interface LessonsRepository extends JpaRepository<Lesson,Long> {
             "WHERE (:teacherName IS NULL OR l.teacher.name = :teacherName) " +
             "AND (:sport IS NULL OR l.sport = :sport)")
     List<Lesson> findByTeacherNameAndSport(@Param("teacherName") String teacherName, @Param("sport") String sport);
-
     /* void test(){//ponerlo de forma opcional
         query.setParameter("teacherName", teacherName)
     }*/

@@ -1,8 +1,10 @@
 package com.example.gymweb.Services;
 
 import com.example.gymweb.Entities.Lesson;
+import com.example.gymweb.Entities.Ranking;
 import com.example.gymweb.Entities.User;
 import com.example.gymweb.Repositories.LessonsRepository;
+import com.example.gymweb.Repositories.RankingRepository;
 import com.example.gymweb.Repositories.UserRepository;
 import com.example.gymweb.Secure.RepositoryUserDetailsService;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -30,6 +32,8 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     LessonsRepository lessonsRepository;
+    @Autowired
+    RankingRepository rankingRepository;
     @Autowired
      PasswordEncoder passwordEncoder;
     @Autowired
@@ -207,6 +211,25 @@ public class UserService {
     public User findByID(long id){
        return userRepository.findUserById(id);
     }
+    public User deleteUserById(long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            for (Lesson lesson : user.getLessons()) {
+                lesson.getUsers().remove(user);
+            }
+            for (Ranking ranking : user.getComments()) {
+                ranking.setUser(null);
+            }
+            lessonsRepository.saveAll(user.getLessons());
+            rankingRepository.saveAll(user.getComments());
+            userRepository.deleteById(id);
+            return user;
+        } else {
+            return null;
+        }
+    }
+
     public User updateUser(long id, User newUser, MultipartFile fileImage) throws IOException {
         Optional<User> u = userRepository.findById(id);
         if (u.isPresent()) {

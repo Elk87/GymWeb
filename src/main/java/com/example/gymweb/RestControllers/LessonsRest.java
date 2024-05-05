@@ -5,18 +5,24 @@ import com.example.gymweb.Repositories.LessonsRepository;
 import com.example.gymweb.Services.LessonsService;
 import com.example.gymweb.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
@@ -88,32 +94,58 @@ public class LessonsRest {
     @PostMapping("/uploadFile/{lessonId}")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable Long lessonId, RedirectAttributes redirectAttributes) {
 
-        //original name of archive
-        String originalFilename = file.getOriginalFilename(); // src/main/java/Reversa.java vulnerabilidasd mirar
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename != null) {
+            String cleanFilename = originalFilename.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
+            String storageDirectory = "files";
+            String filePath = storageDirectory + "/" + cleanFilename;
+            try {
 
+                if (!Paths.get(filePath).normalize().startsWith(Paths.get(storageDirectory).normalize())) {
+                    throw new SecurityException("Invalid file path");
+                }
 
-        String storageDirectory = "src/files";
-        String filePath = storageDirectory + "/" + originalFilename;
+                byte[] bytes = file.getBytes();
+                Path path = Paths.get(filePath);
+                Files.write(path, bytes);
 
-        try {
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(filePath);
-            Files.write(path, bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "redirect:/uploadStatus";
+                Lesson lesson = lessonsService.getLessonById(lessonId);
+                if (lesson != null) {
+                    lesson.setFilePath(filePath);
+                    lessonsService.addLesson(lesson);
+                }
+
+                redirectAttributes.addFlashAttribute("message",
+                        "You successfully uploaded " + cleanFilename + "!");
+            } catch (IOException | SecurityException e) {
+                e.printStackTrace();
+                return "redirect:/uploadStatus";
+            }
+        } else {
+
+            redirectAttributes.addFlashAttribute("message", "Invalid file name");
         }
-
-        Lesson lesson = lessonsService.getLessonById(lessonId);
-        if (lesson != null) {
-            lesson.setFilePath(filePath);
-            lessonsService.addLesson(lesson);
-        }
-
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
 
         return "redirect:/uploadStatus";
+    }@GetMapping("/lessons/{id}/image")
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+        Lesson lesson = lessonsService.getLessonById(id);
+
+        if (lesson.getFilePath() != null) {
+            Path imagePath = Paths.get(lesson.getFilePath());
+            try {
+                Resource file = new UrlResource(imagePath.toUri());
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_TYPE, "video/mp4")
+                        .contentLength(file.contentLength())
+                        .body(file);
+            } catch (IOException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al leer la imagen", e);
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
 }
