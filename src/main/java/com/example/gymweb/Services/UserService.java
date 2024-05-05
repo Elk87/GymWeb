@@ -227,6 +227,10 @@ public class UserService {
     public Optional<User> findByName(String name  ){
        return userRepository.findByName(name);
    }
+    public String findNameByEmail(String email) {
+        return userRepository.findNameByEmail(email);
+    }
+
     public List<Lesson> findLessonsByUser(List<User> user){
         return lessonsRepository.findLessonByUsers(user);
     }

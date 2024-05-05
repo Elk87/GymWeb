@@ -55,7 +55,6 @@ public class DatabaseInitializer implements CommandLineRunner {
         lessonRepository.save(lesson1);
         lessonRepository.save(lesson2);
 
-
     }
 }*/
 
