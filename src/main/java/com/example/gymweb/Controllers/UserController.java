@@ -192,6 +192,16 @@ public class UserController {
     public String deleteRanking( @PathVariable long id){
         rankingService.deleteRanking(id);
         return "redirect:/profile/myrankings";
-
     }
+    @PostMapping("/profile/delete")
+    public String deleteUser(HttpServletRequest request) {
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        userService.deleteUserById(user.getId());
+
+        request.getSession().invalidate();
+
+        return "redirect:/";
+    }
+
 }

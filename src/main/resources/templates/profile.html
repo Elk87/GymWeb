@@ -16,6 +16,12 @@
         <form action="/profile/mylessons" method="get">
             <button type="submit" class="box">Mis clases</button>
         </form>
+
+        <form action="/profile/delete" method="post">
+            <input type="hidden" name="_csrf" value="{{token}}" />
+            <button type="submit" class="btn btn-danger">Borrar mi cuenta</button>
+        </form>
+
     </nav>
 </header>
 <body>
