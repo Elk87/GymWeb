@@ -112,6 +112,7 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.GET,"/api/ranking/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET,"/api/ranking").permitAll()
                     .requestMatchers(HttpMethod.PUT,"/api/ranking/{id}").hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.PUT,"/api/uploadFile/{lessonId}").hasAnyRole("ADMIN")
 
                     // PUBLIC ENDPOINTS
                     .anyRequest().permitAll());

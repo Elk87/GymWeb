@@ -45,7 +45,6 @@ public class LessonsController {
             model.addAttribute("logged", true);
             model.addAttribute("userName", userService.findNameByEmail(principal.getName()));
             model.addAttribute("admin", request.isUserInRole("ADMIN"));
-            model.addAttribute("user", request.isUserInRole("USER"));
 
         } else {
             model.addAttribute("logged", false);

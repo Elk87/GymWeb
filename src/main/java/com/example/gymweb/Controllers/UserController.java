@@ -111,6 +111,11 @@ public class UserController {
         userService.deleteClass(user.getId(), id);
         return "redirect:/profile/mylessons";
     }
+    @PostMapping("/admin/deleteUser/{id}")
+    public String deleteUser(@PathVariable long id){
+        userService.deleteUserById(id);
+        return "redirect:/admin/allUsers";
+    }
     @PostMapping("/profile/updateProfile")
     public String UpdateUser( @RequestParam(value = "fileImage", required = false) MultipartFile fileImage,
                               @ModelAttribute User u, HttpServletRequest request) throws IOException {
