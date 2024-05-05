@@ -5,6 +5,7 @@ import com.example.gymweb.Repositories.LessonsRepository;
 import com.example.gymweb.Services.LessonsService;
 import com.example.gymweb.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -91,43 +92,37 @@ public class LessonsRest {
             @RequestParam String sport) {
         return new  ResponseEntity<>(lessonsRepository.findByTeacherNameAndSport(teacherName, sport),HttpStatus.OK);
     }
+
     @PostMapping("/uploadFile/{lessonId}")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable Long lessonId, RedirectAttributes redirectAttributes) {
 
+        //original name of archive
         String originalFilename = file.getOriginalFilename();
-        if (originalFilename != null) {
-            String cleanFilename = originalFilename.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
-            String storageDirectory = "files";
-            String filePath = storageDirectory + "/" + cleanFilename;
-            try {
-
-                if (!Paths.get(filePath).normalize().startsWith(Paths.get(storageDirectory).normalize())) {
-                    throw new SecurityException("Invalid file path");
-                }
-
-                byte[] bytes = file.getBytes();
-                Path path = Paths.get(filePath);
-                Files.write(path, bytes);
-
-                Lesson lesson = lessonsService.getLessonById(lessonId);
-                if (lesson != null) {
-                    lesson.setFilePath(filePath);
-                    lessonsService.addLesson(lesson);
-                }
-
-                redirectAttributes.addFlashAttribute("message",
-                        "You successfully uploaded " + cleanFilename + "!");
-            } catch (IOException | SecurityException e) {
-                e.printStackTrace();
-                return "redirect:/uploadStatus";
-            }
-        } else {
-
-            redirectAttributes.addFlashAttribute("message", "Invalid file name");
+        String cleanFilename = sanitizeFilename(originalFilename);
+        String storageDirectory = "src/files";
+        String filePath = storageDirectory + "/" + originalFilename;
+        try {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(filePath);
+            Files.write(path, bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "redirect:/uploadStatus";
         }
-
+        Lesson lesson = lessonsService.getLessonById(lessonId);
+        if (lesson != null) {
+            lesson.setFilePath(filePath);
+            lessonsService.addLesson(lesson);
+        }
+        redirectAttributes.addFlashAttribute("message",
+                "You successfully uploaded " + file.getOriginalFilename() + "!");
         return "redirect:/uploadStatus";
-    }@GetMapping("/lessons/{id}/image")
+
+    }
+    private String sanitizeFilename(String originalFilename) {
+        return originalFilename.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
+    }
+        @GetMapping("/lessons/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
         Lesson lesson = lessonsService.getLessonById(id);
 
@@ -146,6 +141,6 @@ public class LessonsRest {
             return ResponseEntity.notFound().build();
         }
     }
-
-
 }
+
+

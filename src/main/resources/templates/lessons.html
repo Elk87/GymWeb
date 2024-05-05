@@ -29,9 +29,9 @@
         <h3>{{sport}}</h3>
         <p class="teacher-info">Profesor: {{teacher.name}}</p>
         <p class="time-info">Hora: {{startTime}} - {{finishTime}}</p>
-        {{#if filePath}}
-        <a href="/lessons/{{id}}/image" class="btn-download" download>Descargar Archivo</a>
-        {{/if}}
+        {{#filePath}}
+        <a href="/api/lessons/{{id}}/image" class="btn-download" download>Descargar Archivo</a>
+        {{/filePath}}
         <form action="/lessons/bookClass/{{id}}" method="post">
             <input type="hidden" name="_csrf" value="{{token}}">
             <button type="submit" class="btn-enroll">Apuntarme</button>
