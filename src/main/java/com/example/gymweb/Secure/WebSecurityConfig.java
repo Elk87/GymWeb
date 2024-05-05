@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -52,7 +53,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         //static resources
-                        .requestMatchers("/css/**", "/js/**", "/img/**", "/bootstrap/**", "/favicon.ico").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/img/**", "/bootstrap/**", "/favicon.ico", "/static/**").permitAll()
                         //public pages
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/login/**").permitAll()
@@ -61,9 +62,11 @@ public class WebSecurityConfig {
                         .requestMatchers("/training").permitAll()
                         .requestMatchers("/lesson").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/profile").hasAnyRole("ADMIN", "USER")
                         .requestMatchers("/profile/**").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/ranking/**").authenticated()
-                        .requestMatchers("/lessons/**").authenticated())
+                        .requestMatchers("/ranking/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/lessons/**").hasAnyRole("ADMIN", "USER")
+                        .anyRequest().authenticated())
 
                 //login
                 .formLogin(formLogin -> formLogin
@@ -76,12 +79,8 @@ public class WebSecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
-                        .permitAll())
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .authenticationEntryPoint(unauthorizedHandlerJwt)
-                ); //punto y coma cierra todo*/
-        http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+                        .permitAll()) //punto y coma cierra todo*/
+            ;
         return http.build();
     }
 }
