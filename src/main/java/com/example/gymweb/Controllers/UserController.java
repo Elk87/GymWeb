@@ -9,12 +9,14 @@ import com.example.gymweb.Secure.jwt.UserLoginService;
 import com.example.gymweb.Services.RankingService;
 import com.example.gymweb.Services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +41,8 @@ public class UserController {
     RankingService rankingService;
     @Autowired
     UserLoginService loginService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @ModelAttribute
     public void addAttributes(Model model, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
@@ -59,8 +63,7 @@ public class UserController {
         User user = userService.getUserByEmail(email);
         model.addAttribute("user",user);
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
-        model.addAttribute("image", "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(userService.getUser(1)
-                .getImageFile().getBytes(1, (int)user.getImageFile().length())));
+        model.addAttribute("image", "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(user.getImageFile().getBytes(1, (int) user.getImageFile().length())));
         //model.addAttribute("lessons", userService.getLessons(user.getId()));
         return "profile";
     }
@@ -77,15 +80,28 @@ public class UserController {
     }
     //@PostMapping("/register")
     //create a new user
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String addUser(@RequestBody User newUser /* @RequestParam("image") MultipartFile image */) throws IOException {
+    /*@RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String addUser(@RequestBody User newUser /* @RequestParam("image") MultipartFile image ) throws IOException {
         /*if(newUser.getId()==0L){//add image to new books
             String nombreImagen=uploadFileService.saveImage(image);
             newUser.setImage(nombreImagen);
-        }*/
+        }
         userService.addUser(newUser);
         return "redirect:/profile";
+    }*/
+
+    @PostMapping("/register")
+    public String registerUser(@RequestParam String name, @RequestParam String DNI, @RequestParam String phoneNumber,@RequestParam int age, @RequestParam String email, @RequestParam String password) {
+        if (userService.getUserByEmail(email) != null) {
+            return "redirect:/register?error=email_exists";
+        }
+        User newUser = new User(name,passwordEncoder.encode(password),DNI,email,phoneNumber,age,"USER");
+
+        userService.saveUser(newUser);
+
+        return "redirect:/login?registered=true";
     }
+
     @PostMapping("/admin/deleteUser/{id}")
     public String deleteUser(@PathVariable long id){
         userService.deleteUserById(id);
@@ -116,13 +132,25 @@ public class UserController {
         userService.deleteClass(user.getId(), id);
         return "redirect:/profile/mylessons";
     }
-    @PostMapping("/profile/updateProfile")
-    public String UpdateUser( @RequestParam(value = "fileImage", required = false) MultipartFile fileImage,
-                              @ModelAttribute User u, HttpServletRequest request) throws IOException {
-        String email = request.getUserPrincipal().getName();
-        User user = userService.getUserByEmail(email);
-        userService.updateUser(user.getId(), u,fileImage);
-        return "redirect:/profile";
+    @PostMapping("/profile/updProfile")
+    public String updateUser(@RequestParam(value = "fileImage", required = false) MultipartFile fileImage,
+                             @RequestParam String name,
+                             @RequestParam int age,
+                             @RequestParam String phoneNumber,
+                             HttpServletRequest request) throws IOException {
+        String userEmail = request.getUserPrincipal().getName();
+        User existingUser = userService.getUserByEmail(userEmail);
+        existingUser.setName(name);
+        existingUser.setAge(age);
+        existingUser.setPhoneNumber(phoneNumber);
+
+        if (fileImage != null && !fileImage.isEmpty()) {
+            existingUser.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
+        }
+
+        userService.updateUser(existingUser.getId(), existingUser, fileImage);
+
+        return "redirect:/";
     }
     //show all user, only available for the admin
     @GetMapping("/admin/allUsers")
@@ -167,6 +195,16 @@ public class UserController {
     public String deleteRanking( @PathVariable long id){
         rankingService.deleteRanking(id);
         return "redirect:/profile/myrankings";
-
     }
+    @PostMapping("/profile/delete")
+    public String deleteUser(HttpServletRequest request) {
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        userService.deleteUserById(user.getId());
+
+        request.getSession().invalidate();
+
+        return "redirect:/";
+    }
+
 }
