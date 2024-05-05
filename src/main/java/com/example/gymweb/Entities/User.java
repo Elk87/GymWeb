@@ -40,7 +40,7 @@ public class User {
     @NotNull
     private String email;
     @NotNull
-    private int phoneNumber;
+    private String phoneNumber;
     @NotNull
     private int age;
     @Lob
@@ -60,7 +60,7 @@ public class User {
     @JsonBackReference
     private List<Lesson> lessons;
     //constructor
-    public User(String name, String password, String DNI, String email, int phoneNumber, int age, String role) {
+    public User(String name, String password, String DNI, String email, String phoneNumber, int age, String role) {
         this.name = name;
         this.password=password;
         this.DNI=DNI;

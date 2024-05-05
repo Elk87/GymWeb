@@ -36,9 +36,9 @@ public class DatabaseInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        User admin = new User("Admin", passwordEncoder.encode("adminPass"), "12345678A", "admin@example.com", 123456789, 30,"ADMIN");
-        User user1 = new User("John", passwordEncoder.encode("userPass"), "12345678B", "john@example.com", 987654321, 25,"USER");
-        User user2 = new User("Jane",passwordEncoder.encode("otherPass"), "12345678C", "jane@example.com", 987654322, 28,"USER");
+        User admin = new User("Admin", passwordEncoder.encode("adminPass"), "12345678A", "admin@example.com", "123456789", 30,"ADMIN");
+        User user1 = new User("John", passwordEncoder.encode("userPass"), "12345678B", "john@example.com", "987654321", 25,"USER");
+        User user2 = new User("Jane",passwordEncoder.encode("otherPass"), "12345678C", "jane@example.com", "987654322", 28,"USER");
 
         Ranking ranking1 = new Ranking("Good lesson!");
         Ranking ranking2 = new Ranking("Awesome class!");

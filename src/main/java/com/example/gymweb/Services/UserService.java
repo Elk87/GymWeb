@@ -50,6 +50,10 @@ public class UserService {
         this.userRepository=userRepository1;
     }
 
+    public void saveUser(User user){
+        userRepository.save(user);
+    }
+
     //add an user
     /*public void addUser(User user){
         long id =Id.incrementAndGet();
@@ -78,7 +82,7 @@ public class UserService {
     }
 
     //list of user by email and phone
-   public List<User> getByEmailAndPhone(int phoneNumber, String email){
+   public List<User> getByEmailAndPhone(String phoneNumber, String email){
         return userRepository.findByPhoneNumberAndEmail(phoneNumber,email);
    }
 
@@ -231,6 +235,7 @@ public class UserService {
         if (u.isPresent()) {
             User user = u.get();
             user.setName(newUser.getName());
+            user.setAge(newUser.getAge());
             user.setEmail(newUser.getEmail());
             user.setPassword(newUser.getPassword());
             user.setPhoneNumber(newUser.getPhoneNumber());
