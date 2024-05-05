@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -76,27 +77,60 @@ public class WebSecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
-                        .permitAll())
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .authenticationEntryPoint(unauthorizedHandlerJwt)
-                ); //punto y coma cierra todo*/
-        http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+                        .permitAll());
+        return http.build();
+    }
+
+    @Bean
+    @Order(1)
+    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
+        http.authenticationProvider(authenticationProvider());
+
+        http
+            .securityMatcher("/api/**")
+            .exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandlerJwt));
+
+        http
+            .authorizeHttpRequests(authorize -> authorize
+                    // PRIVATE ENDPOINTS
+                    .requestMatchers(HttpMethod.POST, "/api/").hasAnyRole("USER")
+                    .requestMatchers(HttpMethod.GET, "/api/lesson").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/lesson").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/lesson/{id}").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/lesson/{id}").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/lessonsByTeacherSport").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/api/uploadFile/{lessonId}").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/auth/login").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/api/auth/logout").hasAnyRole("ADMIN","USER")
+
+                    .requestMatchers(HttpMethod.PUT,"/api/changeprofile").hasAnyRole("USER","ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/register").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/api/deleteuser/{id}").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api/users/{id}").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/ranking").hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.DELETE,"/api/ranking/{id}").hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.GET,"/api/ranking/{id}").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/api/ranking").permitAll()
+                    .requestMatchers(HttpMethod.PUT,"/api/ranking/{id}").hasAnyRole("ADMIN","USER")
+
+                    // PUBLIC ENDPOINTS
+                    .anyRequest().permitAll());
+
+    // Disable Form login Authentication
+        http.formLogin(formLogin -> formLogin.disable());
+
+    // Disable CSRF protection (it is difficult to implement in REST APIs)
+        http.csrf(csrf -> csrf.disable());
+
+    // Disable Basic Authentication
+        http.httpBasic(httpBasic -> httpBasic.disable());
+
+    // Stateless session
+        http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+    // Add JWT Token filter
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 }
-
-   /* @Bean
-    @Order(1)
-    public SecurityFilterChain apiFilterChain(HttpSecurity http, UnauthorizedHandlerJwt unauthorizedHandlerJwt) throws Exception {
-        http.authenticationProvider(authenticationProvider());
-        http
-                .securityMatcher("/api/**")
-                .exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandlerJwt));
-        /*http
-                .authorizeHttpRequests(authorize -> authorize
-
-
-                );
-    }
-}*/
