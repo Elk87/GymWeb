@@ -50,6 +50,7 @@ public class User {
     private Blob imageFile;
     @Nullable
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, orphanRemoval = true)
+    @JsonBackReference
     private List<Ranking> comments;
 
     @Nullable
