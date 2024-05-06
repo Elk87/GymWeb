@@ -96,11 +96,19 @@ public class LessonsRest {
     @PostMapping("/uploadFile/{lessonId}")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable Long lessonId, RedirectAttributes redirectAttributes) {
 
-        //original name of archive
         String originalFilename = file.getOriginalFilename();
-        String cleanFilename = sanitizeFilename(originalFilename);
+        String cleanFilename;
+        try {
+            cleanFilename = sanitizeFilename(originalFilename);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "El nombre del archivo contiene caracteres no permitidos.");
+            return "redirect:/uploadStatus";
+        }
+
         String storageDirectory = "src/files";
-        String filePath = storageDirectory + "/" + originalFilename;
+        String filePath = storageDirectory + "/" + cleanFilename;
+
         try {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(filePath);
@@ -109,20 +117,24 @@ public class LessonsRest {
             e.printStackTrace();
             return "redirect:/uploadStatus";
         }
+
         Lesson lesson = lessonsService.getLessonById(lessonId);
         if (lesson != null) {
             lesson.setFilePath(filePath);
             lessonsService.addLesson(lesson);
         }
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
-        return "redirect:/uploadStatus";
 
+        redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + originalFilename + "!");
+        return "redirect:/uploadStatus";
     }
-    private String sanitizeFilename(String originalFilename) {
-        return originalFilename.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
+    private String sanitizeFilename(String originalFilename) throws IllegalArgumentException {
+        if (!originalFilename.matches("[a-zA-Z0-9\\.\\-]+")) {
+            throw new IllegalArgumentException("El nombre del archivo contiene caracteres no permitidos.");
+        }
+        return originalFilename;
     }
-        @GetMapping("/lessons/{id}/image")
+
+    @GetMapping("/lessons/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
         Lesson lesson = lessonsService.getLessonById(id);
 
