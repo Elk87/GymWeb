@@ -98,18 +98,23 @@ public class LessonsRest {
             @RequestParam(required = false) String sport) {
         if (teacherName == null && sport == null) {
             return new ResponseEntity<>(lessonsRepository.findAll(), HttpStatus.OK);
-        } else if (teacherName != null && sport != null) {
-            List<Lesson> lessons = lessonsRepository.findByTeacherNameAndSport(teacherName, sport);
-            return new ResponseEntity<>(lessons, HttpStatus.OK);
-        } else if (teacherName != null) {
-            List<Lesson> lessons = lessonsRepository.findByTeacherNameAndSport(teacherName, null);
-            return new ResponseEntity<>(lessons, HttpStatus.OK);
-        } else if (sport != null) {
+        } else if (teacherName != null && !teacherName.isEmpty()) {
+            if (sport != null && !sport.isEmpty()) {
+                List<Lesson> lessons = lessonsRepository.findByTeacherNameAndSport(teacherName, sport);
+                return new ResponseEntity<>(lessons, HttpStatus.OK);
+            } else {
+                List<Lesson> lessons = lessonsRepository.findByTeacherNameAndSport(teacherName, null);
+                return new ResponseEntity<>(lessons, HttpStatus.OK);
+            }
+        } else if (sport != null && !sport.isEmpty()) {
             List<Lesson> lessons = lessonsRepository.findByTeacherNameAndSport(null, sport);
             return new ResponseEntity<>(lessons, HttpStatus.OK);
+        }else if(teacherName.isEmpty() && sport.isEmpty()){
+            return new ResponseEntity<>(lessonsRepository.findAll(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
 
 
 
