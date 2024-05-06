@@ -27,14 +27,14 @@
       <td>
         <p>{{{comment}}}</p>
         <form method="post" action="/ranking/updateRanking/{{id}}">
-          <input type="hidden" name="_csrf" value="{{token}}">
+          <input type="hidden" name="{{_crsf.parameterName}}" value="{{_crsf.token}}"/>
           <label>
             <textarea name="comment" placeholder="{{comment}}" rows="3" cols="50" required>{{comment}}</textarea>
           </label>
           <button type="submit">Editar</button>
         </form>
         <form action="/ranking/deleteRanking/{{id}}" method="post">
-          <input type="hidden" name="_csrf" value="{{token}}">
+          <input type="hidden" name="{{_crsf.parameterName}}" value="{{_crsf.token}}"/>
           <button type="submit" class="btn-enroll">Eliminar</button>
         </form>
       </td>

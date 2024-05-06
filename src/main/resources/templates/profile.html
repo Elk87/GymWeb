@@ -18,12 +18,12 @@
         </form>
 
         <form action="/logout" method="post">
-            <input type="hidden" name="_csrf" value="{{token}}" />
+            <input type="hidden" name="{{_crsf.parameterName}}" value="{{_crsf.token}}"/>
             <button type="submit" class="btn btn-secondary">Cerrar sesión</button>
         </form>
 
         <form action="/profile/delete" method="post">
-            <input type="hidden" name="_csrf" value="{{token}}" />
+            <input type="hidden" name="{{_crsf.parameterName}}" value="{{_crsf.token}}"/>
             <button type="submit" class="btn btn-danger">Borrar mi cuenta</button>
         </form>
 
@@ -77,7 +77,7 @@
         <label class="relative-file-upload">
             Subir archivo <input id="imageFile" name="fileImage" type="file" enctype accept="image/jpeg">
         </label>
-        <input type="hidden" name="_csrf" value="{{token}}">
+        <input type="hidden" name="{{_crsf.parameterName}}" value="{{_crsf.token}}"/>
         <button type="submit">Guardar cambios</button>
     </form>
 

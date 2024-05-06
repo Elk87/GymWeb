@@ -16,7 +16,7 @@
 
 <section id="add-lesson">
   <form action="/admin/add/Lesson" method="post">
-    <input type="hidden" name="_csrf" value="{{token}}">
+    <input type="hidden" name="{{_crsf.parameterName}}" value="{{_crsf.token}}"/>
     <div class="form-group">
       <label for="teacher">Profesor:</label>
       <input type="text" id="teacher" name="teacher" placeholder="Nombre del Profesor" required>

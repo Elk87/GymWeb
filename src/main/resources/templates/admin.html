@@ -22,7 +22,7 @@
   {{#Lessons}}
   <div class="class-form">
     <form action="/admin/updateLesson/{{id}}" class="grid-form" method="post">
-      <input type="hidden" name="_csrf" value="{{token}}">
+      <input type="hidden" name="{{_crsf.parameterName}}" value="{{_crsf.token}}"/>
       <div class="form-group">
         <label for="sport">Deporte:</label>
         <input value="{{sport}}" type="text" id="sport" name="sport" required>
@@ -47,7 +47,7 @@
     </form>
 
     <form action="/admin/deleteLesson/{{id}}" method="post">
-      <input type="hidden" name="_csrf" value="{{token}}">
+      <input type="hidden" name="{{_crsf.parameterName}}" value="{{_crsf.token}}"/>
       <div class="form-group">
         <button type="submit" class="btn-enroll">Eliminar</button>
       </div>

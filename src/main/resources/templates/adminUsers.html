@@ -26,7 +26,7 @@
                     <p><strong>Edad:</strong> {{age}}</p>
                 </div>
                 <form action="/admin/deleteUser/{{id}}" method="post">
-                    <input type="hidden" name="_csrf" value="{{token}}">
+                    <input type="hidden" name="{{_crsf.parameterName}}" value="{{_crsf.token}}"/>
                     <div class="form-group">
                         <button type="submit" class="btn-enroll">Eliminar</button>
                     </div>

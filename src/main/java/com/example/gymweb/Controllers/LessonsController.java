@@ -95,7 +95,7 @@ public class LessonsController {
                             @RequestParam LocalTime startTime,
                             @RequestParam LocalTime finishTime,
                             @RequestParam String sport) {
-        Optional<User> u = userService.findByName(teacher);
+        Optional<User> u = userService.findByName(Secure.deleteDangerous(teacher));
         if (u.isPresent()) {
             Lesson lesson = new Lesson();
             lesson.setTeacher(userService.findByName(Secure.deleteDangerous(teacher)).get());

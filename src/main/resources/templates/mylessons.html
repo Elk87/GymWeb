@@ -55,7 +55,7 @@
             <td>{{finishTime}}</td>
             <td>
                 <form action="/lessons/deleteClass/{{id}}" method="post">
-                    <input type="hidden" name="_csrf" value="{{token}}">
+                    <input type="hidden" name="{{_crsf.parameterName}}" value="{{_crsf.token}}"/>
                     <button type="submit">Desapuntarse</button>
                 </form>
             </td>

@@ -53,7 +53,7 @@
         <label class="relative-file-upload">
             Subir archivo <input id="imageFile" name="fileImage" type="file" enctype accept="image/jpeg">
         </label>
-        <input type="hidden" name="_csrf" value="{{token}}">
+        <input type="hidden" name="{{_crsf.parameterName}}" value="{{_crsf.token}}"/>
         <button type="submit">Guardar cambios</button>
     </form>
 

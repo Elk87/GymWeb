@@ -60,7 +60,7 @@
 </style>
 <form action="/login" method="post">
     <h1 class="title">Login</h1>
-    <input type="hidden" name="_csrf" value="{{token}}">
+    <input type="hidden" name="{{_crsf.parameterName}}" value="{{_crsf.token}}"/>
     <label for="username" class="sr-only">Email</label>
     <input type="text" id="username" name="username" class="form-control" placeholder="Email" required autofocus>
     <label for="password" class="sr-only">Password</label>
