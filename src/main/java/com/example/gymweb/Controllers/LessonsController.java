@@ -111,7 +111,7 @@ public class LessonsController {
             model.addAttribute("Lessons", lessons);
         }
 
-        return "admin";
+        return "redirect:/admin";
     }
 
     //Admin can delete some classes by their ID
@@ -124,7 +124,7 @@ public class LessonsController {
         } else {
             model.addAttribute("Lessons", lessons);
         }
-        return "admin";
+        return "redirect:/admin";
     }
 
     //Update an existing lesson
@@ -144,6 +144,6 @@ public class LessonsController {
             model.addAttribute("Lessons", lessons);
         }
 
-        return "admin";
+        return "redirect:/admin";
     }
 }

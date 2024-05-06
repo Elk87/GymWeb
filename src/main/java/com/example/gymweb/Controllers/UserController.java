@@ -83,7 +83,7 @@ public class UserController {
         User user = userService.getUserByEmail(email);
         Lesson lesson = userService.getLessonById(user.getId(),id);
         userService.bookClass(user.getId(), lesson.getId());
-        return "profile";
+        return "redirect:/lesson";
     }
     //@PostMapping("/register")
     //create a new user
@@ -112,7 +112,7 @@ public class UserController {
     @PostMapping("/admin/deleteUser/{id}")
     public String deleteUser(@PathVariable long id){
         userService.deleteUserById(id);
-        return "adminUsers";
+        return "redirect:/admin/allUsers";
     }
     //show the lessons that the user has booked
     @GetMapping("/profile/mylessons")
@@ -129,7 +129,7 @@ public class UserController {
         String email = request.getUserPrincipal().getName();
         User user = userService.getUserByEmail(email);
         userService.bookClass(user.getId(),id);
-        return "lessons";
+        return "redirect:/lesson";
     }
     //delete a lessons from users timetable
     @PostMapping ("/lessons/deleteClass/{id}")
@@ -137,7 +137,7 @@ public class UserController {
         String email = request.getUserPrincipal().getName();
         User user = userService.getUserByEmail(email);
         userService.deleteClass(user.getId(), id);
-        return "mylessons";
+        return "redirect:/profile/mylessons";
     }
     @PostMapping("/profile/updProfile")
     public String updateUser(@RequestParam(value = "fileImage", required = false) MultipartFile fileImage,
@@ -157,7 +157,7 @@ public class UserController {
 
         userService.updateUser(existingUser.getId(), existingUser, fileImage);
 
-        return "profile";
+        return "redirect:/profile";
     }
     //show all user, only available for the admin
     @GetMapping("/admin/allUsers")
@@ -194,14 +194,14 @@ public class UserController {
     @PostMapping("/ranking/updateRanking/{id}")
     public String updateRanking(@RequestParam String comment, @PathVariable long id){
         rankingService.updateRanking(id, comment);
-        return "myRankings";
+        return "redirect:/profile/myrankings";
 
     }
     //delete a ranking done by the user
     @PostMapping("/ranking/deleteRanking/{id}")
     public String deleteRanking( @PathVariable long id){
         rankingService.deleteRanking(id);
-        return "myRankings";
+        return "redirect:/profile/myrankings";
     }
     @PostMapping("/profile/delete")
     public String deleteUser(HttpServletRequest request) {
