@@ -110,10 +110,11 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}").hasAnyRole("ADMIN")
                     .requestMatchers(HttpMethod.POST,"/api/ranking").hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.DELETE,"/api/ranking/{id}").hasAnyRole("ADMIN","USER")
-                    .requestMatchers(HttpMethod.GET,"/api/ranking/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET,"/api/ranking").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/api/ranking/{id}").hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.GET,"/api/ranking").hasAnyRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT,"/api/ranking/{id}").hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.PUT,"/api/uploadFile/{lessonId}").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api/admin/allUsers").hasAnyRole("ADMIN")
 
                     // PUBLIC ENDPOINTS
                     .anyRequest().permitAll());
