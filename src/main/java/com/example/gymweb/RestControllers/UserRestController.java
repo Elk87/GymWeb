@@ -73,7 +73,7 @@ public class UserRestController {
     @DeleteMapping("/deleteMyUser")
     public ResponseEntity<User> deleteMyUser(HttpServletRequest request) {
         String name = request.getUserPrincipal().getName();
-        User user = userService.findByName(name).orElseThrow();
+        User user = userService.getUserByEmail(name);
         userService.deleteUserById(user.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
