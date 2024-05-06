@@ -15,6 +15,8 @@ public interface RankingRepository extends JpaRepository<Ranking,Long> {
    Ranking findRankingById(Long id);
    @Transactional
    void deleteById(Long id);
+   @Transactional
+    void deleteAllByUser(User user);
 }
 
 

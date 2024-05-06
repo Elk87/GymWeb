@@ -1,4 +1,4 @@
-/*package com.example.gymweb.Services;
+package com.example.gymweb.Services;
                                                               //  Comentado para que no se añada constantemente
 import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.Ranking;
@@ -50,11 +50,10 @@ public class DatabaseInitializer implements CommandLineRunner {
         Lesson lesson1 = new Lesson(user1, LocalTime.of(10, 0), LocalTime.of(11, 0), "Yoga");
         Lesson lesson2 = new Lesson(user2, LocalTime.of(15, 0), LocalTime.of(16, 0), "Zumba");
 
-        user1.addLessons(lesson1);
-        user2.addLessons(lesson2);
+
         lessonRepository.save(lesson1);
         lessonRepository.save(lesson2);
 
     }
-}*/
+}
 

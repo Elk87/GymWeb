@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class Lesson {
-    @NotNull
+    @Nullable
     @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "teacher_id")
     @JsonManagedReference

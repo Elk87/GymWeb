@@ -29,12 +29,13 @@ public class UserRestController {
 
 
     //update users information
-    @PutMapping("/changeprofile/{id}")
-    public ResponseEntity<User> updateProfile(@PathVariable long id, @RequestBody User newUser, MultipartFile multipartFile) throws IOException {
-        User oldUser= userService.getUser(id);
+    @PutMapping("/changeprofile")
+    public ResponseEntity<User> updateProfile(HttpServletRequest request, @RequestBody User newUser, MultipartFile multipartFile) throws IOException {
+        String email = request.getUserPrincipal().getName();
+        User oldUser= userService.getUserByEmail(email);
         if (oldUser!= null) {
-            newUser.setId(id);
-            User user= userService.updateUser(id,newUser, multipartFile);
+            newUser.setId(oldUser.getId());
+            User user= userService.updateUser(oldUser.getId(), newUser, multipartFile);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

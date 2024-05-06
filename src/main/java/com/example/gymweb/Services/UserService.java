@@ -216,10 +216,19 @@ public class UserService {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
+
             for (Lesson lesson : user.getLessons()) {
-                lesson.setUsers(null);
+                lesson.getUsers().remove(user);
             }
             lessonsRepository.saveAll(user.getLessons());
+
+            List<Lesson> lessonsAsTeacher = lessonsRepository.findLessonByTeacher(user);
+            for (Lesson lesson : lessonsAsTeacher) {
+                lessonsRepository.delete(lesson);
+
+            }
+            lessonsRepository.saveAll(lessonsAsTeacher);
+
             rankingRepository.deleteAll(user.getComments());
             userRepository.deleteById(id);
             return user;

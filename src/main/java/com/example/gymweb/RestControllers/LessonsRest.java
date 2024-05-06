@@ -2,6 +2,7 @@ package com.example.gymweb.RestControllers;
 import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.User;
 import com.example.gymweb.Repositories.LessonsRepository;
+import com.example.gymweb.Secure.Secure;
 import com.example.gymweb.Services.LessonsService;
 import com.example.gymweb.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,9 +61,20 @@ public class LessonsRest {
 
     //to create a lesson
     @PostMapping("/lesson")
-    public ResponseEntity<Lesson> createLesson(@RequestBody Lesson lesson) {
-        lessonsService.addLesson(lesson);
-        return new ResponseEntity<>(lesson, HttpStatus.CREATED);
+    public ResponseEntity<Lesson> createLesson( @RequestParam String teacher,
+                                                @RequestParam LocalTime startTime,
+                                                @RequestParam LocalTime finishTime,
+                                                @RequestParam String sport) {
+        Optional<User> u = userService.findByName(Secure.deleteDangerous(teacher));
+        if (u.isPresent()) {
+            Lesson lesson = new Lesson();
+            lesson.setTeacher(userService.findByName(Secure.deleteDangerous(teacher)).get());
+            lesson.setStartTime(startTime);
+            lesson.setFinishTime(finishTime);
+            lesson.setSport(Secure.deleteDangerous(sport));
+            lessonsService.addLesson(lesson);
+            return new ResponseEntity<>(lesson,HttpStatus.CREATED);
+        }return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     //this code is for deleting a lesson
