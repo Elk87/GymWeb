@@ -39,6 +39,7 @@ public class LessonsRest {
     LessonsRepository lessonsRepository;
     @Autowired
     UserService userService;
+
     //to get lesson by id
     @GetMapping("/lesson/{id}")
     public ResponseEntity<Lesson> getLessonById(@PathVariable long id) {
@@ -49,18 +50,21 @@ public class LessonsRest {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     //to get all lessons
     @GetMapping("/lesson")
     public ResponseEntity<Collection<Lesson>> getAllLessons() {
         Collection<Lesson> lessons = lessonsService.getLessons();
         return new ResponseEntity<>(lessons, HttpStatus.OK);
     }
+
     //to create a lesson
     @PostMapping("/lesson")
     public ResponseEntity<Lesson> createLesson(@RequestBody Lesson lesson) {
         lessonsService.addLesson(lesson);
         return new ResponseEntity<>(lesson, HttpStatus.CREATED);
     }
+
     //this code is for deleting a lesson
     @DeleteMapping("/lesson/{id}")
     public ResponseEntity<?> deleteLesson(@PathVariable long id) {
@@ -71,27 +75,43 @@ public class LessonsRest {
         lessonsService.deleteLessonById(id);
         return new ResponseEntity<>(lesson, HttpStatus.OK);
     }
+
     //update an existing lesson giving his ID
     @PutMapping("/lesson/{id}")
-    public ResponseEntity<Lesson> updateLesson(BindingResult bindingResult, @RequestParam String teacher, @ RequestParam LocalTime startTime, @RequestParam LocalTime finishTime, @RequestParam String sport, @PathVariable Long id){
-        if (bindingResult.hasErrors()){
+    public ResponseEntity<Lesson> updateLesson(BindingResult bindingResult, @RequestParam String teacher, @RequestParam LocalTime startTime, @RequestParam LocalTime finishTime, @RequestParam String sport, @PathVariable Long id) {
+        if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Optional<User> user = userService.findByName(teacher);
-        if (user.isPresent()){
+        if (user.isPresent()) {
             User t = user.get();
-            Lesson newLesson = new Lesson(t,startTime,finishTime,sport);
+            Lesson newLesson = new Lesson(t, startTime, finishTime, sport);
             lessonsService.updateLesson(id, newLesson);
-            return new ResponseEntity<>(newLesson,HttpStatus.OK);
+            return new ResponseEntity<>(newLesson, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     @GetMapping("/lessonsByTeacherSport")
     public ResponseEntity<List<Lesson>> getLessonsByTeacherAndSport(
-            @RequestParam String teacherName,
-            @RequestParam String sport) {
-        return new  ResponseEntity<>(lessonsRepository.findByTeacherNameAndSport(teacherName, sport),HttpStatus.OK);
+            @RequestParam(required = false) String teacherName,
+            @RequestParam(required = false) String sport) {
+        if (teacherName == null && sport == null) {
+            return new ResponseEntity<>(lessonsRepository.findAll(), HttpStatus.OK);
+        } else if (teacherName != null && sport != null) {
+            List<Lesson> lessons = lessonsRepository.findByTeacherNameAndSport(teacherName, sport);
+            return new ResponseEntity<>(lessons, HttpStatus.OK);
+        } else if (teacherName != null) {
+            List<Lesson> lessons = lessonsRepository.findByTeacherNameAndSport(teacherName, null);
+            return new ResponseEntity<>(lessons, HttpStatus.OK);
+        } else if (sport != null) {
+            List<Lesson> lessons = lessonsRepository.findByTeacherNameAndSport(null, sport);
+            return new ResponseEntity<>(lessons, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
 
     @PostMapping("/uploadFile/{lessonId}")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable Long lessonId, RedirectAttributes redirectAttributes) {
