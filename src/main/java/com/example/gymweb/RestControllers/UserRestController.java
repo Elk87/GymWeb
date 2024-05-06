@@ -3,6 +3,7 @@ package com.example.gymweb.RestControllers;
 import com.example.gymweb.Services.UserService;
 import com.example.gymweb.Entities.User;
 import jakarta.servlet.http.HttpServletRequest;
+import org.hibernate.engine.jdbc.connections.internal.UserSuppliedConnectionProviderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -56,11 +57,12 @@ public class UserRestController {
     //delete an user using his ID
     @DeleteMapping("/deleteuser/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable long id) {
-        if(userService.getUser(id).getId()==-1){
+       User user= userService.getUser(id);
+        if(user!=null){
+            userService.deleteUserById(id);
+            return new ResponseEntity<>(user,HttpStatus.OK);
+        }else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }else{
-            userService.removeUser(id);
-            return new ResponseEntity<>(HttpStatus.OK);
         }
         //userService.removeUser(id);
 
@@ -73,7 +75,7 @@ public class UserRestController {
     @DeleteMapping("/deleteMyUser")
     public ResponseEntity<User> deleteMyUser(HttpServletRequest request) {
         String name = request.getUserPrincipal().getName();
-        User user = userService.findByName(name).orElseThrow();
+        User user = userService.getUserByEmail(name);
         userService.deleteUserById(user.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }

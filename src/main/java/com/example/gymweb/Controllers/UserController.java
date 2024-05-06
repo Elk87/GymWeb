@@ -163,12 +163,7 @@ public class UserController {
     @GetMapping("/admin/allUsers")
     public String showAllUsers(Model model) throws SQLException {
         Collection<User> users = userService.getAllUsers();
-        for (User u : users){
-            long id = u.getId();
-            String imageKey = "image" + id;
-            model.addAttribute(imageKey, "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(userService.getUser(id)
-                    .getImageFile().getBytes(1, (int) userService.getUser(id).getImageFile().length())));
-        }
+
         model.addAttribute("Users", users);
         return "adminUsers";
     }

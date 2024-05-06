@@ -217,19 +217,17 @@ public class UserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             for (Lesson lesson : user.getLessons()) {
-                lesson.getUsers().remove(user);
-            }
-            for (Ranking ranking : user.getComments()) {
-                ranking.setUser(null);
+                lesson.setUsers(null);
             }
             lessonsRepository.saveAll(user.getLessons());
-            rankingRepository.saveAll(user.getComments());
+            rankingRepository.deleteAll(user.getComments());
             userRepository.deleteById(id);
             return user;
         } else {
             return null;
         }
     }
+
 
     public User updateUser(long id, User newUser, MultipartFile fileImage) throws IOException {
         Optional<User> u = userRepository.findById(id);
