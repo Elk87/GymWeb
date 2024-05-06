@@ -107,6 +107,7 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.PUT,"/api/changeprofile").hasAnyRole("USER","ADMIN")
                     .requestMatchers(HttpMethod.POST,"/api/register").permitAll()
                     .requestMatchers(HttpMethod.POST,"/api/deleteuser/{id}").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE,"/api/deleteMyUser").hasAnyRole("USER","ADMIN")
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}").hasAnyRole("ADMIN")
                     .requestMatchers(HttpMethod.POST,"/api/ranking").hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.DELETE,"/api/ranking/{id}").hasAnyRole("ADMIN","USER")

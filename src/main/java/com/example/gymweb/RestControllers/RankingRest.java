@@ -4,10 +4,13 @@ import com.example.gymweb.Entities.Ranking;
 import com.example.gymweb.Entities.User;
 import com.example.gymweb.Services.RankingService;
 import com.example.gymweb.Services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.http.HttpTimeoutException;
 import java.util.Collection;
 
 
@@ -20,8 +23,9 @@ public class RankingRest {
     UserService userService;
     //create a ranking using a comment, this comment is associated to the existing user
     @PostMapping("/ranking")
-    public ResponseEntity<Ranking> createRanking(@RequestParam String comment) {
-        Ranking ranking= rankingService.createRanking(userService.getUser(1),comment);
+    public ResponseEntity<Ranking> createRanking(@RequestParam String comment, HttpServletRequest request) {
+        String email = request.getUserPrincipal().getName();
+        Ranking ranking= rankingService.createRanking(userService.getUserByEmail(email),comment);
         return new ResponseEntity<>(ranking, HttpStatus.CREATED);
     }
     //delete a ranking using his ID
