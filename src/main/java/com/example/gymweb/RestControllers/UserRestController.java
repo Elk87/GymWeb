@@ -2,7 +2,9 @@ package com.example.gymweb.RestControllers;
 
 import com.example.gymweb.Services.UserService;
 import com.example.gymweb.Entities.User;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,6 +69,14 @@ public class UserRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }*/
     }
+    @DeleteMapping("/deleteMyUser")
+    public ResponseEntity<User> deleteMyUser(HttpServletRequest request) {
+        String name = request.getUserPrincipal().getName();
+        User user = userService.findByName(name).orElseThrow();
+        userService.deleteUserById(user.getId());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     //show users based on their ID
     @GetMapping("/users/{id}")
     public ResponseEntity<User> showUser(@PathVariable long id) {
