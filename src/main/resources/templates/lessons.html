@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clases Disponibles</title>
+    <link rel="stylesheet" href="/css/lessonNew.css">
     <link rel="stylesheet" href="/css/estilo.css">
     <link rel="stylesheet" href="/css/lessons.css">
     <link rel="stylesheet" href="/css/allLessons.css">
@@ -15,11 +16,23 @@
     <a  class="navbar-brand" href="/"> <h1>GYMRAT</h1> </a>
 </header>
 
+<section id="filter-classes">
+    <h2>Filtrar Clases</h2>
+    <form id="filter-form">
+        <label for="teacher">Profesor:</label>
+        <input type="text" id="teacher" name="teacher">
+
+        <label for="sport">Deporte:</label>
+        <input type="text" id="sport" name="sport">
+
+        <button type="button" onclick="filterClasses()">Filtrar</button>
+    </form>
+</section>
+
 <section id="available-classes">
     <h2>Clases Disponibles</h2>
     <div id="classes-list"></div>
 </section>
-
 
 <div id="class-template" type="text/template">
     {{#noLessons}}
@@ -43,8 +56,54 @@
     </form>
 </div>
 
-</body>
 <footer>
     <p>&copy; 2024 Gimnasio Fitness. Todos los derechos reservados.</p>
 </footer>
+
+<script>
+    function filterClasses() {
+        var teacher = document.getElementById('teacher').value;
+        var sport = document.getElementById('sport').value;
+
+        var url = '/api/lessonsByTeacherSport';
+        if (teacher && sport) {
+            url += '?teacherName=' + encodeURIComponent(teacher) + '&sport=' + encodeURIComponent(sport);
+        } else if (teacher) {
+            url += '?teacherName=' + encodeURIComponent(teacher);
+        } else if (sport) {
+            url += '?sport=' + encodeURIComponent(sport);
+        }
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => displayFilteredClasses(data))
+            .catch(error => console.error('Error:', error));
+    }
+
+    function displayFilteredClasses(classes) {
+        var classesList = document.getElementById('classes-list');
+        classesList.innerHTML = '';
+
+        if (classes.length === 0) {
+            classesList.innerHTML = '<p>No hay clases  con esos criterios de búsqueda.</p>';
+            return;
+        }
+
+        classes.forEach(function(lesson) {
+            var lessonCard = document.createElement('div');
+            lessonCard.classList.add('lesson-card');
+            lessonCard.innerHTML = '<h3>' + lesson.sport + '</h3>' +
+                '<p class="teacher-info">Profesor: ' + lesson.teacher.name + '</p>' +
+                '<p class="time-info">Hora: ' + lesson.startTime + ' - ' + lesson.finishTime + '</p>' +
+                (lesson.filePath ? '<a href="/api/lessons/' + lesson.id + '/image" class="btn-download" download>Descargar Archivo</a>' : '') +
+                '<form action="/lessons/bookClass/' + lesson.id + '" method="post">' +
+                '<input type="hidden" name="_csrf" value="' + lesson.token + '">' +
+                '<button type="submit" class="btn-enroll">Apuntarme</button>' +
+                '</form>';
+            classesList.appendChild(lessonCard);
+        });
+    }
+</script>
+
+</body>
 </html>
