@@ -15,8 +15,6 @@ public class WebController {
     }
     @GetMapping("/login")
     public String showLogin(Model model, HttpServletRequest request){
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
         return "login";
     }
     @GetMapping("/register")

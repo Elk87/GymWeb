@@ -54,8 +54,6 @@ public class UserController {
         } else {
             model.addAttribute("logged", false);
         }
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        model.addAttribute("token", token.getToken());
     }
     //show user profile
     @GetMapping("/profile")
@@ -74,7 +72,7 @@ public class UserController {
         if (session != null) {
             session.invalidate();
         }
-        return "redirect:/logout";
+        return "index";
     }
 
 
@@ -85,7 +83,7 @@ public class UserController {
         User user = userService.getUserByEmail(email);
         Lesson lesson = userService.getLessonById(user.getId(),id);
         userService.bookClass(user.getId(), lesson.getId());
-        return "redirect:/profile";
+        return "profile";
     }
     //@PostMapping("/register")
     //create a new user
@@ -108,13 +106,13 @@ public class UserController {
 
         userService.saveUser(newUser);
 
-        return "redirect:/login?registered=true";
+        return "login";
     }
 
     @PostMapping("/admin/deleteUser/{id}")
     public String deleteUser(@PathVariable long id){
         userService.deleteUserById(id);
-        return "redirect:/admin/allUsers";
+        return "adminUsers";
     }
     //show the lessons that the user has booked
     @GetMapping("/profile/mylessons")
@@ -131,7 +129,7 @@ public class UserController {
         String email = request.getUserPrincipal().getName();
         User user = userService.getUserByEmail(email);
         userService.bookClass(user.getId(),id);
-        return "redirect:/lesson";
+        return "lessons";
     }
     //delete a lessons from users timetable
     @PostMapping ("/lessons/deleteClass/{id}")
@@ -139,7 +137,7 @@ public class UserController {
         String email = request.getUserPrincipal().getName();
         User user = userService.getUserByEmail(email);
         userService.deleteClass(user.getId(), id);
-        return "redirect:/profile/mylessons";
+        return "mylessons";
     }
     @PostMapping("/profile/updProfile")
     public String updateUser(@RequestParam(value = "fileImage", required = false) MultipartFile fileImage,
@@ -159,7 +157,7 @@ public class UserController {
 
         userService.updateUser(existingUser.getId(), existingUser, fileImage);
 
-        return "redirect:/";
+        return "profile";
     }
     //show all user, only available for the admin
     @GetMapping("/admin/allUsers")
@@ -190,20 +188,20 @@ public class UserController {
         String email = request.getUserPrincipal().getName();
         User user = userService.getUserByEmail(email);
         rankingService.createRanking(user,comment);
-        return "redirect:/ranking";
+        return "ranking";
     }
     //update a ranking done by the user
     @PostMapping("/ranking/updateRanking/{id}")
     public String updateRanking(@RequestParam String comment, @PathVariable long id){
         rankingService.updateRanking(id, comment);
-        return "redirect:/profile/myrankings";
+        return "myRankings";
 
     }
     //delete a ranking done by the user
     @PostMapping("/ranking/deleteRanking/{id}")
     public String deleteRanking( @PathVariable long id){
         rankingService.deleteRanking(id);
-        return "redirect:/profile/myrankings";
+        return "myRankings";
     }
     @PostMapping("/profile/delete")
     public String deleteUser(HttpServletRequest request) {
@@ -213,7 +211,7 @@ public class UserController {
 
         request.getSession().invalidate();
 
-        return "redirect:/";
+        return "index";
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.gymweb.Controllers;
 
 import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.User;
+import com.example.gymweb.Secure.Secure;
 import com.example.gymweb.Services.LessonsService;
 import com.example.gymweb.Services.UploadFileService;
 import com.example.gymweb.Services.UserService;
@@ -97,10 +98,10 @@ public class LessonsController {
         Optional<User> u = userService.findByName(teacher);
         if (u.isPresent()) {
             Lesson lesson = new Lesson();
-            lesson.setTeacher(userService.findByName(teacher).get());
+            lesson.setTeacher(userService.findByName(Secure.deleteDangerous(teacher)).get());
             lesson.setStartTime(startTime);
             lesson.setFinishTime(finishTime);
-            lesson.setSport(sport);
+            lesson.setSport(Secure.deleteDangerous(sport));
             lessonsService.addLesson(lesson);
         }
         Collection<Lesson> lessons = lessonsService.getLessons();
@@ -129,10 +130,10 @@ public class LessonsController {
     //Update an existing lesson
     @PostMapping("/admin/updateLesson/{id}")
     public String updateLesson(Model model, @RequestParam String teacher, @RequestParam LocalTime startTime, @RequestParam LocalTime finishTime, @RequestParam String sport, @PathVariable Long id) {
-        Optional<User> user = userService.findByName(teacher);
+        Optional<User> user = userService.findByName(Secure.deleteDangerous(teacher));
         if (user.isPresent()) {
             User t = user.get();
-            Lesson newLesson = new Lesson(t, startTime, finishTime, sport);
+            Lesson newLesson = new Lesson(t, startTime, finishTime, Secure.deleteDangerous(sport));
             lessonsService.updateLesson(id, newLesson);
         }
 

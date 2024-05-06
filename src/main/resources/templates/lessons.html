@@ -19,6 +19,7 @@
 <section id="filter-classes">
     <h2>Filtrar Clases</h2>
     <form id="filter-form">
+        <input type="hidden" name="_csrf" value="{{token}}">
         <label for="teacher">Profesor:</label>
         <input type="text" id="teacher" name="teacher">
 
@@ -98,7 +99,6 @@
                 (lesson.filePath ? '<a href="/api/lessons/' + lesson.id + '/image" class="btn-download" download>Descargar Archivo</a>' : '') +
                 '<form action="/lessons/bookClass/' + lesson.id + '" method="post">' +
                 '<input type="hidden" name="_csrf" value="' + lesson.token + '">' +
-                '<button type="submit" class="btn-enroll">Apuntarme</button>' +
                 '</form>';
             classesList.appendChild(lessonCard);
         });
