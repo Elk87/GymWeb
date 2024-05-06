@@ -90,10 +90,7 @@ public class LessonsRest {
 
     //update an existing lesson giving his ID
     @PutMapping("/lesson/{id}")
-    public ResponseEntity<Lesson> updateLesson(BindingResult bindingResult, @RequestParam String teacher, @RequestParam LocalTime startTime, @RequestParam LocalTime finishTime, @RequestParam String sport, @PathVariable Long id) {
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Lesson> updateLesson(@RequestParam String teacher, @RequestParam LocalTime startTime, @RequestParam LocalTime finishTime, @RequestParam String sport, @PathVariable Long id) {
         Optional<User> user = userService.findByName(teacher);
         if (user.isPresent()) {
             User t = user.get();
