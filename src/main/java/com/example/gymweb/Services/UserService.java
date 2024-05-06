@@ -7,6 +7,7 @@ import com.example.gymweb.Repositories.LessonsRepository;
 import com.example.gymweb.Repositories.RankingRepository;
 import com.example.gymweb.Repositories.UserRepository;
 import com.example.gymweb.Secure.RepositoryUserDetailsService;
+import com.example.gymweb.Secure.Secure;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -234,11 +235,11 @@ public class UserService {
         Optional<User> u = userRepository.findById(id);
         if (u.isPresent()) {
             User user = u.get();
-            user.setName(newUser.getName());
+            user.setName(Secure.deleteDangerous(newUser.getName()));
             user.setAge(newUser.getAge());
             user.setEmail(newUser.getEmail());
             user.setPassword(newUser.getPassword());
-            user.setPhoneNumber(newUser.getPhoneNumber());
+            user.setPhoneNumber(Secure.deleteDangerous(newUser.getPhoneNumber()));
             if(fileImage!=null && !fileImage.isEmpty()){
                 user.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
             }
@@ -248,6 +249,7 @@ public class UserService {
             return null;
         }
     }
+
     public List<User> findUserByLesson(List<Lesson> lessons){
        return userRepository.findUserByLessons(lessons);
     }
