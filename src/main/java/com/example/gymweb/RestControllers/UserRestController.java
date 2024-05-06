@@ -3,6 +3,8 @@ package com.example.gymweb.RestControllers;
 import com.example.gymweb.Services.UserService;
 import com.example.gymweb.Entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,8 @@ import java.io.IOException;
 public class UserRestController {
     @Autowired
     UserService userService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     //update users information
@@ -34,10 +38,18 @@ public class UserRestController {
     }
     // creating a user
     @PostMapping("/register")
-    public ResponseEntity<User> newUser(@RequestBody User user){
+    public ResponseEntity<User> newUser(@RequestParam String name,
+                                        @RequestParam String DNI,
+                                        @RequestParam String phoneNumber,
+                                        @RequestParam int age,
+                                        @RequestParam String email,
+                                        @RequestParam String password) {
+        User user = new User(name, passwordEncoder.encode(password),DNI,email,phoneNumber,age,"USER");
         userService.addUser(user);
+
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
     //delete an user using his ID
     @DeleteMapping("/deleteuser/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable long id) {

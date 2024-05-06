@@ -32,11 +32,12 @@ public class User {
     private String password;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id=-1;
+    private long id;
     @NotNull
     private String DNI;
     @NotNull
     @ElementCollection(fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<String> roles;
     @NotNull
     private String email;

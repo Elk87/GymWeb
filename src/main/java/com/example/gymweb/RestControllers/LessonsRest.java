@@ -128,7 +128,7 @@ public class LessonsRest {
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("error", "El nombre del archivo contiene caracteres no permitidos.");
-            return "redirect:/uploadStatus";
+            return "El nombre del archivo contiene caracteres no permitidos.";
         }
 
         String storageDirectory = "src/files";
@@ -150,7 +150,7 @@ public class LessonsRest {
         }
 
         redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + originalFilename + "!");
-        return "redirect:/uploadStatus";
+        return "You successfully uploaded " + originalFilename + "!";
     }
     private String sanitizeFilename(String originalFilename) throws IllegalArgumentException {
         if (!originalFilename.matches("[a-zA-Z0-9\\.\\-]+")) {
