@@ -115,10 +115,10 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.GET,"/api/ranking").hasAnyRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT,"/api/ranking/{id}").hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.PUT,"/api/uploadFile/{lessonId}").hasAnyRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/admin/allUsers").hasAnyRole("ADMIN")
-
+                    .requestMatchers(HttpMethod.GET,"/api/admin/allUsers").hasAnyRole("ADMIN"));
+//cambiar ranking la parte de borrar comentarios que no se permita y lo de borrar usuario
                     // PUBLIC ENDPOINTS
-                    .anyRequest().permitAll());
+                    //.anyRequest().permitAll());
 
     // Disable Form login Authentication
         http.formLogin(formLogin -> formLogin.disable());
