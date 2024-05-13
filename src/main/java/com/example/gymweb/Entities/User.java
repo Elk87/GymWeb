@@ -51,12 +51,12 @@ public class User {
     @JsonIgnore
     private Blob imageFile;
     @Nullable
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Ranking> comments;
 
     @Nullable
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_lessons",
             joinColumns = @JoinColumn(name = "user_id"),
