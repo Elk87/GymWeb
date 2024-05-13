@@ -1,5 +1,7 @@
 package com.example.gymweb.RestControllers;
 
+import com.example.gymweb.Entities.Ranking;
+import com.example.gymweb.Services.RankingService;
 import com.example.gymweb.Services.UserService;
 import com.example.gymweb.Entities.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.stream.events.Comment;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +30,8 @@ public class UserRestController {
     UserService userService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RankingService rankingService;
 
 
     //update users information
@@ -73,21 +78,25 @@ public class UserRestController {
     //delete an user using his ID
     @DeleteMapping("/deleteuser/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable long id) {
-       User user= userService.getUser(id);
-        if(user!=null){
+        User user = userService.getUser(id);
+        if(user != null) {
+            if(user.getRoles().contains("ADMIN")){
+                return new ResponseEntity<>(user, HttpStatus.FORBIDDEN);
+            }
+            List<Ranking> rankings = rankingService.getRankingByUser(user);
+            if (!rankings.isEmpty()) {
+                for (Ranking ranking : rankings) {
+                    rankingService.deleteRanking(ranking.getId());
+                }
+            }
             userService.deleteUserById(id);
-            return new ResponseEntity<>(user,HttpStatus.OK);
-        }else {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        //userService.removeUser(id);
-
-        /*if(user != null){
-            return new ResponseEntity<>(user,HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }*/
     }
+
+
     @DeleteMapping("/deleteMyUser")
     public ResponseEntity<User> deleteMyUser(HttpServletRequest request) {
         String name = request.getUserPrincipal().getName();
