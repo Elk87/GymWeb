@@ -2,6 +2,7 @@ package com.example.gymweb.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -28,7 +29,7 @@ public class User {
     @NotNull
     private String name;
     @NotNull
-    @JsonIgnore
+    @JsonProperty("password")
     private String password;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,7 +51,7 @@ public class User {
     private Blob imageFile;
     @Nullable
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, orphanRemoval = true)
-    @JsonBackReference
+    @JsonIgnore
     private List<Ranking> comments;
 
     @Nullable
@@ -60,7 +61,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "lesson_id")
     )
-    @JsonBackReference
+    @JsonIgnore
     private List<Lesson> lessons;
     //constructor
     public User(String name, String password, String DNI, String email, String phoneNumber, int age, String role) {

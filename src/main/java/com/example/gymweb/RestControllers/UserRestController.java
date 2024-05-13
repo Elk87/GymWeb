@@ -42,7 +42,7 @@ public class UserRestController {
         }
     }
     // creating a user
-    @PostMapping("/register")
+    /*@PostMapping("/register")
     public ResponseEntity<User> newUser(@RequestParam String name,
                                         @RequestParam String DNI,
                                         @RequestParam String phoneNumber,
@@ -53,8 +53,30 @@ public class UserRestController {
         userService.addUser(user);
 
         return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
+    }*/
 
+    @PostMapping("/register")
+    public ResponseEntity<String> newUser(@RequestBody User newUser) {
+        if (userService.findNameByEmail(newUser.getEmail()) != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("El email ya está registrado");
+        }
+        User user = new User();
+        user.setName(newUser.getName());
+        user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        user.setDNI(newUser.getDNI());
+        user.setEmail(newUser.getEmail());
+        user.setPhoneNumber(newUser.getPhoneNumber());
+        user.setAge(newUser.getAge());
+        // Asignar el rol USER al nuevo usuario
+        user.setRoles(List.of("USER"));
+
+        // Guardar el nuevo usuario en la base de datos
+        userService.addUser(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Usuario registrado exitosamente");
+    }
     //delete an user using his ID
     @DeleteMapping("/deleteuser/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable long id) {
