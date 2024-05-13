@@ -30,13 +30,27 @@ public class RankingRest {
     }
     //delete a ranking using his ID
     @DeleteMapping("/ranking/{id}")
-    public ResponseEntity<?> deleteRanking(@PathVariable long id) {
-        Ranking ranking = rankingService.getRankingById(id);
-        if(ranking==null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> deleteRanking(@PathVariable long id,HttpServletRequest request) {
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        if (user.getRoles().contains("ADMIN")){
+            Ranking ranking = rankingService.getRankingById(id);
+            if(ranking==null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            rankingService.deleteRanking(id);
+            return new ResponseEntity<>(ranking, HttpStatus.OK);
+        }else if(rankingService.getRankingById(id).getUser().equals(user)){
+            Ranking ranking = rankingService.getRankingById(id);
+            if(ranking==null){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            rankingService.deleteRanking(id);
+            return new ResponseEntity<>(ranking, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        rankingService.deleteRanking(id);
-        return new ResponseEntity<>(ranking, HttpStatus.OK);
+
     }
     //show a ranking using his ID
     @GetMapping("/ranking/{id}")
@@ -56,9 +70,15 @@ public class RankingRest {
     }
     //update an existing ranking using his ID
     @PutMapping("/ranking/{id}")
-    public ResponseEntity<Ranking> updateRanking(@RequestParam String comment, @PathVariable long id) {
-        Ranking ranking= rankingService.updateRanking(id,comment);
-        return new ResponseEntity<>(ranking,HttpStatus.OK);
+    public ResponseEntity<Ranking> updateRanking(@RequestParam String comment, @PathVariable long id,HttpServletRequest request) {
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        if(rankingService.getRankingById(id).getUser().equals(user)){
+            Ranking ranking= rankingService.updateRanking(id,comment);
+            return new ResponseEntity<>(ranking,HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 
 }

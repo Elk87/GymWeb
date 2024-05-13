@@ -99,6 +99,7 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/api/lesson").hasAnyRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/api/lesson/{id}").hasAnyRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/lesson/{id}").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/lesson/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/lessonsByTeacherSport").permitAll()
                     .requestMatchers(HttpMethod.POST,"/api/uploadFile/{lessonId}").hasAnyRole("ADMIN")
                     .requestMatchers(HttpMethod.POST,"/api/auth/login").permitAll()
@@ -108,14 +109,16 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.POST,"/api/register").permitAll()
                     .requestMatchers(HttpMethod.DELETE,"/api/deleteuser/{id}").hasAnyRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE,"/api/deleteMyUser").hasAnyRole("USER","ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api/users/{id}").hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.POST,"/api/ranking").hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.DELETE,"/api/ranking/{id}").hasAnyRole("ADMIN","USER")
-                    .requestMatchers(HttpMethod.GET,"/api/ranking/{id}").hasAnyRole("ADMIN","USER")
-                    .requestMatchers(HttpMethod.GET,"/api/ranking").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api/ranking/{id}").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/api/ranking").permitAll()
                     .requestMatchers(HttpMethod.PUT,"/api/ranking/{id}").hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.PUT,"/api/uploadFile/{lessonId}").hasAnyRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/admin/allUsers").hasAnyRole("ADMIN"));
+                    .requestMatchers(HttpMethod.GET,"/api/admin/allUsers").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api/lessons/{lessonId}/image").permitAll());
+
 //cambiar ranking la parte de borrar comentarios que no se permita y lo de borrar usuario
                     // PUBLIC ENDPOINTS
                     //.anyRequest().permitAll());

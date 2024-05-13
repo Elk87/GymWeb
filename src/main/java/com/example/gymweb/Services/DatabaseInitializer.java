@@ -1,4 +1,4 @@
-package com.example.gymweb.Services;
+/*package com.example.gymweb.Services;
                                                               //  Comentado para que no se añada constantemente
 import com.example.gymweb.Entities.Lesson;
 import com.example.gymweb.Entities.Ranking;
@@ -55,5 +55,5 @@ public class DatabaseInitializer implements CommandLineRunner {
         lessonRepository.save(lesson2);
 
     }
-}
+}*/
 

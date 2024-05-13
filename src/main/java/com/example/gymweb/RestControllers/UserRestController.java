@@ -57,18 +57,18 @@ public class UserRestController {
     }*/
 
     @PostMapping("/register")
-    public ResponseEntity<User> newUser(@RequestBody Map<String, Object> payload) {
-        String name = (String) payload.get("name");
-        String DNI = (String) payload.get("DNI");
-        String phoneNumber = (String) payload.get("phoneNumber");
-        int age = (int) payload.get("age");
-        String email = (String) payload.get("email");
-        String password = (String) payload.get("password");
+    public ResponseEntity<User> newUser(@RequestBody Map<String, Object> user) {
+        String name = (String) user.get("name");
+        String DNI = (String) user.get("DNI");
+        String phoneNumber = (String) user.get("phoneNumber");
+        int age = (int) user.get("age");
+        String email = (String) user.get("email");
+        String password = (String) user.get("password");
 
-        User user = new User(name, passwordEncoder.encode(password), DNI, email, phoneNumber, age, "USER");
-        userService.addUser(user);
+        User newUser = new User(name, passwordEncoder.encode(password), DNI, email, phoneNumber, age, "USER");
+        userService.addUser(newUser);
 
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
     //delete an user using his ID
     @DeleteMapping("/deleteuser/{id}")
@@ -98,12 +98,24 @@ public class UserRestController {
 
     //show users based on their ID
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> showUser(@PathVariable long id) {
-        User user = userService.getUser(id);
-        if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<User> showUser(@PathVariable long id,HttpServletRequest request) {
+        String email = request.getUserPrincipal().getName();
+        if(userService.getUserByEmail(email).getRoles().contains("ADMIN")){
+            User user = userService.getUser(id);
+            if (user != null) {
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }else if (userService.getUserByEmail(email).getId() == id) {
+            User user = userService.getUser(userService.getUserByEmail(email).getId());
+            if (user != null) {
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
  @GetMapping("admin/allUsers")

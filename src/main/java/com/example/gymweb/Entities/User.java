@@ -30,6 +30,7 @@ public class User {
     private String name;
     @NotNull
     @JsonProperty("password")
+    @JsonIgnore
     private String password;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
