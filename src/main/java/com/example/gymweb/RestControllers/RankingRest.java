@@ -65,6 +65,9 @@ public class RankingRest {
     @GetMapping("/ranking")
     public ResponseEntity<Collection<Ranking>> getAllRankings() {
         Collection<Ranking> rankings = rankingService.getRanking();
+        if (rankings.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(rankings, HttpStatus.OK);
 
     }
@@ -73,6 +76,9 @@ public class RankingRest {
     public ResponseEntity<Ranking> updateRanking(@RequestParam String comment, @PathVariable long id,HttpServletRequest request) {
         String email = request.getUserPrincipal().getName();
         User user = userService.getUserByEmail(email);
+        if (rankingService.getRankingById(id) == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         if(rankingService.getRankingById(id).getUser().equals(user)){
             Ranking ranking= rankingService.updateRanking(id,comment);
             return new ResponseEntity<>(ranking,HttpStatus.OK);
