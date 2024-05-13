@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -56,26 +57,18 @@ public class UserRestController {
     }*/
 
     @PostMapping("/register")
-    public ResponseEntity<String> newUser(@RequestBody User newUser) {
-        if (userService.findNameByEmail(newUser.getEmail()) != null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body("El email ya está registrado");
-        }
-        User user = new User();
-        user.setName(newUser.getName());
-        user.setPassword(passwordEncoder.encode(newUser.getPassword()));
-        user.setDNI(newUser.getDNI());
-        user.setEmail(newUser.getEmail());
-        user.setPhoneNumber(newUser.getPhoneNumber());
-        user.setAge(newUser.getAge());
-        // Asignar el rol USER al nuevo usuario
-        user.setRoles(List.of("USER"));
+    public ResponseEntity<User> newUser(@RequestBody Map<String, Object> payload) {
+        String name = (String) payload.get("name");
+        String DNI = (String) payload.get("DNI");
+        String phoneNumber = (String) payload.get("phoneNumber");
+        int age = (int) payload.get("age");
+        String email = (String) payload.get("email");
+        String password = (String) payload.get("password");
 
-        // Guardar el nuevo usuario en la base de datos
+        User user = new User(name, passwordEncoder.encode(password), DNI, email, phoneNumber, age, "USER");
         userService.addUser(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Usuario registrado exitosamente");
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
     //delete an user using his ID
     @DeleteMapping("/deleteuser/{id}")
