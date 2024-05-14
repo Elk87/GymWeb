@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -187,17 +189,41 @@ public class UserController {
     }
     //update a ranking done by the user
     @PostMapping("/ranking/updateRanking/{id}")
-    public String updateRanking(@RequestParam String comment, @PathVariable long id){
-        rankingService.updateRanking(id, comment);
+    public String updateRanking(HttpServletRequest request,@RequestParam String comment, @PathVariable long id){
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        if (rankingService.getRankingById(id) != null) {
+            if(rankingService.getRankingById(id).getUser().equals(user)){
+                Ranking ranking= rankingService.updateRanking(id,comment);
+                return "redirect:/profile/myrankings";
+            }
+        }
         return "redirect:/profile/myrankings";
+
 
     }
     //delete a ranking done by the user
     @PostMapping("/ranking/deleteRanking/{id}")
-    public String deleteRanking( @PathVariable long id){
-        rankingService.deleteRanking(id);
-        return "redirect:/profile/myrankings";
+    public String deleteRanking( @PathVariable long id, HttpServletRequest request) {
+        String email = request.getUserPrincipal().getName();
+        User user = userService.getUserByEmail(email);
+        if (user.getRoles().contains("ADMIN")) {
+            Ranking ranking = rankingService.getRankingById(id);
+            if (ranking != null) {
+                rankingService.deleteRanking(id);
+                return "redirect:/profile/myrankings";
+            }
+        } else if (rankingService.getRankingById(id).getUser().equals(user)) {
+            Ranking ranking = rankingService.getRankingById(id);
+            if (ranking != null) {
+                rankingService.deleteRanking(id);
+                return "redirect:/profile/myrankings";
+            }
+        }
+            return "redirect:/profile/myrankings";
+
     }
+
     @PostMapping("/profile/delete")
     public String deleteUser(HttpServletRequest request) {
         String email = request.getUserPrincipal().getName();
